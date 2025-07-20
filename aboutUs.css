@@ -331,11 +331,89 @@
 
 /* Modern Responsive Design */
 @media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+    }
+    
+    .desktop-language {
+        display: none;
+    }
+    
+    .mobile-menu-btn {
+        display: flex;
+    }
+    
+    /* Fix container and text overflow issues */
+    .container {
+        max-width: 100%;
+        padding: 0 16px;
+        overflow-x: hidden;
+    }
+    
+    .header {
+        padding: 0 16px;
+    }
+    
+    /* Fix hero section text overflow */
+    .about-hero h1 {
+        font-size: 2.5rem;
+        line-height: 1.2;
+        margin-bottom: 16px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    .about-hero .tagline {
+        font-size: 1.1rem;
+        line-height: 1.4;
+        margin-bottom: 24px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    /* Fix story section */
+    .story-section {
+        padding: 80px 0;
+    }
+    
+    .story-content {
+        padding: 0 16px;
+    }
+    
+    .story-content h2 {
+        font-size: 2.2rem;
+        line-height: 1.2;
+        margin-bottom: 32px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    .story-content p {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 24px;
+        text-align: justify;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+    
+    /* Fix team detail section */
+    .team-detail-section {
+        padding: 80px 0;
+    }
+    
+    .team-members {
+        padding: 0 16px;
+        gap: 48px;
+    }
+    
     .team-member-detail {
         grid-template-columns: 1fr;
         text-align: center;
         gap: 32px;
-        padding: 40px 32px;
+        padding: 32px 16px;
+        margin: 0 16px;
     }
     
     .team-member-detail .member-photo {
@@ -344,22 +422,106 @@
         height: 160px;
     }
     
+    .member-info h3 {
+        font-size: 1.6rem;
+        line-height: 1.2;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    .member-info .position {
+        font-size: 1.1rem;
+        line-height: 1.3;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    .member-info .credentials {
+        font-size: 0.9rem;
+        line-height: 1.4;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    .member-info .bio {
+        font-size: 1rem;
+        line-height: 1.6;
+        text-align: justify;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+    
+    /* Fix FAQ section */
+    .faq-section {
+        padding: 80px 0;
+    }
+    
     .faq-grid {
         grid-template-columns: 1fr;
         gap: 24px;
+        padding: 0 16px;
+    }
+    
+    .faq-item {
+        padding: 24px 16px;
+    }
+    
+    .faq-item h3 {
+        font-size: 1.2rem;
+        line-height: 1.3;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    .faq-item p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        text-align: justify;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+    
+    /* Fix contact section */
+    .contact-info-section {
+        padding: 80px 0;
     }
     
     .contact-grid {
         grid-template-columns: 1fr;
         gap: 24px;
+        padding: 0 16px;
     }
     
-    .story-content h2 {
-        font-size: 2.8rem;
+    .contact-item {
+        padding: 24px 16px;
     }
     
-    .member-info h3 {
-        font-size: 1.8rem;
+    .contact-item h3 {
+        font-size: 1.3rem;
+        line-height: 1.2;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    .contact-item p {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    /* Ensure no horizontal scrolling */
+    body {
+        overflow-x: hidden;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    * {
+        max-width: 100%;
+        box-sizing: border-box;
     }
 }
 

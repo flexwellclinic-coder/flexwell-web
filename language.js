@@ -7,52 +7,153 @@ class LanguageSwitcher {
 
     init() {
         this.setupEventListeners();
+        this.setupMobileMenu();
         this.updateLanguage(this.currentLanguage);
         this.closeDropdownOnClickOutside();
     }
 
     setupEventListeners() {
+        // Desktop language switcher
         const languageToggle = document.getElementById('languageToggle');
         const languageDropdown = document.getElementById('languageDropdown');
-        const langOptions = document.querySelectorAll('.lang-option');
+        const langOptions = document.querySelectorAll('#languageDropdown .lang-option');
 
-        // Toggle dropdown
-        languageToggle.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.toggleDropdown();
-        });
+        if (languageToggle) {
+            languageToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.toggleDropdown('languageDropdown');
+            });
+        }
 
-        // Language selection
-        langOptions.forEach(option => {
+        // Mobile language switcher
+        const mobileLangToggle = document.getElementById('mobileLangToggle');
+        const mobileLangDropdown = document.getElementById('mobileLangDropdown');
+        const mobileLangOptions = document.querySelectorAll('#mobileLangDropdown .lang-option');
+
+        if (mobileLangToggle) {
+            mobileLangToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.toggleDropdown('mobileLangDropdown');
+            });
+        }
+
+        // Language selection for both desktop and mobile
+        const allLangOptions = document.querySelectorAll('.lang-option');
+        allLangOptions.forEach(option => {
             option.addEventListener('click', (e) => {
                 const selectedLang = e.currentTarget.getAttribute('data-lang');
                 this.updateLanguage(selectedLang);
-                this.closeDropdown();
+                this.closeAllDropdowns();
             });
         });
     }
 
-    toggleDropdown() {
-        const dropdown = document.getElementById('languageDropdown');
-        const button = document.getElementById('languageToggle');
-        
-        dropdown.classList.toggle('show');
-        button.classList.toggle('active');
+    setupMobileMenu() {
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav a');
+
+        if (mobileMenuToggle && mobileMenu) {
+            // Toggle mobile menu
+            mobileMenuToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.toggleMobileMenu();
+            });
+
+            // Close mobile menu when clicking on navigation links
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    this.closeMobileMenu();
+                });
+            });
+
+            // Close mobile menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!mobileMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+                    this.closeMobileMenu();
+                }
+            });
+
+            // Close mobile menu when window is resized to desktop
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768) {
+                    this.closeMobileMenu();
+                }
+            });
+        }
     }
 
-    closeDropdown() {
+    toggleMobileMenu() {
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        
+        if (mobileMenu && mobileMenuToggle) {
+            mobileMenu.classList.toggle('active');
+            mobileMenuToggle.classList.toggle('active');
+        }
+    }
+
+    closeMobileMenu() {
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        
+        if (mobileMenu && mobileMenuToggle) {
+            mobileMenu.classList.remove('active');
+            mobileMenuToggle.classList.remove('active');
+        }
+    }
+
+    toggleDropdown(dropdownId) {
+        const dropdown = document.getElementById(dropdownId);
+        const buttonId = dropdownId === 'languageDropdown' ? 'languageToggle' : 'mobileLangToggle';
+        const button = document.getElementById(buttonId);
+        
+        if (dropdown && button) {
+            // Close other dropdown first
+            this.closeAllDropdowns();
+            
+            dropdown.classList.toggle('show');
+            button.classList.toggle('active');
+        }
+    }
+
+    closeAllDropdowns() {
+        // Close desktop dropdown
         const dropdown = document.getElementById('languageDropdown');
         const button = document.getElementById('languageToggle');
         
-        dropdown.classList.remove('show');
-        button.classList.remove('active');
+        if (dropdown && button) {
+            dropdown.classList.remove('show');
+            button.classList.remove('active');
+        }
+
+        // Close mobile dropdown
+        const mobileDropdown = document.getElementById('mobileLangDropdown');
+        const mobileButton = document.getElementById('mobileLangToggle');
+        
+        if (mobileDropdown && mobileButton) {
+            mobileDropdown.classList.remove('show');
+            mobileButton.classList.remove('active');
+        }
     }
 
     closeDropdownOnClickOutside() {
         document.addEventListener('click', (e) => {
-            const languageSwitcher = document.querySelector('.language-switcher');
-            if (!languageSwitcher.contains(e.target)) {
-                this.closeDropdown();
+            const desktopLanguageSwitcher = document.querySelector('.desktop-language .language-switcher');
+            const mobileLanguageSwitcher = document.querySelector('.mobile-language .language-switcher');
+            
+            let clickedInside = false;
+            
+            if (desktopLanguageSwitcher && desktopLanguageSwitcher.contains(e.target)) {
+                clickedInside = true;
+            }
+            
+            if (mobileLanguageSwitcher && mobileLanguageSwitcher.contains(e.target)) {
+                clickedInside = true;
+            }
+            
+            if (!clickedInside) {
+                this.closeAllDropdowns();
             }
         });
     }
@@ -78,15 +179,32 @@ class LanguageSwitcher {
     }
 
     updateButton(lang) {
-        const flagElement = document.querySelector('.lang-btn .flag');
-        const textElement = document.querySelector('.lang-btn .lang-text');
+        // Update desktop language button
+        const flagElement = document.querySelector('#languageToggle .flag');
+        const textElement = document.querySelector('#languageToggle .lang-text');
 
-        if (lang === 'sq') {
-            flagElement.textContent = '🇦🇱';
-            textElement.textContent = 'AL';
-        } else {
-            flagElement.textContent = '🇺🇸';
-            textElement.textContent = 'EN';
+        if (flagElement && textElement) {
+            if (lang === 'sq') {
+                flagElement.textContent = '🇦🇱';
+                textElement.textContent = 'AL';
+            } else {
+                flagElement.textContent = '🇺🇸';
+                textElement.textContent = 'EN';
+            }
+        }
+
+        // Update mobile language button
+        const mobileFlagElement = document.querySelector('#mobileLangToggle .flag');
+        const mobileTextElement = document.querySelector('#mobileLangToggle .lang-text');
+
+        if (mobileFlagElement && mobileTextElement) {
+            if (lang === 'sq') {
+                mobileFlagElement.textContent = '🇦🇱';
+                mobileTextElement.textContent = 'AL';
+            } else {
+                mobileFlagElement.textContent = '🇺🇸';
+                mobileTextElement.textContent = 'EN';
+            }
         }
     }
 

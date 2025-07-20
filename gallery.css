@@ -356,19 +356,141 @@
 
 /* Modern Responsive Design */
 @media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+    }
+    
+    .desktop-language {
+        display: none;
+    }
+    
+    .mobile-menu-btn {
+        display: flex;
+    }
+    
+    /* Fix container and text overflow issues */
+    .container {
+        max-width: 100%;
+        padding: 0 16px;
+        overflow-x: hidden;
+    }
+    
+    .header {
+        padding: 0 16px;
+    }
+    
+    /* Fix hero section text overflow */
+    .services-hero h1 {
+        font-size: 2.5rem;
+        line-height: 1.2;
+        margin-bottom: 16px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    .services-hero .tagline {
+        font-size: 1.1rem;
+        line-height: 1.4;
+        margin-bottom: 24px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    /* Fix services sections */
+    .services-section,
+    .modalities-section,
+    .facilities-section,
+    .cta-section {
+        padding: 80px 0;
+    }
+    
+    .services-content,
+    .modalities-content,
+    .facilities-content,
+    .cta-content {
+        padding: 0 16px;
+    }
+    
+    .services-content h2,
+    .modalities-content h2,
+    .facilities-content h2,
+    .cta-content h2 {
+        font-size: 2.2rem;
+        line-height: 1.2;
+        margin-bottom: 32px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    .services-content p,
+    .modalities-content p,
+    .facilities-content p,
+    .cta-content p {
+        font-size: 1rem;
+        line-height: 1.6;
+        margin-bottom: 24px;
+        text-align: justify;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+    
+    /* Fix grids */
     .services-grid {
         grid-template-columns: 1fr;
         gap: 24px;
+        padding: 0 16px;
     }
     
     .modalities-grid {
         grid-template-columns: 1fr;
         gap: 24px;
+        padding: 0 16px;
     }
     
     .facilities-grid {
         grid-template-columns: 1fr;
         gap: 24px;
+        padding: 0 16px;
+    }
+    
+    /* Fix cards */
+    .service-card,
+    .modality-item,
+    .facility-card {
+        padding: 24px 16px;
+    }
+    
+    .service-card h3,
+    .modality-item h3,
+    .facility-card h3 {
+        font-size: 1.3rem;
+        line-height: 1.2;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    .service-card p,
+    .modality-item p,
+    .facility-card p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        text-align: justify;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+    
+    /* Ensure no horizontal scrolling */
+    body {
+        overflow-x: hidden;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    
+    * {
+        max-width: 100%;
+        box-sizing: border-box;
     }
 }
 

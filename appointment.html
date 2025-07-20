@@ -21,20 +21,59 @@
                     <li><a href="gallery.html" data-en="SERVICES" data-sq="SHËRBIMET">SERVICES</a></li>
                     <li><a href="appointment.html" class="active" data-en="APPOINTMENT" data-sq="TAKIM">APPOINTMENT</a></li>
                 </ul>
-                <div class="language-switcher">
-                    <button class="lang-btn" id="languageToggle">
-                        <span class="flag">🇺🇸</span>
-                        <span class="lang-text">EN</span>
-                        <span class="arrow">▼</span>
-                    </button>
-                    <div class="lang-dropdown" id="languageDropdown">
-                        <div class="lang-option" data-lang="en">
+                
+                <div class="desktop-language">
+                    <div class="language-switcher">
+                        <button class="lang-btn" id="languageToggle">
                             <span class="flag">🇺🇸</span>
-                            <span>English</span>
+                            <span class="lang-text">EN</span>
+                            <span class="arrow">▼</span>
+                        </button>
+                        <div class="lang-dropdown" id="languageDropdown">
+                            <div class="lang-option" data-lang="en">
+                                <span class="flag">🇺🇸</span>
+                                <span>English</span>
+                            </div>
+                            <div class="lang-option" data-lang="sq">
+                                <span class="flag">🇦🇱</span>
+                                <span>Shqip</span>
+                            </div>
                         </div>
-                        <div class="lang-option" data-lang="sq">
-                            <span class="flag">🇦🇱</span>
-                            <span>Shqip</span>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn" id="mobileMenuToggle">
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                    <span class="hamburger-line"></span>
+                </button>
+
+                <!-- Mobile Menu -->
+                <div class="mobile-menu" id="mobileMenu">
+                    <div class="mobile-nav">
+                        <a href="index.html" data-en="HOME" data-sq="KRYEFAQE">HOME</a>
+                        <a href="aboutUs.html" data-en="ABOUT" data-sq="RRETH NESH">ABOUT</a>
+                        <a href="gallery.html" data-en="SERVICES" data-sq="SHËRBIMET">SERVICES</a>
+                        <a href="appointment.html" class="active" data-en="APPOINTMENT" data-sq="TAKIM">APPOINTMENT</a>
+                    </div>
+                    <div class="mobile-language">
+                        <div class="language-switcher">
+                            <button class="lang-btn" id="mobileLangToggle">
+                                <span class="flag">🇺🇸</span>
+                                <span class="lang-text">EN</span>
+                                <span class="arrow">▼</span>
+                            </button>
+                            <div class="lang-dropdown" id="mobileLangDropdown">
+                                <div class="lang-option" data-lang="en">
+                                    <span class="flag">🇺🇸</span>
+                                    <span>English</span>
+                                </div>
+                                <div class="lang-option" data-lang="sq">
+                                    <span class="flag">🇦🇱</span>
+                                    <span>Shqip</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
