@@ -3,25 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Services - FlexWell Physiotherapy</title>
+    <title data-en="Services - FlexWell Physiotherapy" data-sq="Shërbimet - FlexWell Fizioterapi">Services - FlexWell Physiotherapy</title>
     <link rel="stylesheet" href="gallery.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="header">
         <nav class="navbar">
             <div class="nav-container">
-                <div class="logo">
+                <a href="index.html" class="logo">
                     <img src="assets/logo.jpeg" alt="FlexWell Logo">
                     <span>FLEXWELL</span>
-                </div>
+                </a>
                 <ul class="nav-menu">
-                    <li><a href="index.html">HOME</a></li>
-                    <li><a href="aboutUs.html">ABOUT</a></li>
-                    <li><a href="gallery.html" class="active">SERVICES</a></li>
-                    <li><a href="appointment.html">APPOINTMENT</a></li>
+                    <li><a href="index.html" data-en="HOME" data-sq="KRYEFAQE">HOME</a></li>
+                    <li><a href="aboutUs.html" data-en="ABOUT" data-sq="RRETH NESH">ABOUT</a></li>
+                    <li><a href="gallery.html" class="active" data-en="SERVICES" data-sq="SHËRBIMET">SERVICES</a></li>
+                    <li><a href="appointment.html" data-en="APPOINTMENT" data-sq="TAKIM">APPOINTMENT</a></li>
                 </ul>
-                <a href="appointment.html" class="cta-button">BOOK SESSION</a>
+                <div class="language-switcher">
+                    <button class="lang-btn" id="languageToggle">
+                        <span class="flag">🇺🇸</span>
+                        <span class="lang-text">EN</span>
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div class="lang-dropdown" id="languageDropdown">
+                        <div class="lang-option" data-lang="en">
+                            <span class="flag">🇺🇸</span>
+                            <span>English</span>
+                        </div>
+                        <div class="lang-option" data-lang="sq">
+                            <span class="flag">🇦🇱</span>
+                            <span>Shqip</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </nav>
     </header>
@@ -30,115 +46,75 @@
         <!-- Hero Section -->
         <section class="services-hero">
             <div class="hero-content">
-                <h1>OUR <span class="accent">SERVICES</span></h1>
-                <p class="tagline">COMPREHENSIVE CARE FOR YOUR RECOVERY</p>
+                <h1>OUR <span class="accent" data-en="SERVICES" data-sq="SHËRBIMET">SERVICES</span></h1>
+                <p class="tagline" data-en="COMPREHENSIVE CARE FOR YOUR WELLNESS" data-sq="KUJDES GJITHËPËRFSHIRËS PËR MIRËQENIEN TUAJ">COMPREHENSIVE CARE FOR YOUR WELLNESS</p>
             </div>
         </section>
 
         <!-- Services Overview -->
         <section class="services-overview">
             <div class="container">
-                <h2 class="section-title">What We Offer</h2>
-                <p class="overview-text">At FlexWell, we provide a comprehensive range of physiotherapy services designed to help you recover, rehabilitate, and optimize your physical performance. Our evidence-based treatments are tailored to your individual needs.</p>
+                <h2 class="section-title" data-en="Expert Treatment Solutions" data-sq="Zgjidhje Eksperte Trajtimi">Expert Treatment Solutions</h2>
+                <p class="overview-text" data-en="At FlexWell, we offer a comprehensive range of physiotherapy services designed to address your unique needs. Our evidence-based approach combines the latest techniques with personalized care to help you achieve optimal recovery and performance." data-sq="Në FlexWell, ne ofrojmë një gamë gjithëpërfshirëse shërbimesh fizioterapie të dizajnuara për t'u përshtatur me nevojat tuaja unike. Qasja jonë e bazuar në evidenca kombinon teknikat më të fundit me kujdesin e personalizuar për t'ju ndihmuar të arrini rikuperim dhe performancë optimale.">At FlexWell, we offer a comprehensive range of physiotherapy services designed to address your unique needs. Our evidence-based approach combines the latest techniques with personalized care to help you achieve optimal recovery and performance.</p>
             </div>
         </section>
 
-        <!-- Main Services Grid -->
+        <!-- Services Grid -->
         <section class="services-grid-section">
             <div class="container">
                 <div class="services-grid">
                     <div class="service-card">
-                        <div class="service-image">
-                            <div class="placeholder-image">💪</div>
-                        </div>
+                        <div class="service-image">🏃‍♂️</div>
                         <div class="service-content">
-                            <h3>General Physiotherapy</h3>
-                            <p>Comprehensive assessment and treatment for musculoskeletal conditions, including back pain, neck pain, joint problems, and mobility issues.</p>
+                            <h3 data-en="Sports Physiotherapy" data-sq="Fizioterapi Sportive">Sports Physiotherapy</h3>
+                            <p data-en="Specialized treatment for athletes and active individuals, focusing on injury prevention, performance enhancement, and rapid recovery." data-sq="Trajtim i specializuar për atletët dhe individët aktivë, duke u fokusuar në parandalimin e lëndimeve, përmirësimin e performancës dhe rikuperimin e shpejtë.">Specialized treatment for athletes and active individuals, focusing on injury prevention, performance enhancement, and rapid recovery.</p>
                             <ul class="service-features">
-                                <li>Manual therapy techniques</li>
-                                <li>Exercise prescription</li>
-                                <li>Pain management</li>
-                                <li>Postural correction</li>
+                                <li data-en="Injury Assessment" data-sq="Vlerësimi i Lëndimeve">Injury Assessment</li>
+                                <li data-en="Return-to-Sport Programs" data-sq="Programet e Kthimit në Sport">Return-to-Sport Programs</li>
+                                <li data-en="Performance Analysis" data-sq="Analiza e Performancës">Performance Analysis</li>
+                                <li data-en="Movement Screening" data-sq="Kontrollimi i Lëvizjes">Movement Screening</li>
                             </ul>
                         </div>
                     </div>
-
+                    
                     <div class="service-card">
-                        <div class="service-image">
-                            <div class="placeholder-image">🏃‍♂️</div>
-                        </div>
+                        <div class="service-image">🦴</div>
                         <div class="service-content">
-                            <h3>Sports Therapy</h3>
-                            <p>Specialized treatment for athletes and active individuals, focusing on injury prevention, performance enhancement, and rapid return to sport.</p>
+                            <h3 data-en="Musculoskeletal Therapy" data-sq="Terapi Muskuloskeletore">Musculoskeletal Therapy</h3>
+                            <p data-en="Treatment for conditions affecting muscles, bones, joints, and connective tissues. From acute injuries to chronic conditions." data-sq="Trajtim për gjendje që ndikojnë në muskuj, kocka, nyje dhe inde lidhëse. Nga lëndimet akute te gjendje kronike.">Treatment for conditions affecting muscles, bones, joints, and connective tissues. From acute injuries to chronic conditions.</p>
                             <ul class="service-features">
-                                <li>Sports injury assessment</li>
-                                <li>Performance optimization</li>
-                                <li>Injury prevention programs</li>
-                                <li>Return-to-sport protocols</li>
+                                <li data-en="Joint Mobilization" data-sq="Mobilizimi i Nyjeve">Joint Mobilization</li>
+                                <li data-en="Soft Tissue Therapy" data-sq="Terapi e Indeve të Buta">Soft Tissue Therapy</li>
+                                <li data-en="Exercise Prescription" data-sq="Recetë Ushtrimesh">Exercise Prescription</li>
+                                <li data-en="Pain Management" data-sq="Menaxhimi i Dhimbjes">Pain Management</li>
                             </ul>
                         </div>
                     </div>
-
+                    
                     <div class="service-card">
-                        <div class="service-image">
-                            <div class="placeholder-image">🔄</div>
-                        </div>
+                        <div class="service-image">🧠</div>
                         <div class="service-content">
-                            <h3>Rehabilitation</h3>
-                            <p>Comprehensive rehabilitation programs for post-surgical recovery, neurological conditions, and complex injury management.</p>
+                            <h3 data-en="Neurological Rehabilitation" data-sq="Rihabilitim Neurologjik">Neurological Rehabilitation</h3>
+                            <p data-en="Specialized care for patients recovering from stroke, spinal cord injuries, or other neurological conditions." data-sq="Kujdes i specializuar për pacientët që rikuperohen nga goditja, lëndimet e palcës së kurrizit ose gjendje të tjera neurologjike.">Specialized care for patients recovering from stroke, spinal cord injuries, or other neurological conditions.</p>
                             <ul class="service-features">
-                                <li>Post-operative care</li>
-                                <li>Neurological rehabilitation</li>
-                                <li>Functional restoration</li>
-                                <li>Adaptive equipment training</li>
+                                <li data-en="Balance Training" data-sq="Trajnim Ekuilibri">Balance Training</li>
+                                <li data-en="Gait Re-education" data-sq="Ri-edukim i Ecjes">Gait Re-education</li>
+                                <li data-en="Coordination Exercises" data-sq="Ushtrime Koordinimi">Coordination Exercises</li>
+                                <li data-en="Functional Training" data-sq="Trajnim Funksional">Functional Training</li>
                             </ul>
                         </div>
                     </div>
-
+                    
                     <div class="service-card">
-                        <div class="service-image">
-                            <div class="placeholder-image">🙌</div>
-                        </div>
+                        <div class="service-image">🔧</div>
                         <div class="service-content">
-                            <h3>Manual Therapy</h3>
-                            <p>Hands-on treatment techniques to restore joint mobility, reduce pain, and improve tissue flexibility through specialized manipulation.</p>
+                            <h3 data-en="Manual Therapy" data-sq="Terapi Manuale">Manual Therapy</h3>
+                            <p data-en="Hands-on treatment techniques including joint manipulation, mobilization, and soft tissue techniques for pain relief and improved mobility." data-sq="Teknika trajtimi me dorë duke përfshirë manipulimin e nyjeve, mobilizimin dhe teknikat e indeve të buta për lehtësimin e dhimbjes dhe përmirësimin e lëvizshmërisë.">Hands-on treatment techniques including joint manipulation, mobilization, and soft tissue techniques for pain relief and improved mobility.</p>
                             <ul class="service-features">
-                                <li>Joint mobilization</li>
-                                <li>Soft tissue massage</li>
-                                <li>Trigger point therapy</li>
-                                <li>Myofascial release</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="service-card">
-                        <div class="service-image">
-                            <div class="placeholder-image">🧘‍♀️</div>
-                        </div>
-                        <div class="service-content">
-                            <h3>Movement Analysis</h3>
-                            <p>Advanced biomechanical assessment to identify movement patterns and develop targeted treatment plans for optimal function.</p>
-                            <ul class="service-features">
-                                <li>Gait analysis</li>
-                                <li>Postural assessment</li>
-                                <li>Movement screening</li>
-                                <li>Ergonomic evaluation</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="service-card">
-                        <div class="service-image">
-                            <div class="placeholder-image">⚡</div>
-                        </div>
-                        <div class="service-content">
-                            <h3>Pain Management</h3>
-                            <p>Comprehensive approach to chronic pain management using multiple therapeutic modalities and evidence-based techniques.</p>
-                            <ul class="service-features">
-                                <li>Chronic pain programs</li>
-                                <li>Pain education</li>
-                                <li>Therapeutic modalities</li>
-                                <li>Lifestyle modification</li>
+                                <li data-en="Spinal Manipulation" data-sq="Manipulim i Shtyllës Kurrizore">Spinal Manipulation</li>
+                                <li data-en="Myofascial Release" data-sq="Lirimi Miofascial">Myofascial Release</li>
+                                <li data-en="Trigger Point Therapy" data-sq="Terapi e Pikave Trigger">Trigger Point Therapy</li>
+                                <li data-en="Craniosacral Therapy" data-sq="Terapi Kraniosakrale">Craniosacral Therapy</li>
                             </ul>
                         </div>
                     </div>
@@ -149,76 +125,68 @@
         <!-- Treatment Modalities -->
         <section class="modalities-section">
             <div class="container">
-                <h2 class="section-title">Treatment Modalities</h2>
+                <h2 class="section-title" data-en="Advanced Treatment Modalities" data-sq="Modalitete të Avancuara Trajtimi">Advanced Treatment Modalities</h2>
                 <div class="modalities-grid">
                     <div class="modality-item">
-                        <h3>📋 Exercise Therapy</h3>
-                        <p>Customized exercise programs designed to restore strength, flexibility, and function specific to your condition and goals.</p>
+                        <h3 data-en="Electrotherapy" data-sq="Elektroterapi">Electrotherapy</h3>
+                        <p data-en="TENS, ultrasound, and electrical stimulation for pain relief and tissue healing." data-sq="TENS, ultrazëri dhe stimulim elektrik për lehtësimin e dhimbjes dhe shërimin e indeve.">TENS, ultrasound, and electrical stimulation for pain relief and tissue healing.</p>
                     </div>
                     
                     <div class="modality-item">
-                        <h3>🔥 Electrotherapy</h3>
-                        <p>Advanced electrical stimulation techniques including TENS, ultrasound, and interferential therapy for pain relief and healing.</p>
+                        <h3 data-en="Dry Needling" data-sq="Gjilpëra të Thata">Dry Needling</h3>
+                        <p data-en="Targeted treatment for muscle trigger points to reduce pain and improve function." data-sq="Trajtim i synuar për pikat trigger të muskujve për të ulur dhimbjen dhe përmirësuar funksionin.">Targeted treatment for muscle trigger points to reduce pain and improve function.</p>
                     </div>
                     
                     <div class="modality-item">
-                        <h3>❄️ Cryotherapy</h3>
-                        <p>Cold therapy applications to reduce inflammation, manage pain, and accelerate recovery from acute injuries.</p>
+                        <h3 data-en="Cupping Therapy" data-sq="Terapi me Kupa">Cupping Therapy</h3>
+                        <p data-en="Traditional technique for improving circulation and reducing muscle tension." data-sq="Teknikë tradicionale për përmirësimin e qarkullimit dhe reduktimin e tensionit muskulor.">Traditional technique for improving circulation and reducing muscle tension.</p>
                     </div>
                     
                     <div class="modality-item">
-                        <h3>🔴 Laser Therapy</h3>
-                        <p>Low-level laser therapy to promote tissue healing, reduce inflammation, and provide pain relief at the cellular level.</p>
+                        <h3 data-en="Kinesio Taping" data-sq="Shirit Kinesio">Kinesio Taping</h3>
+                        <p data-en="Therapeutic taping to support muscles and joints while maintaining mobility." data-sq="Shiritat terapeutikë për të mbështetur muskujt dhe nyet duke ruajtur lëvizshmërinë.">Therapeutic taping to support muscles and joints while maintaining mobility.</p>
                     </div>
                     
                     <div class="modality-item">
-                        <h3>💉 Dry Needling</h3>
-                        <p>Precise needle insertion into trigger points to release muscle tension and reduce pain in specific problem areas.</p>
+                        <h3 data-en="Heat & Cold Therapy" data-sq="Terapi me Nxehtësi dhe Të Ftohtë">Heat & Cold Therapy</h3>
+                        <p data-en="Temperature-based treatments for inflammation control and pain management." data-sq="Trajtime të bazuara në temperaturë për kontrollin e inflamacionit dhe menaxhimin e dhimbjes.">Temperature-based treatments for inflammation control and pain management.</p>
                     </div>
                     
                     <div class="modality-item">
-                        <h3>🎯 Cupping Therapy</h3>
-                        <p>Traditional cupping techniques combined with modern physiotherapy to improve blood flow and reduce muscle tension.</p>
+                        <h3 data-en="Exercise Therapy" data-sq="Terapi me Ushtrime">Exercise Therapy</h3>
+                        <p data-en="Customized exercise programs for strength, flexibility, and functional improvement." data-sq="Programe të personalizuara ushtrimesh për forcën, fleksibilitetin dhe përmirësimin funksional.">Customized exercise programs for strength, flexibility, and functional improvement.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Facilities Section -->
+        <!-- Facilities -->
         <section class="facilities-section">
             <div class="container">
-                <h2 class="section-title">Our Facilities</h2>
+                <h2 class="section-title" data-en="State-of-the-Art Facilities" data-sq="Mjediset e Artit të Fundit">State-of-the-Art Facilities</h2>
                 <div class="facilities-grid">
                     <div class="facility-card">
-                        <div class="facility-image">
-                            <div class="placeholder-image">🏥</div>
-                        </div>
-                        <h3>Private Treatment Rooms</h3>
-                        <p>Comfortable, fully equipped private rooms ensuring confidential and focused one-on-one treatment sessions.</p>
+                        <div class="facility-image">🏥</div>
+                        <h3 data-en="Treatment Rooms" data-sq="Dhomat e Trajtimit">Treatment Rooms</h3>
+                        <p data-en="Private, fully equipped treatment rooms for individual consultations and therapy sessions." data-sq="Dhoma private trajtimi të pajisura plotësisht për konsultime individuale dhe seanca terapie.">Private, fully equipped treatment rooms for individual consultations and therapy sessions.</p>
                     </div>
                     
                     <div class="facility-card">
-                        <div class="facility-image">
-                            <div class="placeholder-image">🏋️‍♀️</div>
-                        </div>
-                        <h3>Exercise Rehabilitation Gym</h3>
-                        <p>Modern gym facility with specialized equipment for therapeutic exercise and functional movement training.</p>
+                        <div class="facility-image">🏋️‍♀️</div>
+                        <h3 data-en="Exercise Studio" data-sq="Studio Ushtrimesh">Exercise Studio</h3>
+                        <p data-en="Spacious rehabilitation gym with modern equipment for strength and conditioning programs." data-sq="Palestër e gjerë rihabilitimi me pajisje moderne për programe force dhe kondicionimi.">Spacious rehabilitation gym with modern equipment for strength and conditioning programs.</p>
                     </div>
                     
                     <div class="facility-card">
-                        <div class="facility-image">
-                            <div class="placeholder-image">🌊</div>
-                        </div>
-                        <h3>Hydrotherapy Pool</h3>
-                        <p>Heated therapeutic pool for aquatic physiotherapy, perfect for low-impact rehabilitation and pain management.</p>
+                        <div class="facility-image">💧</div>
+                        <h3 data-en="Hydrotherapy Pool" data-sq="Pishinë Hidroterapie">Hydrotherapy Pool</h3>
+                        <p data-en="Heated therapeutic pool for aquatic therapy and low-impact rehabilitation exercises." data-sq="Pishinë terapeutike e ngrohur për hidroterapinë dhe ushtrime rihabilitimi me ndikim të ulët.">Heated therapeutic pool for aquatic therapy and low-impact rehabilitation exercises.</p>
                     </div>
                     
                     <div class="facility-card">
-                        <div class="facility-image">
-                            <div class="placeholder-image">🔬</div>
-                        </div>
-                        <h3>Assessment Laboratory</h3>
-                        <p>Advanced biomechanical analysis equipment for detailed movement assessment and gait analysis.</p>
+                        <div class="facility-image">🔬</div>
+                        <h3 data-en="Assessment Lab" data-sq="Laboratori i Vlerësimit">Assessment Lab</h3>
+                        <p data-en="Advanced diagnostic equipment for movement analysis and functional assessments." data-sq="Pajisje diagnostike të avancuara për analizën e lëvizjes dhe vlerësimet funksionale.">Advanced diagnostic equipment for movement analysis and functional assessments.</p>
                     </div>
                 </div>
             </div>
@@ -228,9 +196,9 @@
         <section class="cta-section">
             <div class="container">
                 <div class="cta-content">
-                    <h2>Ready to Start Your Recovery?</h2>
-                    <p>Book your initial consultation today and take the first step towards optimal health and mobility.</p>
-                    <a href="appointment.html" class="cta-btn">BOOK YOUR APPOINTMENT</a>
+                    <h2 data-en="Ready to Start Your Recovery?" data-sq="Gati të Filloni Rikuperimin Tuaj?">Ready to Start Your Recovery?</h2>
+                    <p data-en="Book your consultation today and take the first step towards better health and mobility." data-sq="Rezervoni konsultimin tuaj sot dhe bëni hapin e parë drejt shëndetit dhe lëvizshmërisë më të mirë.">Book your consultation today and take the first step towards better health and mobility.</p>
+                    <a href="appointment.html" class="cta-btn" data-en="BOOK APPOINTMENT" data-sq="REZERVO TAKIM">BOOK APPOINTMENT</a>
                 </div>
             </div>
         </section>
@@ -240,16 +208,11 @@
         <div class="footer-content">
             <div class="footer-logo">
                 <img src="assets/logo.jpeg" alt="FlexWell Logo">
-                <span>FLEXWELL<br>PHYSIOTHERAPY</span>
+                <span>FLEXWELL<br><span data-en="PHYSIOTHERAPY" data-sq="FIZIOTERAPI">PHYSIOTHERAPY</span></span>
             </div>
-            <div class="footer-links">
-                <a href="index.html">HOME</a>
-                <a href="aboutUs.html">ABOUT</a>
-                <a href="gallery.html">SERVICES</a>
-                <a href="appointment.html">APPOINTMENT</a>
-            </div>
-            <div class="footer-social">
-                <div class="social-icons">
+            <div class="footer-info">
+                <p>&copy; 2024 FlexWell <span data-en="Physiotherapy. All rights reserved." data-sq="Fizioterapi. Të gjitha të drejtat të rezervuara.">Physiotherapy. All rights reserved.</span></p>
+                <div class="footer-icons">
                     <span>📧</span>
                     <span>📱</span>
                     <span>📍</span>
@@ -257,5 +220,7 @@
             </div>
         </div>
     </footer>
+
+    <script src="language.js"></script>
 </body>
-</html>
+</html> 

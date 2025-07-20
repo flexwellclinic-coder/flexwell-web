@@ -3,25 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book Appointment - FlexWell Physiotherapy</title>
+    <title data-en="Book Appointment - FlexWell Physiotherapy" data-sq="Rezervo Takim - FlexWell Fizioterapi">Book Appointment - FlexWell Physiotherapy</title>
     <link rel="stylesheet" href="appointment.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="header">
         <nav class="navbar">
             <div class="nav-container">
-                <div class="logo">
+                <a href="index.html" class="logo">
                     <img src="assets/logo.jpeg" alt="FlexWell Logo">
                     <span>FLEXWELL</span>
-                </div>
+                </a>
                 <ul class="nav-menu">
-                    <li><a href="index.html">HOME</a></li>
-                    <li><a href="aboutUs.html">ABOUT</a></li>
-                    <li><a href="gallery.html">SERVICES</a></li>
-                    <li><a href="appointment.html" class="active">APPOINTMENT</a></li>
+                    <li><a href="index.html" data-en="HOME" data-sq="KRYEFAQE">HOME</a></li>
+                    <li><a href="aboutUs.html" data-en="ABOUT" data-sq="RRETH NESH">ABOUT</a></li>
+                    <li><a href="gallery.html" data-en="SERVICES" data-sq="SHËRBIMET">SERVICES</a></li>
+                    <li><a href="appointment.html" class="active" data-en="APPOINTMENT" data-sq="TAKIM">APPOINTMENT</a></li>
                 </ul>
-                <a href="appointment.html" class="cta-button">BOOK SESSION</a>
+                <div class="language-switcher">
+                    <button class="lang-btn" id="languageToggle">
+                        <span class="flag">🇺🇸</span>
+                        <span class="lang-text">EN</span>
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div class="lang-dropdown" id="languageDropdown">
+                        <div class="lang-option" data-lang="en">
+                            <span class="flag">🇺🇸</span>
+                            <span>English</span>
+                        </div>
+                        <div class="lang-option" data-lang="sq">
+                            <span class="flag">🇦🇱</span>
+                            <span>Shqip</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </nav>
     </header>
@@ -30,80 +46,83 @@
         <!-- Hero Section -->
         <section class="appointment-hero">
             <div class="hero-content">
-                <h1>BOOK YOUR <span class="accent">APPOINTMENT</span></h1>
-                <p class="tagline">START YOUR JOURNEY TO RECOVERY</p>
+                <h1><span data-en="BOOK YOUR" data-sq="REZERVONI">BOOK YOUR</span> <span class="accent" data-en="APPOINTMENT" data-sq="TAKIMIN TUAJ">APPOINTMENT</span></h1>
+                <p class="tagline" data-en="START YOUR RECOVERY JOURNEY TODAY" data-sq="FILLONI UDHËTIMIN E RIKUPERIMIT SOT">START YOUR RECOVERY JOURNEY TODAY</p>
             </div>
         </section>
 
-        <!-- Booking Information -->
+        <!-- Booking Info Section -->
         <section class="booking-info-section">
             <div class="container">
                 <div class="booking-intro">
-                    <h2>Schedule Your Session</h2>
-                    <p>Ready to take the first step towards better health? Our team of expert physiotherapists is here to help you achieve your goals. Please fill out the form below, and we'll contact you within 24 hours to confirm your appointment and discuss your specific needs.</p>
+                    <h2 data-en="Schedule Your Session" data-sq="Planifikoni Seancën Tuaj">Schedule Your Session</h2>
+                    <p data-en="Take the first step towards recovery. Our expert physiotherapists are here to help you regain your strength, mobility, and confidence. Book your personalized assessment today." data-sq="Bëni hapin e parë drejt rikuperimit. Fizioterapistët tanë ekspertë janë këtu për t'ju ndihmuar të rifitoni forcën, lëvizshmërinë dhe besimin tuaj. Rezervoni vlerësimin tuaj të personalizuar sot.">Take the first step towards recovery. Our expert physiotherapists are here to help you regain your strength, mobility, and confidence. Book your personalized assessment today.</p>
                 </div>
-
+                
                 <div class="booking-benefits">
                     <div class="benefit-item">
-                        <h3>🎯 Personalized Assessment</h3>
-                        <p>Comprehensive evaluation tailored to your specific condition and goals</p>
+                        <h3 data-en="Expert Assessment" data-sq="Vlerësim Ekspert">Expert Assessment</h3>
+                        <p data-en="Comprehensive evaluation of your condition and movement patterns." data-sq="Vlerësim gjithëpërfshirës i gjendjes dhe modeleve tuaja të lëvizjes.">Comprehensive evaluation of your condition and movement patterns.</p>
                     </div>
+                    
                     <div class="benefit-item">
-                        <h3>⚡ Expert Treatment</h3>
-                        <p>Evidence-based therapy from certified physiotherapists</p>
+                        <h3 data-en="Personalized Plan" data-sq="Plan i Personalizuar">Personalized Plan</h3>
+                        <p data-en="Customized treatment program tailored to your specific needs and goals." data-sq="Program trajtimi i personalizuar i përshtatur me nevojat dhe qëllimet tuaja specifike.">Customized treatment program tailored to your specific needs and goals.</p>
                     </div>
+                    
                     <div class="benefit-item">
-                        <h3>📈 Progress Tracking</h3>
-                        <p>Regular monitoring and adjustment of your treatment plan</p>
+                        <h3 data-en="Modern Facilities" data-sq="Mjediset Moderne">Modern Facilities</h3>
+                        <p data-en="State-of-the-art equipment and comfortable treatment environments." data-sq="Pajisje të artit të fundit dhe mjedise të rehatshme trajtimi.">State-of-the-art equipment and comfortable treatment environments.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Appointment Form -->
+        <!-- Appointment Form Section -->
         <section class="appointment-form-section">
             <div class="container">
                 <div class="form-container">
-                    <h2>Request Your Appointment</h2>
-                    <form class="appointment-form" id="appointmentForm">
+                    <h2 data-en="Book Your Appointment" data-sq="Rezervoni Takimin Tuaj">Book Your Appointment</h2>
+                    
+                    <form class="appointment-form">
                         <!-- Personal Information -->
                         <div class="form-section">
-                            <h3>Personal Information</h3>
+                            <h3 data-en="Personal Information" data-sq="Informacion Personal">Personal Information</h3>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="firstName">First Name *</label>
-                                    <input type="text" id="firstName" name="firstName" required>
+                                    <label data-en="First Name *" data-sq="Emri *">First Name *</label>
+                                    <input type="text" data-placeholder-en="Enter your first name" data-placeholder-sq="Shkruani emrin tuaj" placeholder="Enter your first name" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="lastName">Last Name *</label>
-                                    <input type="text" id="lastName" name="lastName" required>
+                                    <label data-en="Last Name *" data-sq="Mbiemri *">Last Name *</label>
+                                    <input type="text" data-placeholder-en="Enter your last name" data-placeholder-sq="Shkruani mbiemrin tuaj" placeholder="Enter your last name" required>
                                 </div>
                             </div>
                             
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="email">Email Address *</label>
-                                    <input type="email" id="email" name="email" required>
+                                    <label data-en="Email Address *" data-sq="Adresa Email *">Email Address *</label>
+                                    <input type="email" data-placeholder-en="your.email@example.com" data-placeholder-sq="email.juaj@example.com" placeholder="your.email@example.com" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="phone">Phone Number *</label>
-                                    <input type="tel" id="phone" name="phone" required>
+                                    <label data-en="Phone Number *" data-sq="Numri i Telefonit *">Phone Number *</label>
+                                    <input type="tel" data-placeholder-en="+353 123 456 789" data-placeholder-sq="+353 123 456 789" placeholder="+353 123 456 789" required>
                                 </div>
                             </div>
-
+                            
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="age">Age</label>
-                                    <input type="number" id="age" name="age" min="1" max="120">
+                                    <label data-en="Date of Birth" data-sq="Data e Lindjes">Date of Birth</label>
+                                    <input type="date">
                                 </div>
                                 <div class="form-group">
-                                    <label for="gender">Gender</label>
-                                    <select id="gender" name="gender">
-                                        <option value="">Select...</option>
-                                        <option value="male">Male</option>
-                                        <option value="female">Female</option>
-                                        <option value="other">Other</option>
-                                        <option value="prefer-not-to-say">Prefer not to say</option>
+                                    <label data-en="Gender" data-sq="Gjinia">Gender</label>
+                                    <select>
+                                        <option value="" data-en="Select Gender" data-sq="Zgjidhni Gjininë">Select Gender</option>
+                                        <option value="male" data-en="Male" data-sq="Mashkull">Male</option>
+                                        <option value="female" data-en="Female" data-sq="Femër">Female</option>
+                                        <option value="other" data-en="Other" data-sq="Tjetër">Other</option>
+                                        <option value="prefer-not-to-say" data-en="Prefer not to say" data-sq="Preferon të mos thotë">Prefer not to say</option>
                                     </select>
                                 </div>
                             </div>
@@ -111,202 +130,151 @@
 
                         <!-- Appointment Details -->
                         <div class="form-section">
-                            <h3>Appointment Details</h3>
+                            <h3 data-en="Appointment Details" data-sq="Detajet e Takimit">Appointment Details</h3>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="service">Type of Service *</label>
-                                    <select id="service" name="service" required>
-                                        <option value="">Select Service...</option>
-                                        <option value="general">General Physiotherapy</option>
-                                        <option value="sports">Sports Therapy</option>
-                                        <option value="rehabilitation">Rehabilitation</option>
-                                        <option value="manual">Manual Therapy</option>
-                                        <option value="movement">Movement Analysis</option>
-                                        <option value="pain">Pain Management</option>
-                                    </select>
+                                    <label data-en="Preferred Date *" data-sq="Data e Preferuar *">Preferred Date *</label>
+                                    <input type="date" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="therapist">Preferred Therapist</label>
-                                    <select id="therapist" name="therapist">
-                                        <option value="">No preference</option>
-                                        <option value="dr-sarah">Dr. Sarah Mitchell</option>
-                                        <option value="mark">Mark Thompson</option>
-                                        <option value="lisa">Lisa Rodriguez</option>
-                                        <option value="james">James Wilson</option>
+                                    <label data-en="Preferred Time *" data-sq="Ora e Preferuar *">Preferred Time *</label>
+                                    <select required>
+                                        <option value="" data-en="Select Time" data-sq="Zgjidhni Orën">Select Time</option>
+                                        <option value="09:00" data-en="9:00 AM" data-sq="9:00 AM">9:00 AM</option>
+                                        <option value="10:00" data-en="10:00 AM" data-sq="10:00 AM">10:00 AM</option>
+                                        <option value="11:00" data-en="11:00 AM" data-sq="11:00 AM">11:00 AM</option>
+                                        <option value="14:00" data-en="2:00 PM" data-sq="2:00 PM">2:00 PM</option>
+                                        <option value="15:00" data-en="3:00 PM" data-sq="3:00 PM">3:00 PM</option>
+                                        <option value="16:00" data-en="4:00 PM" data-sq="4:00 PM">4:00 PM</option>
+                                        <option value="17:00" data-en="5:00 PM" data-sq="5:00 PM">5:00 PM</option>
                                     </select>
                                 </div>
                             </div>
-
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="preferredDate">Preferred Date</label>
-                                    <input type="date" id="preferredDate" name="preferredDate">
-                                </div>
-                                <div class="form-group">
-                                    <label for="preferredTime">Preferred Time</label>
-                                    <select id="preferredTime" name="preferredTime">
-                                        <option value="">No preference</option>
-                                        <option value="morning">Morning (8:00 AM - 12:00 PM)</option>
-                                        <option value="afternoon">Afternoon (12:00 PM - 5:00 PM)</option>
-                                        <option value="evening">Evening (5:00 PM - 8:00 PM)</option>
-                                    </select>
-                                </div>
+                            
+                            <div class="form-group">
+                                <label data-en="Service Type *" data-sq="Lloji i Shërbimit *">Service Type *</label>
+                                <select required>
+                                    <option value="" data-en="Select Service" data-sq="Zgjidhni Shërbimin">Select Service</option>
+                                    <option value="initial-assessment" data-en="Initial Assessment (60 min)" data-sq="Vlerësimi Fillestar (60 min)">Initial Assessment (60 min)</option>
+                                    <option value="sports-therapy" data-en="Sports Physiotherapy" data-sq="Fizioterapi Sportive">Sports Physiotherapy</option>
+                                    <option value="musculoskeletal" data-en="Musculoskeletal Therapy" data-sq="Terapi Muskuloskeletore">Musculoskeletal Therapy</option>
+                                    <option value="neurological" data-en="Neurological Rehabilitation" data-sq="Rihabilitim Neurologjik">Neurological Rehabilitation</option>
+                                    <option value="manual-therapy" data-en="Manual Therapy" data-sq="Terapi Manuale">Manual Therapy</option>
+                                </select>
                             </div>
                         </div>
 
                         <!-- Medical Information -->
                         <div class="form-section">
-                            <h3>Medical Information</h3>
+                            <h3 data-en="Medical Information" data-sq="Informacion Mjekësor">Medical Information</h3>
                             <div class="form-group">
-                                <label for="condition">Primary Condition/Concern *</label>
-                                <textarea id="condition" name="condition" rows="3" placeholder="Please describe your main symptoms, pain areas, or reasons for seeking physiotherapy..." required></textarea>
+                                <label data-en="Reason for Visit *" data-sq="Arsyeja e Vizitës *">Reason for Visit *</label>
+                                <textarea data-placeholder-en="Please describe your symptoms, injury, or the reason for your visit..." data-placeholder-sq="Ju lutemi përshkruani simptomat, lëndimin ose arsyen e vizitës suaj..." placeholder="Please describe your symptoms, injury, or the reason for your visit..." rows="4" required></textarea>
                             </div>
-
+                            
                             <div class="form-group">
-                                <label for="symptoms">Current Symptoms</label>
+                                <label data-en="Current Symptoms" data-sq="Simptomat Aktuale">Current Symptoms</label>
                                 <div class="checkbox-group">
-                                    <label class="checkbox-item">
-                                        <input type="checkbox" name="symptoms" value="pain">
-                                        <span>Pain</span>
-                                    </label>
-                                    <label class="checkbox-item">
-                                        <input type="checkbox" name="symptoms" value="stiffness">
-                                        <span>Stiffness</span>
-                                    </label>
-                                    <label class="checkbox-item">
-                                        <input type="checkbox" name="symptoms" value="weakness">
-                                        <span>Weakness</span>
-                                    </label>
-                                    <label class="checkbox-item">
-                                        <input type="checkbox" name="symptoms" value="numbness">
-                                        <span>Numbness/Tingling</span>
-                                    </label>
-                                    <label class="checkbox-item">
-                                        <input type="checkbox" name="symptoms" value="mobility">
-                                        <span>Reduced Mobility</span>
-                                    </label>
-                                    <label class="checkbox-item">
-                                        <input type="checkbox" name="symptoms" value="balance">
-                                        <span>Balance Issues</span>
-                                    </label>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="pain" name="symptoms" value="pain">
+                                        <span data-en="Pain" data-sq="Dhimbje">Pain</span>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="stiffness" name="symptoms" value="stiffness">
+                                        <span data-en="Stiffness" data-sq="Ngurtësi">Stiffness</span>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="weakness" name="symptoms" value="weakness">
+                                        <span data-en="Weakness" data-sq="Dobësi">Weakness</span>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="numbness" name="symptoms" value="numbness">
+                                        <span data-en="Numbness" data-sq="Mpirje">Numbness</span>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="swelling" name="symptoms" value="swelling">
+                                        <span data-en="Swelling" data-sq="Ënjëtje">Swelling</span>
+                                    </div>
+                                    <div class="checkbox-item">
+                                        <input type="checkbox" id="mobility" name="symptoms" value="mobility">
+                                        <span data-en="Reduced Mobility" data-sq="Lëvizshmëri e Reduktuar">Reduced Mobility</span>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="duration">How long have you had this condition?</label>
-                                    <select id="duration" name="duration">
-                                        <option value="">Select...</option>
-                                        <option value="acute">Less than 1 week</option>
-                                        <option value="subacute">1-4 weeks</option>
-                                        <option value="chronic">1-6 months</option>
-                                        <option value="longterm">More than 6 months</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="previousTreatment">Previous Treatment</label>
-                                    <select id="previousTreatment" name="previousTreatment">
-                                        <option value="">Select...</option>
-                                        <option value="none">No previous treatment</option>
-                                        <option value="gp">GP consultation</option>
-                                        <option value="physio">Previous physiotherapy</option>
-                                        <option value="specialist">Specialist consultation</option>
-                                        <option value="surgery">Surgery</option>
-                                        <option value="other">Other treatment</option>
-                                    </select>
-                                </div>
-                            </div>
-
+                            
                             <div class="form-group">
-                                <label for="medications">Current Medications</label>
-                                <textarea id="medications" name="medications" rows="2" placeholder="Please list any current medications, supplements, or treatments..."></textarea>
+                                <label data-en="Medical History" data-sq="Historia Mjekësore">Medical History</label>
+                                <textarea data-placeholder-en="Please list any relevant medical conditions, previous injuries, or surgeries..." data-placeholder-sq="Ju lutemi listoni çdo gjendje mjekësore relevante, lëndime të mëparshme ose operacione..." placeholder="Please list any relevant medical conditions, previous injuries, or surgeries..." rows="3"></textarea>
                             </div>
-
+                            
                             <div class="form-group">
-                                <label for="medicalHistory">Relevant Medical History</label>
-                                <textarea id="medicalHistory" name="medicalHistory" rows="3" placeholder="Please mention any relevant medical conditions, surgeries, or injuries..."></textarea>
+                                <label data-en="Current Medications" data-sq="Medikamentet Aktuale">Current Medications</label>
+                                <textarea data-placeholder-en="List any medications you are currently taking..." data-placeholder-sq="Listoni çdo medikament që po merrni aktualisht..." placeholder="List any medications you are currently taking..." rows="2"></textarea>
                             </div>
                         </div>
 
                         <!-- Insurance Information -->
                         <div class="form-section">
-                            <h3>Insurance & Payment</h3>
+                            <h3 data-en="Insurance Information" data-sq="Informacion Sigurimesh">Insurance Information</h3>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="insurance">Insurance Provider</label>
-                                    <select id="insurance" name="insurance">
-                                        <option value="">Select...</option>
-                                        <option value="vhi">VHI Healthcare</option>
-                                        <option value="laya">Laya Healthcare</option>
-                                        <option value="irish-life">Irish Life Health</option>
-                                        <option value="hse">HSE/Medical Card</option>
-                                        <option value="private">Private Pay</option>
-                                        <option value="other">Other</option>
+                                    <label data-en="Insurance Provider" data-sq="Ofrues Sigurimesh">Insurance Provider</label>
+                                    <select>
+                                        <option value="" data-en="Select Provider" data-sq="Zgjidhni Ofruesin">Select Provider</option>
+                                        <option value="vhi" data-en="VHI Healthcare" data-sq="VHI Healthcare">VHI Healthcare</option>
+                                        <option value="laya" data-en="Laya Healthcare" data-sq="Laya Healthcare">Laya Healthcare</option>
+                                        <option value="irish-life" data-en="Irish Life Health" data-sq="Irish Life Health">Irish Life Health</option>
+                                        <option value="other" data-en="Other" data-sq="Tjetër">Other</option>
+                                        <option value="none" data-en="No Insurance" data-sq="Pa Sigurim">No Insurance</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="memberNumber">Member Number</label>
-                                    <input type="text" id="memberNumber" name="memberNumber" placeholder="If applicable">
+                                    <label data-en="Policy Number" data-sq="Numri i Policës">Policy Number</label>
+                                    <input type="text" data-placeholder-en="Enter your policy number" data-placeholder-sq="Shkruani numrin e policës suaj" placeholder="Enter your policy number">
                                 </div>
                             </div>
                         </div>
 
                         <!-- Additional Information -->
                         <div class="form-section">
-                            <h3>Additional Information</h3>
+                            <h3 data-en="Additional Information" data-sq="Informacion Shtesë">Additional Information</h3>
                             <div class="form-group">
-                                <label for="additionalInfo">Anything else we should know?</label>
-                                <textarea id="additionalInfo" name="additionalInfo" rows="3" placeholder="Special requirements, accessibility needs, goals, etc."></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="consent" required>
-                                    <span>I consent to being contacted regarding my appointment and treatment *</span>
-                                </label>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="checkbox-item">
-                                    <input type="checkbox" name="newsletter">
-                                    <span>I would like to receive health tips and updates via email</span>
-                                </label>
+                                <label data-en="Special Requirements" data-sq="Kërkesat Speciale">Special Requirements</label>
+                                <textarea data-placeholder-en="Any accessibility needs, preferred therapist, or other special requirements..." data-placeholder-sq="Çdo nevojë për qasje, terapist i preferuar ose kërkesa të tjera speciale..." placeholder="Any accessibility needs, preferred therapist, or other special requirements..." rows="3"></textarea>
                             </div>
                         </div>
 
-                        <button type="submit" class="submit-btn">REQUEST APPOINTMENT</button>
+                        <button type="submit" class="submit-btn" data-en="BOOK APPOINTMENT" data-sq="REZERVO TAKIM">BOOK APPOINTMENT</button>
                     </form>
                 </div>
             </div>
         </section>
 
-        <!-- Contact Information -->
+        <!-- Contact Section -->
         <section class="contact-section">
             <div class="container">
                 <div class="contact-info">
-                    <h2>Contact Information</h2>
+                    <h2 data-en="Need Help?" data-sq="Keni Nevojë për Ndihmë?">Need Help?</h2>
                     <div class="contact-details">
                         <div class="contact-item">
-                            <h3>📍 Clinic Address</h3>
-                            <p>123 Fitzwilliam Street<br>Dublin 2, D02 XY12<br>Ireland</p>
+                            <h3 data-en="📞 Call Us" data-sq="📞 Telefononi">📞 Call Us</h3>
+                            <p>+353 1 234 5678</p>
                         </div>
                         
                         <div class="contact-item">
-                            <h3>📱 Phone & Email</h3>
-                            <p>Phone: +353 1 234 5678<br>Email: info@flexwellphysio.ie</p>
+                            <h3 data-en="📧 Email Us" data-sq="📧 Na Shkruani">📧 Email Us</h3>
+                            <p>appointments@flexwellphysio.ie</p>
                         </div>
                         
                         <div class="contact-item">
-                            <h3>🕒 Opening Hours</h3>
-                            <p>Monday - Friday: 8:00 AM - 8:00 PM<br>
-                            Saturday: 9:00 AM - 5:00 PM<br>
-                            Sunday: Closed</p>
+                            <h3 data-en="🕒 Office Hours" data-sq="🕒 Orari i Zyrës">🕒 Office Hours</h3>
+                            <p data-en="Mon-Fri: 8:00 AM - 8:00 PM<br>Sat: 9:00 AM - 5:00 PM" data-sq="Hën-Pre: 8:00 AM - 8:00 PM<br>Sht: 9:00 AM - 5:00 PM">Mon-Fri: 8:00 AM - 8:00 PM<br>Sat: 9:00 AM - 5:00 PM</p>
                         </div>
                     </div>
                     
                     <div class="emergency-info">
-                        <h3>⚠️ Emergency Situations</h3>
-                        <p>For medical emergencies, please call 999 or visit your nearest A&E department. This form is for non-urgent appointment requests only.</p>
+                        <h3 data-en="Emergency?" data-sq="Emergjencë?">Emergency?</h3>
+                        <p data-en="For urgent medical issues, please contact your GP or call emergency services at 999/112." data-sq="Për çështje mjekësore urgjente, ju lutemi kontaktoni mjekun tuaj familjar ose telefononi shërbimet e emergjencës në 999/112.">For urgent medical issues, please contact your GP or call emergency services at 999/112.</p>
                     </div>
                 </div>
             </div>
@@ -317,16 +285,11 @@
         <div class="footer-content">
             <div class="footer-logo">
                 <img src="assets/logo.jpeg" alt="FlexWell Logo">
-                <span>FLEXWELL<br>PHYSIOTHERAPY</span>
+                <span>FLEXWELL<br><span data-en="PHYSIOTHERAPY" data-sq="FIZIOTERAPI">PHYSIOTHERAPY</span></span>
             </div>
-            <div class="footer-links">
-                <a href="index.html">HOME</a>
-                <a href="aboutUs.html">ABOUT</a>
-                <a href="gallery.html">SERVICES</a>
-                <a href="appointment.html">APPOINTMENT</a>
-            </div>
-            <div class="footer-social">
-                <div class="social-icons">
+            <div class="footer-info">
+                <p>&copy; 2024 FlexWell <span data-en="Physiotherapy. All rights reserved." data-sq="Fizioterapi. Të gjitha të drejtat të rezervuara.">Physiotherapy. All rights reserved.</span></p>
+                <div class="footer-icons">
                     <span>📧</span>
                     <span>📱</span>
                     <span>📍</span>
@@ -335,16 +298,19 @@
         </div>
     </footer>
 
+    <script src="language.js"></script>
     <script>
-        // Simple form submission handler
-        document.getElementById('appointmentForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your appointment request! We will contact you within 24 hours to confirm your booking.');
-        });
-
         // Set minimum date to today
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('preferredDate').setAttribute('min', today);
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateInputs = document.querySelectorAll('input[type="date"]');
+            const today = new Date().toISOString().split('T')[0];
+            dateInputs.forEach(input => {
+                if (input.previousElementSibling.textContent.includes('Preferred Date') || 
+                    input.previousElementSibling.textContent.includes('Data e Preferuar')) {
+                    input.min = today;
+                }
+            });
+        });
     </script>
 </body>
-</html>
+</html> 

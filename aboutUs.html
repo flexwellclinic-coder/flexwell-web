@@ -3,25 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - FlexWell Physiotherapy</title>
+    <title data-en="About Us - FlexWell Physiotherapy" data-sq="Rreth Nesh - FlexWell Fizioterapi">About Us - FlexWell Physiotherapy</title>
     <link rel="stylesheet" href="aboutUs.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="header">
         <nav class="navbar">
             <div class="nav-container">
-                <div class="logo">
+                <a href="index.html" class="logo">
                     <img src="assets/logo.jpeg" alt="FlexWell Logo">
                     <span>FLEXWELL</span>
-                </div>
+                </a>
                 <ul class="nav-menu">
-                    <li><a href="index.html">HOME</a></li>
-                    <li><a href="aboutUs.html" class="active">ABOUT</a></li>
-                    <li><a href="gallery.html">SERVICES</a></li>
-                    <li><a href="appointment.html">APPOINTMENT</a></li>
+                    <li><a href="index.html" data-en="HOME" data-sq="KRYEFAQE">HOME</a></li>
+                    <li><a href="aboutUs.html" class="active" data-en="ABOUT" data-sq="RRETH NESH">ABOUT</a></li>
+                    <li><a href="gallery.html" data-en="SERVICES" data-sq="SHËRBIMET">SERVICES</a></li>
+                    <li><a href="appointment.html" data-en="APPOINTMENT" data-sq="TAKIM">APPOINTMENT</a></li>
                 </ul>
-                <a href="appointment.html" class="cta-button">BOOK SESSION</a>
+                <div class="language-switcher">
+                    <button class="lang-btn" id="languageToggle">
+                        <span class="flag">🇺🇸</span>
+                        <span class="lang-text">EN</span>
+                        <span class="arrow">▼</span>
+                    </button>
+                    <div class="lang-dropdown" id="languageDropdown">
+                        <div class="lang-option" data-lang="en">
+                            <span class="flag">🇺🇸</span>
+                            <span>English</span>
+                        </div>
+                        <div class="lang-option" data-lang="sq">
+                            <span class="flag">🇦🇱</span>
+                            <span>Shqip</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </nav>
     </header>
@@ -30,8 +46,8 @@
         <!-- Hero Section -->
         <section class="about-hero">
             <div class="hero-content">
-                <h1>ABOUT <span class="accent">FLEXWELL</span></h1>
-                <p class="tagline">DEDICATED TO YOUR RECOVERY</p>
+                <h1>ABOUT <span class="accent" data-en="FLEXWELL" data-sq="FLEXWELL">FLEXWELL</span></h1>
+                <p class="tagline" data-en="DEDICATED TO YOUR RECOVERY" data-sq="TË PËRKUSHTUAR PËR RIKUPERIMIN TUAJ">DEDICATED TO YOUR RECOVERY</p>
             </div>
         </section>
 
@@ -39,10 +55,10 @@
         <section class="story-section">
             <div class="container">
                 <div class="story-content">
-                    <h2>Our Story</h2>
-                    <p>Founded in 2015, FlexWell Physiotherapy has been at the forefront of rehabilitation and recovery in Dublin. Our clinic was born from a simple belief: everyone deserves to move pain-free and live their life to the fullest.</p>
-                    <p>We combine evidence-based treatment methods with personalized care, ensuring each patient receives the attention and expertise they deserve. Our team of certified physiotherapists brings together decades of experience in sports medicine, rehabilitation, and holistic wellness.</p>
-                    <p>From professional athletes to weekend warriors, from post-surgical recovery to chronic pain management, we've helped thousands of patients restore their mobility and reclaim their active lifestyles.</p>
+                    <h2 data-en="Our Story" data-sq="Historia Jonë">Our Story</h2>
+                    <p data-en="Founded in 2015, FlexWell Physiotherapy has been at the forefront of rehabilitation and recovery in Dublin. Our clinic was born from a simple belief: everyone deserves to move pain-free and live their life to the fullest." data-sq="E themeluar në 2015, FlexWell Fizioterapi ka qenë në ballë të rihabilitimit dhe rikuperimit në Dublin. Klinika jonë lindi nga një besim i thjeshtë: të gjithë meritojnë të lëvizin pa dhimbje dhe të jetojnë jetën e tyre plotësisht.">Founded in 2015, FlexWell Physiotherapy has been at the forefront of rehabilitation and recovery in Dublin. Our clinic was born from a simple belief: everyone deserves to move pain-free and live their life to the fullest.</p>
+                    <p data-en="We combine evidence-based treatment methods with personalized care, ensuring each patient receives the attention and expertise they deserve. Our team of certified physiotherapists brings together decades of experience in sports medicine, rehabilitation, and holistic wellness." data-sq="Ne kombinojmë metodat e trajtimit të bazuara në evidenca me kujdesin e personalizuar, duke siguruar që çdo pacient të marrë vëmendjen dhe ekspertizën që meriton. Ekipi ynë i fizioterapistëve të certifikuar sjell së bashku dekada përvojë në mjekësinë sportive, rihabilitimin dhe mirëqenien holistike.">We combine evidence-based treatment methods with personalized care, ensuring each patient receives the attention and expertise they deserve. Our team of certified physiotherapists brings together decades of experience in sports medicine, rehabilitation, and holistic wellness.</p>
+                    <p data-en="From professional athletes to weekend warriors, from post-surgical recovery to chronic pain management, we've helped thousands of patients restore their mobility and reclaim their active lifestyles." data-sq="Nga atletët profesionistë te luftëtarët e fundjavës, nga rikuperimi pas-kirurgjikal te menaxhimi i dhimbjes kronike, ne kemi ndihmuar mijëra pacientë të rikthejnë lëvizshmërinë e tyre dhe të rifitojnë stilin e tyre aktiv të jetesës.">From professional athletes to weekend warriors, from post-surgical recovery to chronic pain management, we've helped thousands of patients restore their mobility and reclaim their active lifestyles.</p>
                 </div>
             </div>
         </section>
@@ -50,7 +66,7 @@
         <!-- Team Section -->
         <section class="team-detail-section">
             <div class="container">
-                <h2 class="section-title">Meet Our Team</h2>
+                <h2 class="section-title" data-en="Meet Our Team" data-sq="Takoni Ekipin Tonë">Meet Our Team</h2>
                 <div class="team-members">
                     <div class="team-member-detail">
                         <div class="member-photo">
@@ -58,9 +74,9 @@
                         </div>
                         <div class="member-info">
                             <h3>Dr. Sarah Mitchell</h3>
-                            <p class="position">Lead Physiotherapist & Clinic Director</p>
-                            <p class="credentials">MSc Physiotherapy, Chartered Physiotherapist</p>
-                            <p class="bio">With over 15 years of experience, Dr. Sarah specializes in musculoskeletal conditions and post-operative rehabilitation. She holds advanced certifications in manual therapy and has worked with Olympic athletes.</p>
+                            <p class="position" data-en="Lead Physiotherapist & Clinic Director" data-sq="Fizioterapiste Kryesore & Drejtore Klinike">Lead Physiotherapist & Clinic Director</p>
+                            <p class="credentials" data-en="MSc Physiotherapy, Chartered Physiotherapist" data-sq="MSc Fizioterapi, Fizioterapiste e Liçensuar">MSc Physiotherapy, Chartered Physiotherapist</p>
+                            <p class="bio" data-en="With over 15 years of experience, Dr. Sarah specializes in musculoskeletal conditions and post-operative rehabilitation. She holds advanced certifications in manual therapy and has worked with Olympic athletes." data-sq="Me mbi 15 vjet përvojë, Dr. Sarah specializohet në gjendje muskuloskeletore dhe rihabilitim pas-operativ. Ajo mban certifikime të avancuara në terapi manuale dhe ka punuar me atletë olimpikë.">With over 15 years of experience, Dr. Sarah specializes in musculoskeletal conditions and post-operative rehabilitation. She holds advanced certifications in manual therapy and has worked with Olympic athletes.</p>
                         </div>
                     </div>
                     
@@ -70,9 +86,9 @@
                         </div>
                         <div class="member-info">
                             <h3>Mark Thompson</h3>
-                            <p class="position">Sports Therapist</p>
-                            <p class="credentials">BSc Sports Therapy, CIMSPA Registered</p>
-                            <p class="bio">Mark brings a wealth of knowledge in sports injury prevention and performance enhancement. He has worked with professional rugby and football teams, helping athletes return to peak performance.</p>
+                            <p class="position" data-en="Sports Therapist" data-sq="Terapist Sportiv">Sports Therapist</p>
+                            <p class="credentials" data-en="BSc Sports Therapy, CIMSPA Registered" data-sq="BSc Terapi Sportive, I Regjistruar CIMSPA">BSc Sports Therapy, CIMSPA Registered</p>
+                            <p class="bio" data-en="Mark brings a wealth of knowledge in sports injury prevention and performance enhancement. He has worked with professional rugby and football teams, helping athletes return to peak performance." data-sq="Mark sjell një pasuri dijesh në parandalimin e lëndimeve sportive dhe përmirësimin e performancës. Ai ka punuar me ekipe profesionale ragbi dhe futbolli, duke ndihmuar atletët të kthehen në performancë maksimale.">Mark brings a wealth of knowledge in sports injury prevention and performance enhancement. He has worked with professional rugby and football teams, helping athletes return to peak performance.</p>
                         </div>
                     </div>
                     
@@ -82,9 +98,9 @@
                         </div>
                         <div class="member-info">
                             <h3>Lisa Rodriguez</h3>
-                            <p class="position">Rehabilitation Specialist</p>
-                            <p class="credentials">MSc Rehabilitation Science, Neurological Physiotherapy</p>
-                            <p class="bio">Lisa specializes in neurological rehabilitation and has extensive experience helping patients recover from stroke, spinal cord injuries, and other neurological conditions.</p>
+                            <p class="position" data-en="Rehabilitation Specialist" data-sq="Specialiste Rihabilitimi">Rehabilitation Specialist</p>
+                            <p class="credentials" data-en="MSc Rehabilitation Science, Neurological Physiotherapy" data-sq="MSc Shkenca Rihabilitimi, Fizioterapi Neurologjike">MSc Rehabilitation Science, Neurological Physiotherapy</p>
+                            <p class="bio" data-en="Lisa specializes in neurological rehabilitation and has extensive experience helping patients recover from stroke, spinal cord injuries, and other neurological conditions." data-sq="Lisa specializohet në rihabilitim neurologjik dhe ka përvojë të gjerë në ndihmën e pacientëve për të përmirësuar nga goditja, lëndimet e palcës së kurrizit dhe gjendje të tjera neurologjike.">Lisa specializes in neurological rehabilitation and has extensive experience helping patients recover from stroke, spinal cord injuries, and other neurological conditions.</p>
                         </div>
                     </div>
                     
@@ -94,9 +110,9 @@
                         </div>
                         <div class="member-info">
                             <h3>James Wilson</h3>
-                            <p class="position">Manual Therapist</p>
-                            <p class="credentials">Diploma in Osteopathy, Manual Therapy Specialist</p>
-                            <p class="bio">James combines traditional osteopathic techniques with modern physiotherapy approaches. He excels in treating chronic pain conditions and joint mobility issues.</p>
+                            <p class="position" data-en="Manual Therapist" data-sq="Terapist Manual">Manual Therapist</p>
+                            <p class="credentials" data-en="Diploma in Osteopathy, Manual Therapy Specialist" data-sq="Diplomë në Osteopati, Specialist i Terapisë Manuale">Diploma in Osteopathy, Manual Therapy Specialist</p>
+                            <p class="bio" data-en="James combines traditional osteopathic techniques with modern physiotherapy approaches. He excels in treating chronic pain conditions and joint mobility issues." data-sq="James kombinon teknikat tradicionale osteopatike me qasjet moderne të fizioterapisë. Ai dallon në trajtimin e gjendjes së dhimbjes kronike dhe problemeve të lëvizshmërisë së nyjeve.">James combines traditional osteopathic techniques with modern physiotherapy approaches. He excels in treating chronic pain conditions and joint mobility issues.</p>
                         </div>
                     </div>
                 </div>
@@ -106,36 +122,36 @@
         <!-- FAQ Section -->
         <section class="faq-section">
             <div class="container">
-                <h2 class="section-title">Frequently Asked Questions</h2>
+                <h2 class="section-title" data-en="Frequently Asked Questions" data-sq="Pyetje të Bëra Shpesh">Frequently Asked Questions</h2>
                 <div class="faq-grid">
                     <div class="faq-item">
-                        <h3>What conditions do you treat?</h3>
-                        <p>We treat a wide range of conditions including sports injuries, back and neck pain, post-surgical rehabilitation, arthritis, stroke recovery, and chronic pain conditions.</p>
+                        <h3 data-en="What conditions do you treat?" data-sq="Çfarë gjendjesh trajtoni?">What conditions do you treat?</h3>
+                        <p data-en="We treat a wide range of conditions including sports injuries, back and neck pain, post-surgical rehabilitation, arthritis, stroke recovery, and chronic pain conditions." data-sq="Ne trajtojmë një gamë të gjerë gjendjesh duke përfshirë lëndimet sportive, dhimbjet e shpinës dhe qafës, rihabilitimin pas-kirurgjikal, artritin, rikuperimin nga goditja dhe gjendje dhimbjeje kronike.">We treat a wide range of conditions including sports injuries, back and neck pain, post-surgical rehabilitation, arthritis, stroke recovery, and chronic pain conditions.</p>
                     </div>
                     
                     <div class="faq-item">
-                        <h3>Do I need a referral?</h3>
-                        <p>No referral is needed for physiotherapy treatment. However, some insurance plans may require a GP referral for coverage. We recommend checking with your insurance provider.</p>
+                        <h3 data-en="Do I need a referral?" data-sq="A kam nevojë për një referim?">Do I need a referral?</h3>
+                        <p data-en="No referral is needed for physiotherapy treatment. However, some insurance plans may require a GP referral for coverage. We recommend checking with your insurance provider." data-sq="Nuk ka nevojë për referim për trajtim fizioterapie. Megjithatë, disa plane sigurimesh mund të kërkojnë një referim nga mjeku familjar për mbulesë. Rekomandojmë të kontrolloni me ofruesin tuaj të sigurimit.">No referral is needed for physiotherapy treatment. However, some insurance plans may require a GP referral for coverage. We recommend checking with your insurance provider.</p>
                     </div>
                     
                     <div class="faq-item">
-                        <h3>What should I expect in my first session?</h3>
-                        <p>Your first session includes a comprehensive assessment of your condition, medical history review, physical examination, and development of a personalized treatment plan.</p>
+                        <h3 data-en="What should I expect in my first session?" data-sq="Çfarë duhet të pres në seancën time të parë?">What should I expect in my first session?</h3>
+                        <p data-en="Your first session includes a comprehensive assessment of your condition, medical history review, physical examination, and development of a personalized treatment plan." data-sq="Seanca juaj e parë përfshin një vlerësim gjithëpërfshirës të gjendjes suaj, rishikim të historisë mjekësore, ekzaminim fizik dhe zhvillim të një plani trajtimi të personalizuar.">Your first session includes a comprehensive assessment of your condition, medical history review, physical examination, and development of a personalized treatment plan.</p>
                     </div>
                     
                     <div class="faq-item">
-                        <h3>How long are the sessions?</h3>
-                        <p>Initial consultations are 60 minutes, while follow-up sessions are typically 45 minutes. Treatment duration depends on your individual needs and progress.</p>
+                        <h3 data-en="How long are the sessions?" data-sq="Sa zgjatin seancat?">How long are the sessions?</h3>
+                        <p data-en="Initial consultations are 60 minutes, while follow-up sessions are typically 45 minutes. Treatment duration depends on your individual needs and progress." data-sq="Konsultimet fillestare janë 60 minuta, ndërsa seancat e ndjekjes janë zakonisht 45 minuta. Kohëzgjatja e trajtimit varet nga nevojat tuaja individuale dhe progresi.">Initial consultations are 60 minutes, while follow-up sessions are typically 45 minutes. Treatment duration depends on your individual needs and progress.</p>
                     </div>
                     
                     <div class="faq-item">
-                        <h3>Do you accept insurance?</h3>
-                        <p>Yes, we work with most major insurance providers including VHI, Laya Healthcare, and Irish Life Health. Please bring your insurance details to your appointment.</p>
+                        <h3 data-en="Do you accept insurance?" data-sq="A pranoni sigurim?">Do you accept insurance?</h3>
+                        <p data-en="Yes, we work with most major insurance providers including VHI, Laya Healthcare, and Irish Life Health. Please bring your insurance details to your appointment." data-sq="Po, ne punojmë me shumicën e ofruesve kryesorë të sigurimit duke përfshirë VHI, Laya Healthcare dhe Irish Life Health. Ju lutemi sillni detajet e sigurimit tuaj në takimin tuaj.">Yes, we work with most major insurance providers including VHI, Laya Healthcare, and Irish Life Health. Please bring your insurance details to your appointment.</p>
                     </div>
                     
                     <div class="faq-item">
-                        <h3>What are your cancellation policies?</h3>
-                        <p>We require at least 24 hours notice for cancellations. Late cancellations or no-shows may incur a fee as outlined in our terms and conditions.</p>
+                        <h3 data-en="What are your cancellation policies?" data-sq="Cilat janë politikat tuaja të anulimit?">What are your cancellation policies?</h3>
+                        <p data-en="We require at least 24 hours notice for cancellations. Late cancellations or no-shows may incur a fee as outlined in our terms and conditions." data-sq="Ne kërkojmë të paktën 24 orë njoftim për anulimet. Anulimet e vonuara ose mosparaqitjet mund të kenë një tarifë siç përcaktohet në kushtet tona.">We require at least 24 hours notice for cancellations. Late cancellations or no-shows may incur a fee as outlined in our terms and conditions.</p>
                     </div>
                 </div>
             </div>
@@ -146,25 +162,23 @@
             <div class="container">
                 <div class="contact-grid">
                     <div class="contact-item">
-                        <h3>📍 Location</h3>
-                        <p>123 Fitzwilliam Street<br>Dublin 2, Ireland</p>
+                        <h3 data-en="📍 Location" data-sq="📍 Vendndodhja">📍 Location</h3>
+                        <p data-en="123 Fitzwilliam Street<br>Dublin 2, Ireland" data-sq="123 Fitzwilliam Street<br>Dublin 2, Irlandë">123 Fitzwilliam Street<br>Dublin 2, Ireland</p>
                     </div>
                     
                     <div class="contact-item">
-                        <h3>📱 Phone</h3>
+                        <h3 data-en="📱 Phone" data-sq="📱 Telefoni">📱 Phone</h3>
                         <p>+353 1 234 5678</p>
                     </div>
                     
                     <div class="contact-item">
-                        <h3>📧 Email</h3>
+                        <h3 data-en="📧 Email" data-sq="📧 Email">📧 Email</h3>
                         <p>info@flexwellphysio.ie</p>
                     </div>
                     
                     <div class="contact-item">
-                        <h3>🕒 Hours</h3>
-                        <p>Mon-Fri: 8:00 AM - 8:00 PM<br>
-                        Sat: 9:00 AM - 5:00 PM<br>
-                        Sun: Closed</p>
+                        <h3 data-en="🕒 Hours" data-sq="🕒 Orari">🕒 Hours</h3>
+                        <p data-en="Mon-Fri: 8:00 AM - 8:00 PM<br>Sat: 9:00 AM - 5:00 PM<br>Sun: Closed" data-sq="Hën-Pre: 8:00 AM - 8:00 PM<br>Sht: 9:00 AM - 5:00 PM<br>Dje: Mbyllur">Mon-Fri: 8:00 AM - 8:00 PM<br>Sat: 9:00 AM - 5:00 PM<br>Sun: Closed</p>
                     </div>
                 </div>
             </div>
@@ -175,16 +189,11 @@
         <div class="footer-content">
             <div class="footer-logo">
                 <img src="assets/logo.jpeg" alt="FlexWell Logo">
-                <span>FLEXWELL<br>PHYSIOTHERAPY</span>
+                <span>FLEXWELL<br><span data-en="PHYSIOTHERAPY" data-sq="FIZIOTERAPI">PHYSIOTHERAPY</span></span>
             </div>
-            <div class="footer-links">
-                <a href="index.html">HOME</a>
-                <a href="aboutUs.html">ABOUT</a>
-                <a href="gallery.html">SERVICES</a>
-                <a href="appointment.html">APPOINTMENT</a>
-            </div>
-            <div class="footer-social">
-                <div class="social-icons">
+            <div class="footer-info">
+                <p>&copy; 2024 FlexWell <span data-en="Physiotherapy. All rights reserved." data-sq="Fizioterapi. Të gjitha të drejtat të rezervuara.">Physiotherapy. All rights reserved.</span></p>
+                <div class="footer-icons">
                     <span>📧</span>
                     <span>📱</span>
                     <span>📍</span>
@@ -192,5 +201,7 @@
             </div>
         </div>
     </footer>
+
+    <script src="language.js"></script>
 </body>
-</html>
+</html> 

@@ -26,21 +26,6 @@
     opacity: 0.8;
 }
 
-.services-hero::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60"><defs><pattern id="hexagon" width="30" height="26" patternUnits="userSpaceOnUse"><polygon points="15,2 26,8 26,20 15,26 4,20 4,8" fill="none" stroke="rgba(52,211,153,0.02)" stroke-width="1"/></pattern></defs><rect width="60" height="60" fill="url(%23hexagon)"/></svg>');
-}
-
-.services-hero .hero-content {
-    position: relative;
-    z-index: 2;
-}
-
 .services-hero h1 {
     font-family: 'Inter', sans-serif;
     font-size: clamp(3rem, 8vw, 5.5rem);
@@ -92,17 +77,6 @@
     position: relative;
 }
 
-.services-grid-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 25% 75%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
-    opacity: 0.8;
-}
-
 .services-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
@@ -115,7 +89,6 @@
 .service-card {
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
     border-radius: 24px;
     padding: 40px;
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -210,16 +183,6 @@
     position: relative;
 }
 
-.modalities-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 75% 25%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
-}
-
 .modalities-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -232,7 +195,6 @@
 .modality-item {
     background: rgba(255, 255, 255, 0.7);
     backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
     padding: 40px;
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -278,7 +240,6 @@
 .facility-card {
     background: rgba(255, 255, 255, 0.03);
     backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 24px;
     padding: 40px 32px;
@@ -337,21 +298,6 @@
     padding: 100px 0;
     text-align: center;
     position: relative;
-}
-
-.cta-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
-}
-
-.cta-content {
-    position: relative;
-    z-index: 2;
 }
 
 .cta-content h2 {
@@ -424,49 +370,9 @@
         grid-template-columns: 1fr;
         gap: 24px;
     }
-    
-    .service-card {
-        padding: 32px 24px;
-    }
-    
-    .modality-item {
-        padding: 32px 24px;
-    }
-    
-    .facility-card {
-        padding: 32px 24px;
-    }
-    
-    .services-grid-section {
-        padding: 100px 0;
-    }
-    
-    .modalities-section {
-        padding: 100px 0;
-    }
-    
-    .facilities-section {
-        padding: 100px 0;
-    }
 }
 
 @media (max-width: 480px) {
-    .cta-content h2 {
-        font-size: 2.5rem;
-    }
-    
-    .service-content h3 {
-        font-size: 1.5rem;
-    }
-    
-    .modality-item h3 {
-        font-size: 1.2rem;
-    }
-    
-    .facility-card h3 {
-        font-size: 1.3rem;
-    }
-    
     .service-card {
         padding: 28px 20px;
     }
@@ -478,4 +384,4 @@
     .facility-card {
         padding: 28px 20px;
     }
-}
+} 
