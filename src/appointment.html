@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment - FlexWell Physiotherapy</title>
+    <link rel="stylesheet" href="appointment.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo">
+                    <img src="assets/logo.jpeg" alt="FlexWell Logo">
+                    <span>FLEXWELL</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="aboutUs.html">ABOUT</a></li>
+                    <li><a href="gallery.html">SERVICES</a></li>
+                    <li><a href="appointment.html" class="active">APPOINTMENT</a></li>
+                </ul>
+                <a href="appointment.html" class="cta-button">BOOK SESSION</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="appointment-hero">
+            <div class="hero-content">
+                <h1>BOOK YOUR <span class="accent">APPOINTMENT</span></h1>
+                <p class="tagline">START YOUR JOURNEY TO RECOVERY</p>
+            </div>
+        </section>
+
+        <!-- Booking Information -->
+        <section class="booking-info-section">
+            <div class="container">
+                <div class="booking-intro">
+                    <h2>Schedule Your Session</h2>
+                    <p>Ready to take the first step towards better health? Our team of expert physiotherapists is here to help you achieve your goals. Please fill out the form below, and we'll contact you within 24 hours to confirm your appointment and discuss your specific needs.</p>
+                </div>
+
+                <div class="booking-benefits">
+                    <div class="benefit-item">
+                        <h3>🎯 Personalized Assessment</h3>
+                        <p>Comprehensive evaluation tailored to your specific condition and goals</p>
+                    </div>
+                    <div class="benefit-item">
+                        <h3>⚡ Expert Treatment</h3>
+                        <p>Evidence-based therapy from certified physiotherapists</p>
+                    </div>
+                    <div class="benefit-item">
+                        <h3>📈 Progress Tracking</h3>
+                        <p>Regular monitoring and adjustment of your treatment plan</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Appointment Form -->
+        <section class="appointment-form-section">
+            <div class="container">
+                <div class="form-container">
+                    <h2>Request Your Appointment</h2>
+                    <form class="appointment-form" id="appointmentForm">
+                        <!-- Personal Information -->
+                        <div class="form-section">
+                            <h3>Personal Information</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="firstName">First Name *</label>
+                                    <input type="text" id="firstName" name="firstName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lastName">Last Name *</label>
+                                    <input type="text" id="lastName" name="lastName" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">Email Address *</label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone Number *</label>
+                                    <input type="tel" id="phone" name="phone" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="age">Age</label>
+                                    <input type="number" id="age" name="age" min="1" max="120">
+                                </div>
+                                <div class="form-group">
+                                    <label for="gender">Gender</label>
+                                    <select id="gender" name="gender">
+                                        <option value="">Select...</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                        <option value="prefer-not-to-say">Prefer not to say</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Appointment Details -->
+                        <div class="form-section">
+                            <h3>Appointment Details</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="service">Type of Service *</label>
+                                    <select id="service" name="service" required>
+                                        <option value="">Select Service...</option>
+                                        <option value="general">General Physiotherapy</option>
+                                        <option value="sports">Sports Therapy</option>
+                                        <option value="rehabilitation">Rehabilitation</option>
+                                        <option value="manual">Manual Therapy</option>
+                                        <option value="movement">Movement Analysis</option>
+                                        <option value="pain">Pain Management</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="therapist">Preferred Therapist</label>
+                                    <select id="therapist" name="therapist">
+                                        <option value="">No preference</option>
+                                        <option value="dr-sarah">Dr. Sarah Mitchell</option>
+                                        <option value="mark">Mark Thompson</option>
+                                        <option value="lisa">Lisa Rodriguez</option>
+                                        <option value="james">James Wilson</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="preferredDate">Preferred Date</label>
+                                    <input type="date" id="preferredDate" name="preferredDate">
+                                </div>
+                                <div class="form-group">
+                                    <label for="preferredTime">Preferred Time</label>
+                                    <select id="preferredTime" name="preferredTime">
+                                        <option value="">No preference</option>
+                                        <option value="morning">Morning (8:00 AM - 12:00 PM)</option>
+                                        <option value="afternoon">Afternoon (12:00 PM - 5:00 PM)</option>
+                                        <option value="evening">Evening (5:00 PM - 8:00 PM)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Medical Information -->
+                        <div class="form-section">
+                            <h3>Medical Information</h3>
+                            <div class="form-group">
+                                <label for="condition">Primary Condition/Concern *</label>
+                                <textarea id="condition" name="condition" rows="3" placeholder="Please describe your main symptoms, pain areas, or reasons for seeking physiotherapy..." required></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="symptoms">Current Symptoms</label>
+                                <div class="checkbox-group">
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="symptoms" value="pain">
+                                        <span>Pain</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="symptoms" value="stiffness">
+                                        <span>Stiffness</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="symptoms" value="weakness">
+                                        <span>Weakness</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="symptoms" value="numbness">
+                                        <span>Numbness/Tingling</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="symptoms" value="mobility">
+                                        <span>Reduced Mobility</span>
+                                    </label>
+                                    <label class="checkbox-item">
+                                        <input type="checkbox" name="symptoms" value="balance">
+                                        <span>Balance Issues</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="duration">How long have you had this condition?</label>
+                                    <select id="duration" name="duration">
+                                        <option value="">Select...</option>
+                                        <option value="acute">Less than 1 week</option>
+                                        <option value="subacute">1-4 weeks</option>
+                                        <option value="chronic">1-6 months</option>
+                                        <option value="longterm">More than 6 months</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="previousTreatment">Previous Treatment</label>
+                                    <select id="previousTreatment" name="previousTreatment">
+                                        <option value="">Select...</option>
+                                        <option value="none">No previous treatment</option>
+                                        <option value="gp">GP consultation</option>
+                                        <option value="physio">Previous physiotherapy</option>
+                                        <option value="specialist">Specialist consultation</option>
+                                        <option value="surgery">Surgery</option>
+                                        <option value="other">Other treatment</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="medications">Current Medications</label>
+                                <textarea id="medications" name="medications" rows="2" placeholder="Please list any current medications, supplements, or treatments..."></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="medicalHistory">Relevant Medical History</label>
+                                <textarea id="medicalHistory" name="medicalHistory" rows="3" placeholder="Please mention any relevant medical conditions, surgeries, or injuries..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Insurance Information -->
+                        <div class="form-section">
+                            <h3>Insurance & Payment</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="insurance">Insurance Provider</label>
+                                    <select id="insurance" name="insurance">
+                                        <option value="">Select...</option>
+                                        <option value="vhi">VHI Healthcare</option>
+                                        <option value="laya">Laya Healthcare</option>
+                                        <option value="irish-life">Irish Life Health</option>
+                                        <option value="hse">HSE/Medical Card</option>
+                                        <option value="private">Private Pay</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="memberNumber">Member Number</label>
+                                    <input type="text" id="memberNumber" name="memberNumber" placeholder="If applicable">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Additional Information -->
+                        <div class="form-section">
+                            <h3>Additional Information</h3>
+                            <div class="form-group">
+                                <label for="additionalInfo">Anything else we should know?</label>
+                                <textarea id="additionalInfo" name="additionalInfo" rows="3" placeholder="Special requirements, accessibility needs, goals, etc."></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="consent" required>
+                                    <span>I consent to being contacted regarding my appointment and treatment *</span>
+                                </label>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="newsletter">
+                                    <span>I would like to receive health tips and updates via email</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="submit-btn">REQUEST APPOINTMENT</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Information -->
+        <section class="contact-section">
+            <div class="container">
+                <div class="contact-info">
+                    <h2>Contact Information</h2>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <h3>📍 Clinic Address</h3>
+                            <p>123 Fitzwilliam Street<br>Dublin 2, D02 XY12<br>Ireland</p>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <h3>📱 Phone & Email</h3>
+                            <p>Phone: +353 1 234 5678<br>Email: info@flexwellphysio.ie</p>
+                        </div>
+                        
+                        <div class="contact-item">
+                            <h3>🕒 Opening Hours</h3>
+                            <p>Monday - Friday: 8:00 AM - 8:00 PM<br>
+                            Saturday: 9:00 AM - 5:00 PM<br>
+                            Sunday: Closed</p>
+                        </div>
+                    </div>
+                    
+                    <div class="emergency-info">
+                        <h3>⚠️ Emergency Situations</h3>
+                        <p>For medical emergencies, please call 999 or visit your nearest A&E department. This form is for non-urgent appointment requests only.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="assets/logo.jpeg" alt="FlexWell Logo">
+                <span>FLEXWELL<br>PHYSIOTHERAPY</span>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">HOME</a>
+                <a href="aboutUs.html">ABOUT</a>
+                <a href="gallery.html">SERVICES</a>
+                <a href="appointment.html">APPOINTMENT</a>
+            </div>
+            <div class="footer-social">
+                <div class="social-icons">
+                    <span>📧</span>
+                    <span>📱</span>
+                    <span>📍</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple form submission handler
+        document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your appointment request! We will contact you within 24 hours to confirm your booking.');
+        });
+
+        // Set minimum date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('preferredDate').setAttribute('min', today);
+    </script>
+</body>
+</html>

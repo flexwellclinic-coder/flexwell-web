@@ -1,0 +1,518 @@
+/* Import base styles from index.css */
+@import url('index.css');
+
+/* Modern Appointment Hero Section */
+.appointment-hero {
+    min-height: 70vh;
+    background: radial-gradient(ellipse at center, #064e3b 0%, #0a0f0a 70%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 100px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.appointment-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 60% 40%, rgba(16, 185, 129, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 30% 70%, rgba(52, 211, 153, 0.08) 0%, transparent 50%);
+    opacity: 0.8;
+}
+
+.appointment-hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><defs><pattern id="plus" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M20,15 L20,25 M15,20 L25,20" stroke="rgba(52,211,153,0.03)" stroke-width="2" fill="none"/></pattern></defs><rect width="80" height="80" fill="url(%23plus)"/></svg>');
+}
+
+.appointment-hero .hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+.appointment-hero h1 {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-weight: 800;
+    line-height: 0.9;
+    margin-bottom: 24px;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+    background: linear-gradient(135deg, #ffffff 0%, #d1d5db 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.appointment-hero .accent {
+    background: linear-gradient(135deg, #34d399, #10b981, #059669);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.appointment-hero .tagline {
+    font-size: clamp(1rem, 2.5vw, 1.6rem);
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 3px;
+    font-weight: 300;
+    text-transform: uppercase;
+}
+
+/* Modern Booking Info Section */
+.booking-info-section {
+    background: #0a0f0a;
+    padding: 100px 0;
+}
+
+.booking-intro {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.booking-intro h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, #34d399, #10b981);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 32px;
+    letter-spacing: -1px;
+}
+
+.booking-intro p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1.15rem;
+    line-height: 1.8;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.booking-benefits {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
+    margin-top: 80px;
+}
+
+.benefit-item {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.benefit-item:hover {
+    transform: translateY(-6px);
+    border-color: rgba(16, 185, 129, 0.2);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.benefit-item h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #34d399, #10b981);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+}
+
+.benefit-item p {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+/* Modern Appointment Form Section */
+.appointment-form-section {
+    background: linear-gradient(135deg, #064e3b 0%, #0a0f0a 100%);
+    padding: 120px 0;
+    position: relative;
+}
+
+.appointment-form-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 75% 25%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+    opacity: 0.8;
+}
+
+.form-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 64px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 2;
+}
+
+.form-container h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, #34d399, #10b981);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    margin-bottom: 48px;
+    letter-spacing: -1px;
+}
+
+.form-section {
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.form-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 32px;
+}
+
+.form-section h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #34d399, #10b981);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 32px;
+    border-left: 4px solid #10b981;
+    padding-left: 20px;
+    letter-spacing: -0.5px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 600;
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    padding: 16px 20px;
+    border-radius: 12px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.08);
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+    transform: translateY(-1px);
+}
+
+.form-group input:required:invalid {
+    border-color: rgba(239, 68, 68, 0.7);
+}
+
+.form-group input:required:valid {
+    border-color: rgba(34, 197, 94, 0.7);
+}
+
+/* Modern Checkbox Group Styling */
+.checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: rgba(255, 255, 255, 0.9);
+    cursor: pointer;
+    padding: 12px 16px;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.checkbox-item:hover {
+    background: rgba(16, 185, 129, 0.08);
+    border-color: rgba(16, 185, 129, 0.2);
+    transform: translateY(-1px);
+}
+
+.checkbox-item input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #10b981;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.checkbox-item span {
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+/* Modern Submit Button */
+.submit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #ffffff;
+    padding: 20px;
+    border: none;
+    border-radius: 16px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-top: 32px;
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.submit-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(16, 185, 129, 0.4);
+    background: linear-gradient(135deg, #059669, #047857);
+}
+
+.submit-btn:active {
+    transform: translateY(-1px);
+}
+
+/* Modern Contact Section */
+.contact-section {
+    background: #0a0f0a;
+    padding: 100px 0;
+}
+
+.contact-info h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, #34d399, #10b981);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-align: center;
+    margin-bottom: 64px;
+    letter-spacing: -1px;
+}
+
+.contact-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px;
+    margin-bottom: 64px;
+}
+
+.contact-item {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.contact-item:hover {
+    transform: translateY(-6px);
+    border-color: rgba(16, 185, 129, 0.2);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+}
+
+.contact-item h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #34d399, #10b981);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+}
+
+.contact-item p {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+.emergency-info {
+    background: rgba(239, 68, 68, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+    box-shadow: 0 10px 40px rgba(239, 68, 68, 0.1);
+}
+
+.emergency-info h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #ef4444;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+}
+
+.emergency-info p {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.7;
+    font-size: 1rem;
+}
+
+/* Active Navigation State */
+.nav-menu a.active {
+    color: #34d399;
+}
+
+.nav-menu a.active::after {
+    width: 100%;
+}
+
+/* Modern Responsive Design */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 40px 32px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .checkbox-group {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .booking-benefits {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    
+    .contact-details {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+    
+    .form-section h3 {
+        font-size: 1.4rem;
+    }
+    
+    .booking-info-section {
+        padding: 80px 0;
+    }
+    
+    .appointment-form-section {
+        padding: 100px 0;
+    }
+    
+    .contact-section {
+        padding: 80px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-container {
+        padding: 32px 24px;
+    }
+    
+    .form-container h2 {
+        font-size: 2rem;
+    }
+    
+    .benefit-item {
+        padding: 32px 24px;
+    }
+    
+    .contact-item {
+        padding: 32px 24px;
+    }
+    
+    .emergency-info {
+        padding: 32px 24px;
+    }
+    
+    .form-section {
+        margin-bottom: 40px;
+    }
+    
+    .form-section h3 {
+        font-size: 1.3rem;
+        margin-bottom: 24px;
+    }
+    
+    .checkbox-item {
+        padding: 10px 12px;
+    }
+}
