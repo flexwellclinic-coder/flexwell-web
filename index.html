@@ -3,90 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-en="FlexWell Physiotherapy" data-sq="FlexWell Fizioterapi">FlexWell Physiotherapy</title>
+    <title data-en="Flex Well Physiotherapy" data-sq="Flex Well Fizioterapi">Flex Well Physiotherapy</title>
     <link rel="stylesheet" href="index.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- HEADER -->
     <header class="header">
-        <nav class="navbar">
-            <div class="nav-container">
-                <a href="index.html" class="logo">
-                    <img src="assets/logo.jpeg" alt="FlexWell Logo">
-                    <span>FLEXWELL</span>
-                </a>
-                <ul class="nav-menu">
-                    <li><a href="index.html" data-en="HOME" data-sq="KRYEFAQE">HOME</a></li>
-                    <li><a href="aboutUs.html" data-en="ABOUT" data-sq="RRETH NESH">ABOUT</a></li>
-                    <li><a href="gallery.html" data-en="SERVICES" data-sq="SHËRBIMET">SERVICES</a></li>
-                    <li><a href="appointment.html" data-en="APPOINTMENT" data-sq="TAKIM">APPOINTMENT</a></li>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="assets/logo.jpeg" alt="Flex Well Logo">
+                <span>FLEX WELL</span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <ul class="nav-menu">
+                <li><a href="index.html" data-en="Home" data-sq="Shtëpia">Home</a></li>
+                <li><a href="aboutUs.html" data-en="About Us" data-sq="Rreth Nesh">About Us</a></li>
+                <li><a href="gallery.html" data-en="Services" data-sq="Shërbimet">Services</a></li>
+                <li><a href="appointment.html" data-en="Book Appointment" data-sq="Rezervo Takim">Book Appointment</a></li>
+            </ul>
+            
+            <!-- Desktop Language Switcher -->
+            <div class="language-switcher" id="desktopLanguageSwitcher">
+                <button id="languageBtn" class="language-btn">EN</button>
+                <div class="language-dropdown" id="languageDropdown">
+                    <button onclick="changeLanguage('en')" data-lang="en">EN</button>
+                    <button onclick="changeLanguage('sq')" data-lang="sq">AL</button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-menu-overlay" id="mobileMenuOverlay">
+            <div class="mobile-menu">
+                <div class="mobile-menu-header">
+                    <button class="mobile-menu-close" id="mobileMenuClose">✕</button>
+                </div>
+                <ul class="mobile-nav-menu">
+                    <li><a href="index.html" data-en="Home" data-sq="Shtëpia">Home</a></li>
+                    <li><a href="aboutUs.html" data-en="About Us" data-sq="Rreth Nesh">About Us</a></li>
+                    <li><a href="gallery.html" data-en="Services" data-sq="Shërbimet">Services</a></li>
+                    <li><a href="appointment.html" data-en="Book Appointment" data-sq="Rezervo Takim">Book Appointment</a></li>
                 </ul>
                 
-                <div class="desktop-language">
-                    <div class="language-switcher">
-                        <button class="lang-btn" id="languageToggle">
-                            <span class="flag">🇺🇸</span>
-                            <span class="lang-text">EN</span>
-                            <span class="arrow">▼</span>
-                        </button>
-                        <div class="lang-dropdown" id="languageDropdown">
-                            <div class="lang-option" data-lang="en">
-                                <span class="flag">🇺🇸</span>
-                                <span>English</span>
-                            </div>
-                            <div class="lang-option" data-lang="sq">
-                                <span class="flag">🇦🇱</span>
-                                <span>Shqip</span>
-                            </div>
-                        </div>
+                <!-- Mobile Language Switcher -->
+                <div class="mobile-language-switcher">
+                    <div class="mobile-language-header" id="mobileLanguageHeader">
+                        <span data-en="Language" data-sq="Gjuha">Language</span>
+                        <span id="mobileLanguageBtn">EN</span>
                     </div>
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <button class="mobile-menu-btn" id="mobileMenuToggle">
-                    <span class="hamburger-line"></span>
-                    <span class="hamburger-line"></span>
-                    <span class="hamburger-line"></span>
-                </button>
-
-                <!-- Mobile Menu -->
-                <div class="mobile-menu" id="mobileMenu">
-                    <div class="mobile-nav">
-                        <a href="index.html" data-en="HOME" data-sq="KRYEFAQE">HOME</a>
-                        <a href="aboutUs.html" data-en="ABOUT" data-sq="RRETH NESH">ABOUT</a>
-                        <a href="gallery.html" data-en="SERVICES" data-sq="SHËRBIMET">SERVICES</a>
-                        <a href="appointment.html" data-en="APPOINTMENT" data-sq="TAKIM">APPOINTMENT</a>
-                    </div>
-                    <div class="mobile-language">
-                        <div class="language-switcher">
-                            <button class="lang-btn" id="mobileLangToggle">
-                                <span class="flag">🇺🇸</span>
-                                <span class="lang-text">EN</span>
-                                <span class="arrow">▼</span>
-                            </button>
-                            <div class="lang-dropdown" id="mobileLangDropdown">
-                                <div class="lang-option" data-lang="en">
-                                    <span class="flag">🇺🇸</span>
-                                    <span>English</span>
-                                </div>
-                                <div class="lang-option" data-lang="sq">
-                                    <span class="flag">🇦🇱</span>
-                                    <span>Shqip</span>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="mobile-language-dropdown" id="mobileLanguageDropdown">
+                        <button onclick="changeLanguage('en')" data-lang="en">EN - English</button>
+                        <button onclick="changeLanguage('sq')" data-lang="sq">AL - Shqip</button>
                     </div>
                 </div>
             </div>
-        </nav>
+        </div>
     </header>
 
+    <!-- MAIN CONTENT -->
     <main>
         <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
-                <div class="hero-text">
-                    <h1>FLEXWELL<br><span class="accent" data-en="PHYSIOTHERAPY" data-sq="FIZIOTERAPI">PHYSIOTHERAPY</span></h1>
+                <h1>FLEX WELL<br><span class="accent" data-en="PHYSIOTHERAPY" data-sq="FIZIOTERAPI">PHYSIOTHERAPY</span></h1>
                     <p class="tagline" data-en="RESTORE YOUR MOVEMENT" data-sq="RIKTHENI LËVIZJEN TUAJ">RESTORE YOUR MOVEMENT</p>
                     <div class="hero-description">
                         <h2 data-en="WELCOME" data-sq="MIRË SE VINI">WELCOME</h2>
@@ -170,19 +158,20 @@
         </section>
     </main>
 
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-logo">
-                <img src="assets/logo.jpeg" alt="FlexWell Logo">
-                <span>FLEXWELL<br><span data-en="PHYSIOTHERAPY" data-sq="FIZIOTERAPI">PHYSIOTHERAPY</span></span>
+                <img src="assets/logo.jpeg" alt="Flex Well Logo">
+                <span>FLEX WELL<br><span data-en="PHYSIOTHERAPY" data-sq="FIZIOTERAPI">PHYSIOTHERAPY</span></span>
             </div>
             <div class="footer-info">
-                <p>&copy; 2024 FlexWell <span data-en="Physiotherapy. All rights reserved." data-sq="Fizioterapi. Të gjitha të drejtat të rezervuara.">Physiotherapy. All rights reserved.</span></p>
-                <div class="footer-icons">
-                    <span>📧</span>
-                    <span>📱</span>
-                    <span>📍</span>
-                </div>
+                <p>&copy; 2024 Flex Well <span data-en="Physiotherapy. All rights reserved." data-sq="Fizioterapi. Të gjitha të drejtat të rezervuara.">Physiotherapy. All rights reserved.</span></p>
+            </div>
+            <div class="footer-icons">
+                <span>📧</span>
+                <span>📞</span>
+                <span>📍</span>
             </div>
         </div>
     </footer>
