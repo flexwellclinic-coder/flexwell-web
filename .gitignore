@@ -26,9 +26,6 @@ yarn-error.log*
 .idea/
 
 # Old static files (keep as backup)
-*.html
-*.css
-*.js
 language.js
 assets/ 
 node_modules
