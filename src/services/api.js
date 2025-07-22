@@ -2,7 +2,9 @@ import axios from 'axios';
 
 // Create axios instance with base configuration
 const api = axios.create({
-  baseURL: process.env.NODE_ENV === 'production' ? '/api' : 'http://localhost:5001/api',
+  baseURL: process.env.NODE_ENV === 'production' 
+    ? (process.env.REACT_APP_API_URL || 'https://your-backend-url.railway.app/api')
+    : 'http://localhost:5001/api',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json'

@@ -44,19 +44,37 @@ const Admin = ({ t }) => {
   }, [isAuthenticated, currentPage, searchTerm, filterDate, filterStatus, sortBy, sortOrder]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const checkAuthentication = async () => {
-    const token = localStorage.getItem('adminToken');
-    const isAdminAuth = localStorage.getItem('adminAuth');
-    
-    if (token && isAdminAuth === 'true') {
-      try {
-        await authAPI.verify();
+    try {
+      const token = localStorage.getItem('adminToken');
+      if (!token) {
+        setIsAuthenticated(false);
+        return;
+      }
+
+      // Frontend-only check for production
+      if (process.env.NODE_ENV === 'production') {
+        if (token === 'frontend-admin-token') {
+          setIsAuthenticated(true);
+          return;
+        } else {
+          localStorage.removeItem('adminToken');
+          setIsAuthenticated(false);
+          return;
+        }
+      }
+
+      // API verification for development
+      const response = await authAPI.verify();
+      if (response.success) {
         setIsAuthenticated(true);
-        loadAppointments();
-      } catch (error) {
-        console.error('Token verification failed:', error);
-        authAPI.logout();
+      } else {
+        localStorage.removeItem('adminToken');
         setIsAuthenticated(false);
       }
+    } catch (error) {
+      console.error('Auth check failed:', error);
+      localStorage.removeItem('adminToken');
+      setIsAuthenticated(false);
     }
   };
 
@@ -104,22 +122,46 @@ const Admin = ({ t }) => {
     setError('');
 
     try {
-      const response = await authAPI.login(loginForm.username, loginForm.password);
+      const { username, password } = loginForm;
+      
+      // Simple frontend-only check for production
+      if (process.env.NODE_ENV === 'production') {
+        if (username === 'admin' && password === 'flexwell2024') {
+          localStorage.setItem('adminToken', 'frontend-admin-token');
+          setIsAuthenticated(true);
+          return;
+        } else {
+          setError('Invalid username or password');
+          return;
+        }
+      }
+
+      // API login for development
+      const response = await authAPI.login({ username, password });
+      
       if (response.success) {
         setIsAuthenticated(true);
-        setLoginForm({ username: 'admin', password: '' });
-        loadAppointments();
+      } else {
+        setError(response.message || 'Login failed');
       }
     } catch (error) {
-      console.error('Login failed:', error);
-      setError(error.message || 'Login failed');
-      setLoginForm({ ...loginForm, password: '' });
+      console.error('Login error:', error);
+      setError('Login failed. Please check your credentials.');
     } finally {
       setIsLoggingIn(false);
     }
   };
 
   const handleLogout = () => {
+    // Frontend-only logout for production
+    if (process.env.NODE_ENV === 'production') {
+      localStorage.removeItem('adminToken');
+      setIsAuthenticated(false);
+      setAppointments([]);
+      return;
+    }
+
+    // API logout for development
     authAPI.logout();
     setIsAuthenticated(false);
     setAppointments([]);

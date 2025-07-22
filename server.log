@@ -1,0 +1,8 @@
+
+> flexwell-webapp@1.0.0 server
+> node server/server.js
+
+Server is running on port 5001
+Environment: development
+Database: Connected
+MongoDB Connected: ac-z7brqnk-shard-00-00.turqknf.mongodb.net
