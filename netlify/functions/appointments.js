@@ -301,15 +301,26 @@ async function createAppointment(data, headers) {
 
   } catch (error) {
     console.error('Error creating appointment:', error);
+    console.error('Error details:', error.message);
+    console.error('Received data:', data);
     
     if (error.name === 'ValidationError') {
+      const validationErrors = Object.values(error.errors).map(err => ({
+        field: err.path,
+        message: err.message,
+        value: err.value
+      }));
+      
+      console.error('Validation errors:', validationErrors);
+      
       return {
         statusCode: 400,
         headers,
         body: JSON.stringify({
           success: false,
           message: 'Validation error',
-          errors: Object.values(error.errors).map(err => err.message)
+          errors: validationErrors,
+          receivedData: data
         })
       };
     }
@@ -320,7 +331,8 @@ async function createAppointment(data, headers) {
       body: JSON.stringify({
         success: false,
         message: 'Failed to create appointment',
-        error: error.message
+        error: error.message,
+        errorDetails: error.stack
       })
     };
   }

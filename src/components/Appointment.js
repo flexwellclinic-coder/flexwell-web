@@ -46,12 +46,22 @@ const Appointment = ({ t }) => {
         createdBy: 'patient'
       };
 
-      // Try to save to database first
+      // Debug: Test data first
       try {
+        const debugResponse = await fetch('/.netlify/functions/debug-appointment', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(appointment)
+        });
+        const debugData = await debugResponse.json();
+        console.log('Debug analysis:', debugData);
+        
+        // Try to save to database
         await appointmentsAPI.create(appointment);
         console.log('Appointment saved to database successfully');
       } catch (apiError) {
         console.warn('Database unavailable, saving to localStorage:', apiError);
+        console.error('Full API error:', apiError);
         // Fallback to localStorage if API is unavailable
         localStorageBackup.addAppointment(appointment);
       }
