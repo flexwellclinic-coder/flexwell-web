@@ -22,26 +22,28 @@ const Home = ({ t }) => {
         </div>
       </section>
 
-      {/* Welcome Section */}
-      <section className="hero-description">
-        <div className="container">
-          <h2 data-en="WELCOME" data-sq="MIRËSEVINI">
-            {t('WELCOME', 'MIRËSEVINI')}
-          </h2>
-          <p data-en="Our practice specializes in helping you regain optimal function. Based in Dublin's heart, we offer a blend of modern techniques and traditional expertise. Whether you're recovering from injury, managing chronic pain, or looking to optimize your performance, we're here to guide you every step of the way." data-sq="Praktika jonë specializohet në t'ju ndihmuar të rifitoni funksionin optimal. I bazuar në zemrën e Dublinit, ne ofrojmë një përzierje të teknikave moderne dhe ekspertizës tradicionale. Pavarësisht nëse po rimëkëmbeni nga lëndimi, po menaxhoni dhimbjen kronike, ose po kërkoni të optimizoni performancën tuaj, ne jemi këtu për t'ju udhëhequr në çdo hap të rrugës.">
-            {t(
-              "Our practice specializes in helping you regain optimal function. Based in Dublin's heart, we offer a blend of modern techniques and traditional expertise. Whether you're recovering from injury, managing chronic pain, or looking to optimize your performance, we're here to guide you every step of the way.",
-              "Praktika jonë specializohet në t'ju ndihmuar të rifitoni funksionin optimal. I bazuar në zemrën e Dublinit, ne ofrojmë një përzierje të teknikave moderne dhe ekspertizës tradicionale. Pavarësisht nëse po rimëkëmbeni nga lëndimi, po menaxhoni dhimbjen kronike, ose po kërkoni të optimizoni performancën tuaj, ne jemi këtu për t'ju udhëhequr në çdo hap të rrugës."
-            )}
-          </p>
-          <Link 
-            to="/about" 
-            className="cta-btn"
-            data-en="LEARN MORE ABOUT US" 
-            data-sq="MËSONI MË SHUMË RRETH NESH"
+      {/* Video Welcome Section */}
+      <section className="video-welcome-section">
+        <div className="video-container">
+          <video 
+            className="background-video" 
+            autoPlay 
+            muted 
+            loop 
+            playsInline
           >
-            {t('LEARN MORE ABOUT US', 'MËSONI MË SHUMË RRETH NESH')}
-          </Link>
+            <source src="/assets/20250725_0110_Luxurious Clinic Reception_simple_compose_01k0zb752we978jb9esamq3pzq.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          <div className="video-overlay"></div>
+          <div className="video-content">
+            <h2 data-en="WELCOME" data-sq="MIRËSEVINI">
+              {t('WELCOME', 'MIRËSEVINI')}
+            </h2>
+            <p data-en="Your Journey to Optimal Health Starts Here" data-sq="Udhëtimi Juaj për Shëndet Optimal Fillon Këtu">
+              {t('Your Journey to Optimal Health Starts Here', 'Udhëtimi Juaj për Shëndet Optimal Fillon Këtu')}
+            </p>
+          </div>
         </div>
       </section>
 
@@ -112,6 +114,17 @@ const Home = ({ t }) => {
 
       {/* Call to Action Section */}
       <section className="cta-section">
+        <video 
+          className="cta-background-video" 
+          autoPlay 
+          muted 
+          loop 
+          playsInline
+        >
+          <source src="/assets/Elegant Physiotherapy Room.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <div className="cta-video-overlay"></div>
         <div className="container">
           <div className="cta-content">
             <h2 data-en="Ready to Begin Your Recovery?" data-sq="Gati të Filloni Rimëkëmbjen Tuaj?">
