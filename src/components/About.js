@@ -11,8 +11,8 @@ const About = ({ t }) => {
               {t('ABOUT', 'RRETH')}
             </span>
             <br />
-            <span className="accent" data-en="FLEX WELL" data-sq="FLEX WELL">
-              {t('FLEX WELL', 'FLEX WELL')}
+            <span className="accent" data-en="FLEX    WELL" data-sq="FLEX    WELL">
+              {t('FLEX    WELL', 'FLEX    WELL')}
             </span>
           </h1>
           <p className="tagline" data-en="YOUR TRUSTED PHYSIOTHERAPY PARTNER" data-sq="PARTNERI JUAJ I BESUAR I FIZIOTERAPISË">
@@ -28,10 +28,10 @@ const About = ({ t }) => {
             <h2 data-en="Our Story" data-sq="Historia Jonë">
               {t('Our Story', 'Historia Jonë')}
             </h2>
-            <p data-en="Flex Well Physiotherapy was founded with a simple yet powerful vision: to help every individual achieve their optimal physical potential. Located in the vibrant heart of Dublin, our clinic has become a trusted destination for those seeking expert physiotherapy care." data-sq="Flex Well Physiotherapy u themelua me një vizion të thjeshtë por të fuqishëm: t'i ndihmojë çdo individ të arrijë potencialin e tyre optimal fizik. I vendosur në zemrën e gjallë të Dublinit, klinika jonë është bërë një destinacion i besuar për ata që kërkojnë kujdes ekspert fizioterapie.">
+            <p data-en="Flex    Well Physiotherapy was founded with a simple yet powerful vision: to help every individual achieve their optimal physical potential. Located in the vibrant heart of Dublin, our clinic has become a trusted destination for those seeking expert physiotherapy care." data-sq="Flex    Well Physiotherapy u themelua me një vizion të thjeshtë por të fuqishëm: t'i ndihmojë çdo individ të arrijë potencialin e tyre optimal fizik. I vendosur në zemrën e gjallë të Dublinit, klinika jonë është bërë një destinacion i besuar për ata që kërkojnë kujdes ekspert fizioterapie.">
               {t(
-                'Flex Well Physiotherapy was founded with a simple yet powerful vision: to help every individual achieve their optimal physical potential. Located in the vibrant heart of Dublin, our clinic has become a trusted destination for those seeking expert physiotherapy care.',
-                'Flex Well Physiotherapy u themelua me një vizion të thjeshtë por të fuqishëm: t\'i ndihmojë çdo individ të arrijë potencialin e tyre optimal fizik. I vendosur në zemrën e gjallë të Dublinit, klinika jonë është bërë një destinacion i besuar për ata që kërkojnë kujdes ekspert fizioterapie.'
+                'Flex    Well Physiotherapy was founded with a simple yet powerful vision: to help every individual achieve their optimal physical potential. Located in the vibrant heart of Dublin, our clinic has become a trusted destination for those seeking expert physiotherapy care.',
+                'Flex    Well Physiotherapy u themelua me një vizion të thjeshtë por të fuqishëm: t\'i ndihmojë çdo individ të arrijë potencialin e tyre optimal fizik. I vendosur në zemrën e gjallë të Dublinit, klinika jonë është bërë një destinacion i besuar për ata që kërkojnë kujdes ekspert fizioterapie.'
               )}
             </p>
             <p data-en="We believe that movement is medicine, and every person deserves to live without pain or physical limitations. Our approach combines cutting-edge techniques with time-tested methods, ensuring that each patient receives personalized care tailored to their unique needs and goals." data-sq="Ne besojmë se lëvizja është ilaç, dhe çdo person meriton të jetojë pa dhimbje ose kufizime fizike. Qasja jonë kombinon teknikat më të avancuara me metodat e provuara në kohë, duke siguruar që çdo pacient të marrë kujdes të personalizuar të përshtatur për nevojat dhe qëllimet e tyre unike.">

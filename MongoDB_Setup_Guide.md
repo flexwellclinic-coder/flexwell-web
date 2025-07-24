@@ -1,6 +1,6 @@
-# MongoDB Atlas Setup Guide for Flex Well
+# MongoDB Atlas Setup Guide for Flex  Well
 
-This guide will help you set up MongoDB Atlas (cloud database) for your Flex Well appointment system.
+This guide will help you set up MongoDB Atlas (cloud database) for your Flex  Well appointment system.
 
 ## 🚀 Quick Setup
 

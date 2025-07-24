@@ -63,8 +63,8 @@ const Header = ({ currentLanguage, updateLanguage, t }) => {
     <header className="header">
       <div className="nav-container">
           <Link to="/" className="logo">
-              <img src="/assets/logo.jpeg" alt="Flex Well Logo" />
-              <span>FLEX WELL</span>
+              <img src="/assets/logo.jpeg" alt="Flex    Well Logo" />
+              <span>FLEX    WELL</span>
           </Link>
 
           <ul className="nav-menu">

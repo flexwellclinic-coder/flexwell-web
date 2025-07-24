@@ -8,8 +8,8 @@ const Home = ({ t }) => {
       <section className="hero">
         <div className="hero-content">
           <h1 className="hero-title">
-            <span data-en="FLEX WELL" data-sq="FLEX WELL">
-              {t('FLEX WELL', 'FLEX WELL')}
+            <span data-en="FLEX    WELL" data-sq="FLEX    WELL">
+              {t('FLEX    WELL', 'FLEX    WELL')}
             </span>
             <br />
             <span className="accent" data-en="PHYSIOTHERAPY" data-sq="FIZIOTERAPI">

@@ -347,7 +347,7 @@ const Admin = ({ t }) => {
       <div className="admin-login">
         <div className="login-container">
           <div className="login-header">
-            <h1>Flex Well Admin Panel</h1>
+            <h1>Flex    Well Admin Panel</h1>
             <p>Enter password to access appointment management</p>
           </div>
           <form onSubmit={handleLogin} className="login-form">
@@ -393,7 +393,7 @@ const Admin = ({ t }) => {
       <header className="admin-header">
         <div className="admin-container">
           <div className="admin-title">
-            <h1>Flex Well Admin Panel</h1>
+            <h1>Flex    Well Admin Panel</h1>
             <p>Appointment Management System</p>
           </div>
           <button onClick={handleLogout} className="logout-btn">

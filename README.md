@@ -1,6 +1,6 @@
-# Flex Well Physiotherapy - React Web App
+# Flex  Well Physiotherapy - React Web App
 
-A modern, responsive React web application for Flex Well Physiotherapy clinic in Dublin, Ireland.
+A modern, responsive React web application for Flex  Well Physiotherapy clinic in Dublin, Ireland.
 
 ## Features
 
@@ -88,7 +88,7 @@ src/
 
 public/
 ├── assets/              # Static assets
-│   └── logo.jpeg        # Flex Well logo
+│   └── logo.jpeg        # Flex  Well logo
 └── index.html           # HTML template
 ```
 
@@ -131,7 +131,7 @@ The app uses a custom translation system:
 
 ## Contact Information
 
-**Flex Well Physiotherapy**
+**Flex  Well Physiotherapy**
 - 📍 123 Grafton Street, Dublin 2, Ireland
 - 📞 +353 1 234 5678
 - 📧 info@flexwellphysio.ie
@@ -139,4 +139,4 @@ The app uses a custom translation system:
 
 ## License
 
-© 2024 Flex Well Physiotherapy. All rights reserved. 
+© 2024 Flex  Well Physiotherapy. All rights reserved. 

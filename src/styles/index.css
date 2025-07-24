@@ -996,6 +996,24 @@ main {
     display: block;
 }
 
+/* Enhanced spacing for Flex Well branding */
+.logo span,
+.hero-title span,
+.admin-title h1 {
+  letter-spacing: 0.15em;
+}
+
+/* Extra spacing for main hero titles */
+.hero-title {
+  letter-spacing: 0.1em;
+}
+
+/* Logo specific styling */
+.logo span {
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
 /* Modern Responsive Design */
 @media (max-width: 768px) {
     .nav-menu {

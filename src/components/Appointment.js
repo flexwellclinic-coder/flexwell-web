@@ -89,7 +89,7 @@ const Appointment = ({ t }) => {
       <section className="appointment-hero">
         <div className="hero-content">
           <h1>
-            <span data-en="REZERVONI" data-sq="REZERVONI">
+            <span data-en="BOOK YOUR" data-sq="REZERVONI">
               {t('BOOK YOUR', 'REZERVONI')}
             </span>
             <br />

@@ -6,7 +6,7 @@ const Footer = ({ t }) => {
       <div className="container">
         <div className="footer-content">
           <div className="footer-info">
-            <p>&copy; 2024 Flex Well Physiotherapy. All rights reserved.</p>
+            <p>&copy; 2024 Flex    Well Physiotherapy. All rights reserved.</p>
           </div>
           <div className="footer-icons">
             <span className="icon">📧</span>
