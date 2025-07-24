@@ -34,8 +34,8 @@ This guide will help you set up automatic WhatsApp appointment reminders for **F
 2. **Add these variables**:
 
 ```
-WHATSAPP_INSTANCE_ID = your_instance_id_here
-WHATSAPP_TOKEN = your_token_here
+WHATSAPP_INSTANCE_ID = instance134734
+WHATSAPP_TOKEN = gp6t41z2d824ok2o
 ```
 
 **Example:**
