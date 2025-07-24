@@ -35,20 +35,21 @@ const Appointment = ({ t }) => {
     setFormErrors({});
     setSubmitMessage('');
     
+    // Create appointment object
+    const appointment = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      phone: formData.phone,
+      date: formData.preferredDate,
+      time: formData.preferredTime,
+      service: formData.serviceType,
+      notes: `${formData.painArea ? 'Pain/Concern: ' + formData.painArea + '. ' : ''}${formData.urgencyLevel ? 'Urgency: ' + formData.urgencyLevel + '. ' : ''}${formData.insuranceProvider ? 'Insurance: ' + formData.insuranceProvider + '. ' : ''}${formData.additionalNotes || ''}`,
+      previousInjury: formData.previousInjury,
+      createdBy: 'patient'
+    };
+    
     try {
-      // Create appointment object
-      const appointment = {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        phone: formData.phone,
-        date: formData.preferredDate,
-        time: formData.preferredTime,
-        service: formData.serviceType,
-        notes: `${formData.painArea ? 'Pain/Concern: ' + formData.painArea + '. ' : ''}${formData.urgencyLevel ? 'Urgency: ' + formData.urgencyLevel + '. ' : ''}${formData.insuranceProvider ? 'Insurance: ' + formData.insuranceProvider + '. ' : ''}${formData.additionalNotes || ''}`,
-        previousInjury: formData.previousInjury,
-        createdBy: 'patient'
-      };
 
       // Try to save to database
       const response = await appointmentsAPI.create(appointment);

@@ -88,6 +88,17 @@ const appointmentSchema = new mongoose.Schema({
   },
   completedAt: {
     type: Date
+  },
+  // WhatsApp reminder tracking
+  reminderSent: {
+    type: Boolean,
+    default: false
+  },
+  reminderSentAt: {
+    type: Date
+  },
+  reminderMessageId: {
+    type: String
   }
 }, {
   timestamps: true,

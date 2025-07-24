@@ -1,0 +1,43 @@
+name: WhatsApp Appointment Reminders
+
+# Run daily at 10:00 AM Irish time (9:00 AM UTC)
+on:
+  schedule:
+    - cron: '0 9 * * *'
+  # Allow manual triggering for testing
+  workflow_dispatch:
+
+jobs:
+  send-reminders:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Send WhatsApp Reminders
+        run: |
+          echo "Triggering WhatsApp reminders..."
+          
+          # Call the Netlify function to send reminders
+          response=$(curl -s -X POST \
+            "https://flexwellclinic.netlify.app/.netlify/functions/whatsapp-reminder" \
+            -H "Content-Type: application/json" \
+            -w "%{http_code}")
+          
+          http_code="${response: -3}"
+          response_body="${response%???}"
+          
+          echo "HTTP Status: $http_code"
+          echo "Response: $response_body"
+          
+          if [ "$http_code" -eq 200 ]; then
+            echo "✅ WhatsApp reminders sent successfully"
+            echo "$response_body" | jq '.summary' || echo "$response_body"
+          else
+            echo "❌ Failed to send WhatsApp reminders"
+            echo "$response_body"
+            exit 1
+          fi
+      
+      - name: Log Results
+        if: always()
+        run: |
+          echo "WhatsApp reminder job completed at $(date)" 
