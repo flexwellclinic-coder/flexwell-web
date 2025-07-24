@@ -26,10 +26,14 @@ const Appointment = ({ t }) => {
   };
 
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
+  const [submitMessage, setSubmitMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setFormErrors({});
+    setSubmitMessage('');
     
     try {
       // Create appointment object
@@ -46,48 +50,51 @@ const Appointment = ({ t }) => {
         createdBy: 'patient'
       };
 
-      // Debug: Test data first
-      try {
-        const debugResponse = await fetch('/.netlify/functions/debug-appointment', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(appointment)
-        });
-        const debugData = await debugResponse.json();
-        console.log('Debug analysis:', debugData);
-        
-        // Try to save to database
-        await appointmentsAPI.create(appointment);
+      // Try to save to database
+      const response = await appointmentsAPI.create(appointment);
+      
+      if (response.success) {
         console.log('Appointment saved to database successfully');
-      } catch (apiError) {
-        console.warn('Database unavailable, saving to localStorage:', apiError);
-        console.error('Full API error:', apiError);
-        // Fallback to localStorage if API is unavailable
-        localStorageBackup.addAppointment(appointment);
+        
+        // Reset form on success
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          preferredDate: '',
+          preferredTime: '',
+          serviceType: '',
+          previousInjury: false,
+          painArea: '',
+          urgencyLevel: '',
+          insuranceProvider: '',
+          additionalNotes: ''
+        });
+
+        setSubmitMessage(t('✅ Thank you! Your appointment request has been submitted successfully. We will contact you within 24 hours to confirm.', '✅ Faleminderit! Kërkesa juaj për takim është dërguar me sukses. Ne do t\'ju kontaktojmë brenda 24 orëve për të konfirmuar.'));
       }
-
-      // Reset form
-      setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        preferredDate: '',
-        preferredTime: '',
-        serviceType: '',
-        previousInjury: false,
-        painArea: '',
-        urgencyLevel: '',
-        insuranceProvider: '',
-        additionalNotes: ''
-      });
-
-      // Show success message
-      alert(t('Thank you for your appointment request. We will contact you soon!', 'Faleminderit për kërkesën tuaj për takim. Ne do t\'ju kontaktojmë së shpejti!'));
 
     } catch (error) {
       console.error('Error submitting appointment:', error);
-      alert(t('There was an error submitting your appointment. Please try again.', 'Ka ndodhur një gabim gjatë dërgimit të takimit tuaj. Ju lutem provoni përsëri.'));
+      
+      // Handle validation errors
+      if (error.response && error.response.data && error.response.data.errors) {
+        const errors = {};
+        error.response.data.errors.forEach(err => {
+          errors[err.field] = err.message;
+        });
+        setFormErrors(errors);
+        setSubmitMessage(t('❌ Please fix the errors below and try again.', '❌ Ju lutem rregulloni gabimet më poshtë dhe provoni përsëri.'));
+      } else {
+        // Fallback to localStorage if API is completely unavailable
+        try {
+          localStorageBackup.addAppointment(appointment);
+          setSubmitMessage(t('⚠️ Your appointment has been saved locally. We will process it as soon as possible.', '⚠️ Takimi juaj është ruajtur lokalisht. Ne do ta përpunojmë sa më shpejt të jetë e mundur.'));
+        } catch (localError) {
+          setSubmitMessage(t('❌ There was an error submitting your appointment. Please try again.', '❌ Ka ndodhur një gabim gjatë dërgimit të takimit tuaj. Ju lutem provoni përsëri.'));
+        }
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -126,6 +133,12 @@ const Appointment = ({ t }) => {
                 'Plotësoni formularin më poshtë dhe ne do t\'ju kontaktojmë brenda 24 orëve për të konfirmuar takimin tuaj dhe për të diskutuar nevojat tuaja specifike.'
               )}
             </p>
+
+            {submitMessage && (
+              <div className={`submit-message ${submitMessage.includes('✅') ? 'success' : submitMessage.includes('⚠️') ? 'warning' : 'error'}`}>
+                {submitMessage}
+              </div>
+            )}
 
             <form onSubmit={handleSubmit} className="appointment-form">
               <div className="form-row">
@@ -175,10 +188,12 @@ const Appointment = ({ t }) => {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
+                    className={formErrors.email ? 'error' : ''}
                     data-placeholder-en="Enter your email address"
                     data-placeholder-sq="Shkruani adresën tuaj të email-it"
                     placeholder={t('Enter your email address', 'Shkruani adresën tuaj të email-it')}
                   />
+                  {formErrors.email && <span className="field-error">{formErrors.email}</span>}
                 </div>
                 <div className="form-group">
                   <label htmlFor="phone" data-en="Phone Number *" data-sq="Numri i Telefonit *">
@@ -191,10 +206,12 @@ const Appointment = ({ t }) => {
                     value={formData.phone}
                     onChange={handleInputChange}
                     required
+                    className={formErrors.phone ? 'error' : ''}
                     data-placeholder-en="Enter your phone number"
                     data-placeholder-sq="Shkruani numrin tuaj të telefonit"
                     placeholder={t('Enter your phone number', 'Shkruani numrin tuaj të telefonit')}
                   />
+                  {formErrors.phone && <span className="field-error">{formErrors.phone}</span>}
                 </div>
               </div>
 

@@ -620,4 +620,60 @@
     .emergency-info {
         padding: 32px 24px;
     }
+}
+
+/* Form Validation Styles */
+.submit-message {
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    border: 1px solid;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.submit-message.success {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: #10b981;
+    color: #065f46;
+}
+
+.submit-message.warning {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: #f59e0b;
+    color: #92400e;
+}
+
+.submit-message.error {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: #ef4444;
+    color: #991b1b;
+}
+
+.form-group input.error,
+.form-group select.error,
+.form-group textarea.error {
+    border-color: #ef4444 !important;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+
+.field-error {
+    display: block;
+    margin-top: 6px;
+    color: #ef4444;
+    font-size: 14px;
+    font-weight: 500;
 } 
