@@ -3,8 +3,8 @@ import axios from 'axios';
 // Create axios instance with base configuration
 const api = axios.create({
   baseURL: process.env.NODE_ENV === 'production' 
-    ? (process.env.REACT_APP_API_URL || 'https://your-backend-url.railway.app/api')
-    : 'http://localhost:5001/api',
+    ? '/.netlify/functions'
+    : 'http://localhost:8888/.netlify/functions',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json'
@@ -44,7 +44,7 @@ export const authAPI = {
   // Admin login
   login: async (username, password) => {
     try {
-      const response = await api.post('/auth/login', { username, password });
+      const response = await api.post('/auth-login', { username, password });
       if (response.data.success && response.data.data.token) {
         localStorage.setItem('adminToken', response.data.data.token);
         localStorage.setItem('adminAuth', 'true');
@@ -58,7 +58,7 @@ export const authAPI = {
   // Verify token
   verify: async () => {
     try {
-      const response = await api.post('/auth/verify');
+      const response = await api.post('/auth-verify');
       return response.data;
     } catch (error) {
       throw error.response?.data || { success: false, message: 'Token verification failed' };
@@ -71,10 +71,10 @@ export const authAPI = {
     localStorage.removeItem('adminAuth');
   },
 
-  // Get admin profile
+  // Get admin profile (using verify endpoint for now)
   getProfile: async () => {
     try {
-      const response = await api.get('/auth/profile');
+      const response = await api.post('/auth-verify');
       return response.data;
     } catch (error) {
       throw error.response?.data || { success: false, message: 'Failed to get profile' };
@@ -147,7 +147,7 @@ export const appointmentsAPI = {
   // Get available time slots for a date
   getAvailableSlots: async (date) => {
     try {
-      const response = await api.get(`/appointments/available/${date}`);
+      const response = await api.get(`/available-slots/${date}`);
       return response.data;
     } catch (error) {
       throw error.response?.data || { success: false, message: 'Failed to fetch available slots' };

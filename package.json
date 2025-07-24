@@ -21,8 +21,10 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "node server/server.js",
-    "dev": "concurrently \"npm run server\" \"npm start\"",
-    "install-server": "npm install"
+    "dev": "netlify dev",
+    "dev-old": "concurrently \"npm run server\" \"npm start\"",
+    "install-server": "npm install",
+    "functions:install": "cd netlify/functions && npm install"
   },
   "eslintConfig": {
     "extends": [
@@ -43,7 +45,7 @@
   },
   "devDependencies": {
     "concurrently": "^7.6.0",
+    "netlify-cli": "^17.0.0",
     "nodemon": "^2.0.22"
-  },
-  "proxy": "http://localhost:5001"
+  }
 }

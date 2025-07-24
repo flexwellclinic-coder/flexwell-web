@@ -1,0 +1,17 @@
+{
+  "name": "flexwell-netlify-functions",
+  "version": "1.0.0",
+  "description": "Flex    Well Netlify Functions",
+  "main": "index.js",
+  "dependencies": {
+    "mongoose": "^7.0.3",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "keywords": ["netlify", "functions", "physiotherapy", "api"],
+  "author": "Flex    Well Physiotherapy",
+  "license": "MIT"
+} 
