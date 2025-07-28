@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { appointmentsAPI, localStorageBackup } from '../services/api';
+import useScrollAnimation from '../hooks/useScrollAnimation';
 
 const Appointment = ({ t }) => {
+  const [heroTitleRef, heroTitleVisible] = useScrollAnimation();
+  const [heroTaglineRef, heroTaglineVisible] = useScrollAnimation();
+  const [formTitleRef, formTitleVisible] = useScrollAnimation();
+  const [formDescRef, formDescVisible] = useScrollAnimation();
+  const [formRef, formVisible] = useScrollAnimation();
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -106,7 +113,10 @@ const Appointment = ({ t }) => {
       {/* Appointment Hero Section */}
       <section className="appointment-hero">
         <div className="hero-content">
-          <h1>
+          <h1 
+            ref={heroTitleRef}
+            className={`scroll-animate ${heroTitleVisible ? 'animate-in' : ''}`}
+          >
             <span data-en="BOOK YOUR" data-sq="REZERVONI">
               {t('BOOK YOUR', 'REZERVONI')}
             </span>
@@ -115,7 +125,12 @@ const Appointment = ({ t }) => {
               {t('APPOINTMENT', 'TAKIMIN TUAJ')}
             </span>
           </h1>
-          <p className="tagline" data-en="TAKE THE FIRST STEP TOWARD RECOVERY" data-sq="BËNI HAPIN E PARË DREJT RIMËKËMBJES">
+          <p 
+            ref={heroTaglineRef}
+            className={`tagline scroll-animate scroll-animate-stagger-2 ${heroTaglineVisible ? 'animate-in' : ''}`}
+            data-en="TAKE THE FIRST STEP TOWARD RECOVERY" 
+            data-sq="BËNI HAPIN E PARË DREJT RIMËKËMBJES"
+          >
             {t('TAKE THE FIRST STEP TOWARD RECOVERY', 'BËNI HAPIN E PARË DREJT RIMËKËMBJES')}
           </p>
         </div>
@@ -125,10 +140,20 @@ const Appointment = ({ t }) => {
       <section className="booking-section">
         <div className="container">
           <div className="form-container">
-            <h1 data-en="Schedule Your Appointment" data-sq="Planifikoni Takimin Tuaj">
+            <h1 
+              ref={formTitleRef}
+              className={`scroll-animate ${formTitleVisible ? 'animate-in' : ''}`}
+              data-en="Schedule Your Appointment" 
+              data-sq="Planifikoni Takimin Tuaj"
+            >
               {t('Schedule Your Appointment', 'Planifikoni Takimin Tuaj')}
             </h1>
-            <p data-en="Fill out the form below and we'll contact you within 24 hours to confirm your appointment and discuss your specific needs." data-sq="Plotësoni formularin më poshtë dhe ne do t'ju kontaktojmë brenda 24 orëve për të konfirmuar takimin tuaj dhe për të diskutuar nevojat tuaja specifike.">
+            <p 
+              ref={formDescRef}
+              className={`scroll-animate scroll-animate-stagger-1 ${formDescVisible ? 'animate-in' : ''}`}
+              data-en="Fill out the form below and we'll contact you within 24 hours to confirm your appointment and discuss your specific needs." 
+              data-sq="Plotësoni formularin më poshtë dhe ne do t'ju kontaktojmë brenda 24 orëve për të konfirmuar takimin tuaj dhe për të diskutuar nevojat tuaja specifike."
+            >
               {t(
                 'Fill out the form below and we\'ll contact you within 24 hours to confirm your appointment and discuss your specific needs.',
                 'Plotësoni formularin më poshtë dhe ne do t\'ju kontaktojmë brenda 24 orëve për të konfirmuar takimin tuaj dhe për të diskutuar nevojat tuaja specifike.'
@@ -141,7 +166,11 @@ const Appointment = ({ t }) => {
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="appointment-form">
+            <form 
+              ref={formRef}
+              onSubmit={handleSubmit} 
+              className={`appointment-form scroll-animate-scale scroll-animate-stagger-2 ${formVisible ? 'animate-in' : ''}`}
+            >
               <div className="form-row">
                 <div className="form-group">
                   <label htmlFor="firstName" data-en="First Name *" data-sq="Emri *">

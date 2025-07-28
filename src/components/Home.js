@@ -1,13 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import useScrollAnimation from '../hooks/useScrollAnimation';
 
 const Home = ({ t }) => {
+  const [titleRef, titleVisible] = useScrollAnimation();
+  const [subtitleRef, subtitleVisible] = useScrollAnimation();
+  const [videoContentRef, videoContentVisible] = useScrollAnimation();
+  const [servicesHeaderRef, servicesHeaderVisible] = useScrollAnimation();
+  const [service1Ref, service1Visible] = useScrollAnimation();
+  const [service2Ref, service2Visible] = useScrollAnimation();
+  const [service3Ref, service3Visible] = useScrollAnimation();
+  const [service4Ref, service4Visible] = useScrollAnimation();
+  const [ctaRef, ctaVisible] = useScrollAnimation();
+
   return (
     <div>
       {/* Hero Section */}
       <section className="hero">
         <div className="hero-content">
-          <h1 className="hero-title">
+          <h1 
+            ref={titleRef}
+            className={`hero-title scroll-animate ${titleVisible ? 'animate-in' : ''}`}
+          >
             <span data-en="FLEX    WELL" data-sq="FLEX    WELL">
               {t('FLEX    WELL', 'FLEX    WELL')}
             </span>
@@ -16,7 +30,12 @@ const Home = ({ t }) => {
               {t('PHYSIOTHERAPY', 'FIZIOTERAPI')}
             </span>
           </h1>
-          <p className="hero-subtitle" data-en="RESTORE YOUR MOVEMENT" data-sq="RIKTHENI LËVIZJEN TUAJ">
+          <p 
+            ref={subtitleRef}
+            className={`hero-subtitle scroll-animate scroll-animate-stagger-2 ${subtitleVisible ? 'animate-in' : ''}`}
+            data-en="RESTORE YOUR MOVEMENT" 
+            data-sq="RIKTHENI LËVIZJEN TUAJ"
+          >
             {t('RESTORE YOUR MOVEMENT', 'RIKTHENI LËVIZJEN TUAJ')}
           </p>
         </div>
@@ -32,11 +51,14 @@ const Home = ({ t }) => {
             loop 
             playsInline
           >
-            <source src="/assets/20250725_0110_Luxurious Clinic Reception_simple_compose_01k0zb752we978jb9esamq3pzq.mp4" type="video/mp4" />
+            <source src="/assets/reception.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
           <div className="video-overlay"></div>
-          <div className="video-content">
+          <div 
+            ref={videoContentRef}
+            className={`video-content scroll-animate-scale ${videoContentVisible ? 'animate-in' : ''}`}
+          >
             <h2 data-en="WELCOME" data-sq="MIRËSEVINI">
               {t('WELCOME', 'MIRËSEVINI')}
             </h2>
@@ -50,11 +72,19 @@ const Home = ({ t }) => {
       {/* Services Preview Section */}
       <section className="services-preview">
         <div className="container">
-          <h2 data-en="OUR SERVICES" data-sq="SHËRBIMET TONA">
+          <h2 
+            ref={servicesHeaderRef}
+            className={`scroll-animate ${servicesHeaderVisible ? 'animate-in' : ''}`}
+            data-en="OUR SERVICES" 
+            data-sq="SHËRBIMET TONA"
+          >
             {t('OUR SERVICES', 'SHËRBIMET TONA')}
           </h2>
           <div className="services-grid">
-            <div className="service-card">
+            <div 
+              ref={service1Ref}
+              className={`service-card service-card-animate scroll-animate-stagger-1 ${service1Visible ? 'animate-in' : ''}`}
+            >
               <h3 data-en="Manual Therapy" data-sq="Terapia Manuale">
                 {t('Manual Therapy', 'Terapia Manuale')}
               </h3>
@@ -65,7 +95,10 @@ const Home = ({ t }) => {
                 )}
               </p>
             </div>
-            <div className="service-card">
+            <div 
+              ref={service2Ref}
+              className={`service-card service-card-animate scroll-animate-stagger-2 ${service2Visible ? 'animate-in' : ''}`}
+            >
               <h3 data-en="Exercise Therapy" data-sq="Terapia e Ushtrimeve">
                 {t('Exercise Therapy', 'Terapia e Ushtrimeve')}
               </h3>
@@ -76,7 +109,10 @@ const Home = ({ t }) => {
                 )}
               </p>
             </div>
-            <div className="service-card">
+            <div 
+              ref={service3Ref}
+              className={`service-card service-card-animate scroll-animate-stagger-3 ${service3Visible ? 'animate-in' : ''}`}
+            >
               <h3 data-en="Pain Management" data-sq="Menaxhimi i Dhimbjes">
                 {t('Pain Management', 'Menaxhimi i Dhimbjes')}
               </h3>
@@ -87,7 +123,10 @@ const Home = ({ t }) => {
                 )}
               </p>
             </div>
-            <div className="service-card">
+            <div 
+              ref={service4Ref}
+              className={`service-card service-card-animate scroll-animate-stagger-4 ${service4Visible ? 'animate-in' : ''}`}
+            >
               <h3 data-en="Sports Rehabilitation" data-sq="Rehabilitimi Sportiv">
                 {t('Sports Rehabilitation', 'Rehabilitimi Sportiv')}
               </h3>
@@ -126,7 +165,10 @@ const Home = ({ t }) => {
         </video>
         <div className="cta-video-overlay"></div>
         <div className="container">
-          <div className="cta-content">
+          <div 
+            ref={ctaRef}
+            className={`cta-content scroll-animate-scale ${ctaVisible ? 'animate-in' : ''}`}
+          >
             <h2 data-en="Ready to Begin Your Recovery?" data-sq="Gati të Filloni Rimëkëmbjen Tuaj?">
               {t('Ready to Begin Your Recovery?', 'Gati të Filloni Rimëkëmbjen Tuaj?')}
             </h2>

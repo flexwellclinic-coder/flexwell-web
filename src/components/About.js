@@ -1,12 +1,34 @@
 import React from 'react';
+import useScrollAnimation from '../hooks/useScrollAnimation';
 
 const About = ({ t }) => {
+  const [heroTitleRef, heroTitleVisible] = useScrollAnimation();
+  const [heroTaglineRef, heroTaglineVisible] = useScrollAnimation();
+  const [storyTitleRef, storyTitleVisible] = useScrollAnimation();
+  const [storyP1Ref, storyP1Visible] = useScrollAnimation();
+  const [storyP2Ref, storyP2Visible] = useScrollAnimation();
+  const [storyP3Ref, storyP3Visible] = useScrollAnimation();
+  const [teamTitleRef, teamTitleVisible] = useScrollAnimation();
+  const [member1Ref, member1Visible] = useScrollAnimation();
+  const [member2Ref, member2Visible] = useScrollAnimation();
+  const [member3Ref, member3Visible] = useScrollAnimation();
+  const [faqTitleRef, faqTitleVisible] = useScrollAnimation();
+  const [faq1Ref, faq1Visible] = useScrollAnimation();
+  const [faq2Ref, faq2Visible] = useScrollAnimation();
+  const [faq3Ref, faq3Visible] = useScrollAnimation();
+  const [faq4Ref, faq4Visible] = useScrollAnimation();
+  const [contactTitleRef, contactTitleVisible] = useScrollAnimation();
+  const [contactGridRef, contactGridVisible] = useScrollAnimation();
+
   return (
     <div>
       {/* About Hero Section */}
       <section className="about-hero">
         <div className="hero-content">
-          <h1>
+          <h1 
+            ref={heroTitleRef}
+            className={`scroll-animate ${heroTitleVisible ? 'animate-in' : ''}`}
+          >
             <span data-en="ABOUT" data-sq="RRETH">
               {t('ABOUT', 'RRETH')}
             </span>
@@ -15,7 +37,12 @@ const About = ({ t }) => {
               {t('FLEX    WELL', 'FLEX    WELL')}
             </span>
           </h1>
-          <p className="tagline" data-en="YOUR TRUSTED PHYSIOTHERAPY PARTNER" data-sq="PARTNERI JUAJ I BESUAR I FIZIOTERAPISË">
+          <p 
+            ref={heroTaglineRef}
+            className={`tagline scroll-animate scroll-animate-stagger-2 ${heroTaglineVisible ? 'animate-in' : ''}`}
+            data-en="YOUR TRUSTED PHYSIOTHERAPY PARTNER" 
+            data-sq="PARTNERI JUAJ I BESUAR I FIZIOTERAPISË"
+          >
             {t('YOUR TRUSTED PHYSIOTHERAPY PARTNER', 'PARTNERI JUAJ I BESUAR I FIZIOTERAPISË')}
           </p>
         </div>
@@ -25,22 +52,42 @@ const About = ({ t }) => {
       <section className="story-section">
         <div className="container">
           <div className="story-content">
-            <h2 data-en="Our Story" data-sq="Historia Jonë">
+            <h2 
+              ref={storyTitleRef}
+              className={`scroll-animate ${storyTitleVisible ? 'animate-in' : ''}`}
+              data-en="Our Story" 
+              data-sq="Historia Jonë"
+            >
               {t('Our Story', 'Historia Jonë')}
             </h2>
-            <p data-en="Flex    Well Physiotherapy was founded with a simple yet powerful vision: to help every individual achieve their optimal physical potential. Located in the vibrant heart of Dublin, our clinic has become a trusted destination for those seeking expert physiotherapy care." data-sq="Flex    Well Physiotherapy u themelua me një vizion të thjeshtë por të fuqishëm: t'i ndihmojë çdo individ të arrijë potencialin e tyre optimal fizik. I vendosur në zemrën e gjallë të Dublinit, klinika jonë është bërë një destinacion i besuar për ata që kërkojnë kujdes ekspert fizioterapie.">
+            <p 
+              ref={storyP1Ref}
+              className={`scroll-animate scroll-animate-stagger-1 ${storyP1Visible ? 'animate-in' : ''}`}
+              data-en="Flex    Well Physiotherapy was founded with a simple yet powerful vision: to help every individual achieve their optimal physical potential. Located in the vibrant heart of Dublin, our clinic has become a trusted destination for those seeking expert physiotherapy care." 
+              data-sq="Flex    Well Physiotherapy u themelua me një vizion të thjeshtë por të fuqishëm: t'i ndihmojë çdo individ të arrijë potencialin e tyre optimal fizik. I vendosur në zemrën e gjallë të Dublinit, klinika jonë është bërë një destinacion i besuar për ata që kërkojnë kujdes ekspert fizioterapie."
+            >
               {t(
                 'Flex    Well Physiotherapy was founded with a simple yet powerful vision: to help every individual achieve their optimal physical potential. Located in the vibrant heart of Dublin, our clinic has become a trusted destination for those seeking expert physiotherapy care.',
                 'Flex    Well Physiotherapy u themelua me një vizion të thjeshtë por të fuqishëm: t\'i ndihmojë çdo individ të arrijë potencialin e tyre optimal fizik. I vendosur në zemrën e gjallë të Dublinit, klinika jonë është bërë një destinacion i besuar për ata që kërkojnë kujdes ekspert fizioterapie.'
               )}
             </p>
-            <p data-en="We believe that movement is medicine, and every person deserves to live without pain or physical limitations. Our approach combines cutting-edge techniques with time-tested methods, ensuring that each patient receives personalized care tailored to their unique needs and goals." data-sq="Ne besojmë se lëvizja është ilaç, dhe çdo person meriton të jetojë pa dhimbje ose kufizime fizike. Qasja jonë kombinon teknikat më të avancuara me metodat e provuara në kohë, duke siguruar që çdo pacient të marrë kujdes të personalizuar të përshtatur për nevojat dhe qëllimet e tyre unike.">
+            <p 
+              ref={storyP2Ref}
+              className={`scroll-animate scroll-animate-stagger-2 ${storyP2Visible ? 'animate-in' : ''}`}
+              data-en="We believe that movement is medicine, and every person deserves to live without pain or physical limitations. Our approach combines cutting-edge techniques with time-tested methods, ensuring that each patient receives personalized care tailored to their unique needs and goals." 
+              data-sq="Ne besojmë se lëvizja është ilaç, dhe çdo person meriton të jetojë pa dhimbje ose kufizime fizike. Qasja jonë kombinon teknikat më të avancuara me metodat e provuara në kohë, duke siguruar që çdo pacient të marrë kujdes të personalizuar të përshtatur për nevojat dhe qëllimet e tyre unike."
+            >
               {t(
                 'We believe that movement is medicine, and every person deserves to live without pain or physical limitations. Our approach combines cutting-edge techniques with time-tested methods, ensuring that each patient receives personalized care tailored to their unique needs and goals.',
                 'Ne besojmë se lëvizja është ilaç, dhe çdo person meriton të jetojë pa dhimbje ose kufizime fizike. Qasja jonë kombinon teknikat më të avancuara me metodat e provuara në kohë, duke siguruar që çdo pacient të marrë kujdes të personalizuar të përshtatur për nevojat dhe qëllimet e tyre unike.'
               )}
             </p>
-            <p data-en="From weekend warriors to professional athletes, from office workers to active seniors, we've had the privilege of helping thousands of people reclaim their mobility and return to the activities they love." data-sq="Nga luftëtarët e fundjavës tek atletët profesionistë, nga punonjësit e zyrës tek të moshuarit aktiv, ne kemi pasur privilegjin të ndihmojmë mijëra njerëz të rifitojnë lëvizshmërinë e tyre dhe të kthehen në aktivitetet që duan.">
+            <p 
+              ref={storyP3Ref}
+              className={`scroll-animate scroll-animate-stagger-3 ${storyP3Visible ? 'animate-in' : ''}`}
+              data-en="From weekend warriors to professional athletes, from office workers to active seniors, we've had the privilege of helping thousands of people reclaim their mobility and return to the activities they love." 
+              data-sq="Nga luftëtarët e fundjavës tek atletët profesionistë, nga punonjësit e zyrës tek të moshuarit aktiv, ne kemi pasur privilegjin të ndihmojmë mijëra njerëz të rifitojnë lëvizshmërinë e tyre dhe të kthehen në aktivitetet që duan."
+            >
               {t(
                 'From weekend warriors to professional athletes, from office workers to active seniors, we\'ve had the privilege of helping thousands of people reclaim their mobility and return to the activities they love.',
                 'Nga luftëtarët e fundjavës tek atletët profesionistë, nga punonjësit e zyrës tek të moshuarit aktiv, ne kemi pasur privilegjin të ndihmojmë mijëra njerëz të rifitojnë lëvizshmërinë e tyre dhe të kthehen në aktivitetet që duan.'
@@ -53,11 +100,19 @@ const About = ({ t }) => {
       {/* Team Detail Section */}
       <section className="team-detail-section">
         <div className="container">
-          <h2 className="section-title" data-en="Meet Our Expert Team" data-sq="Njihuni me Ekipin Tonë Ekspert">
+          <h2 
+            ref={teamTitleRef}
+            className={`section-title scroll-animate ${teamTitleVisible ? 'animate-in' : ''}`}
+            data-en="Meet Our Expert Team" 
+            data-sq="Njihuni me Ekipin Tonë Ekspert"
+          >
             {t('Meet Our Expert Team', 'Njihuni me Ekipin Tonë Ekspert')}
           </h2>
           <div className="team-members">
-            <div className="team-member-detail">
+            <div 
+              ref={member1Ref}
+              className={`team-member-detail scroll-animate-slide-left scroll-animate-stagger-1 ${member1Visible ? 'animate-in' : ''}`}
+            >
               <div className="member-photo">
                 <div className="placeholder-photo">Dr. Sarah O'Connor</div>
               </div>
@@ -76,7 +131,10 @@ const About = ({ t }) => {
               </div>
             </div>
 
-            <div className="team-member-detail">
+            <div 
+              ref={member2Ref}
+              className={`team-member-detail scroll-animate-slide-right scroll-animate-stagger-2 ${member2Visible ? 'animate-in' : ''}`}
+            >
               <div className="member-photo">
                 <div className="placeholder-photo">Michael Chen</div>
               </div>
@@ -95,7 +153,10 @@ const About = ({ t }) => {
               </div>
             </div>
 
-            <div className="team-member-detail">
+            <div 
+              ref={member3Ref}
+              className={`team-member-detail scroll-animate-slide-left scroll-animate-stagger-3 ${member3Visible ? 'animate-in' : ''}`}
+            >
               <div className="member-photo">
                 <div className="placeholder-photo">Emma Walsh</div>
               </div>
@@ -120,11 +181,19 @@ const About = ({ t }) => {
       {/* FAQ Section */}
       <section className="faq-section">
         <div className="container">
-          <h2 className="section-title" data-en="Frequently Asked Questions" data-sq="Pyetjet e Bëra Shpesh">
+          <h2 
+            ref={faqTitleRef}
+            className={`section-title scroll-animate ${faqTitleVisible ? 'animate-in' : ''}`}
+            data-en="Frequently Asked Questions" 
+            data-sq="Pyetjet e Bëra Shpesh"
+          >
             {t('Frequently Asked Questions', 'Pyetjet e Bëra Shpesh')}
           </h2>
           <div className="faq-grid">
-            <div className="faq-item">
+            <div 
+              ref={faq1Ref}
+              className={`faq-item scroll-animate scroll-animate-stagger-1 ${faq1Visible ? 'animate-in' : ''}`}
+            >
               <h3 data-en="Do I need a referral?" data-sq="A më duhet një dërgim?">
                 {t('Do I need a referral?', 'A më duhet një dërgim?')}
               </h3>
@@ -135,7 +204,10 @@ const About = ({ t }) => {
                 )}
               </p>
             </div>
-            <div className="faq-item">
+            <div 
+              ref={faq2Ref}
+              className={`faq-item scroll-animate scroll-animate-stagger-2 ${faq2Visible ? 'animate-in' : ''}`}
+            >
               <h3 data-en="How long is each session?" data-sq="Sa zgjat çdo seancë?">
                 {t('How long is each session?', 'Sa zgjat çdo seancë?')}
               </h3>
@@ -146,7 +218,10 @@ const About = ({ t }) => {
                 )}
               </p>
             </div>
-            <div className="faq-item">
+            <div 
+              ref={faq3Ref}
+              className={`faq-item scroll-animate scroll-animate-stagger-3 ${faq3Visible ? 'animate-in' : ''}`}
+            >
               <h3 data-en="What should I wear?" data-sq="Çfarë duhet të vesh?">
                 {t('What should I wear?', 'Çfarë duhet të vesh?')}
               </h3>
@@ -157,7 +232,10 @@ const About = ({ t }) => {
                 )}
               </p>
             </div>
-            <div className="faq-item">
+            <div 
+              ref={faq4Ref}
+              className={`faq-item scroll-animate scroll-animate-stagger-4 ${faq4Visible ? 'animate-in' : ''}`}
+            >
               <h3 data-en="Do you accept insurance?" data-sq="A pranoni sigurimin?">
                 {t('Do you accept insurance?', 'A pranoni sigurimin?')}
               </h3>
@@ -175,10 +253,18 @@ const About = ({ t }) => {
       {/* Contact Info Section */}
       <section className="contact-info-section">
         <div className="container">
-          <h2 className="section-title" data-en="Get In Touch" data-sq="Kontaktoni me Ne">
+          <h2 
+            ref={contactTitleRef}
+            className={`section-title scroll-animate ${contactTitleVisible ? 'animate-in' : ''}`}
+            data-en="Get In Touch" 
+            data-sq="Kontaktoni me Ne"
+          >
             {t('Get In Touch', 'Kontaktoni me Ne')}
           </h2>
-          <div className="contact-grid">
+          <div 
+            ref={contactGridRef}
+            className={`contact-grid scroll-animate-scale scroll-animate-stagger-1 ${contactGridVisible ? 'animate-in' : ''}`}
+          >
             <div className="contact-item">
               <h3 data-en="Location" data-sq="Vendndodhja">
                 {t('Location', 'Vendndodhja')}
