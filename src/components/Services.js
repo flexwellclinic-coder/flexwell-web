@@ -1,31 +1,32 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import useScrollAnimation from '../hooks/useScrollAnimation';
+// import useScrollAnimation from '../hooks/useScrollAnimation';
 
 const Services = ({ t }) => {
-  const [heroTitleRef, heroTitleVisible] = useScrollAnimation();
-  const [heroTaglineRef, heroTaglineVisible] = useScrollAnimation();
-  const [servicesTitleRef, servicesTitleVisible] = useScrollAnimation();
-  const [servicesDescRef, servicesDescVisible] = useScrollAnimation();
-  const [service1Ref, service1Visible] = useScrollAnimation();
-  const [service2Ref, service2Visible] = useScrollAnimation();
-  const [service3Ref, service3Visible] = useScrollAnimation();
-  const [service4Ref, service4Visible] = useScrollAnimation();
-  const [service5Ref, service5Visible] = useScrollAnimation();
-  const [service6Ref, service6Visible] = useScrollAnimation();
-  const [modalitiesTitleRef, modalitiesTitleVisible] = useScrollAnimation();
-  const [modalitiesDescRef, modalitiesDescVisible] = useScrollAnimation();
-  const [modality1Ref, modality1Visible] = useScrollAnimation();
-  const [modality2Ref, modality2Visible] = useScrollAnimation();
-  const [modality3Ref, modality3Visible] = useScrollAnimation();
-  const [modality4Ref, modality4Visible] = useScrollAnimation();
-  const [facilitiesTitleRef, facilitiesTitleVisible] = useScrollAnimation();
-  const [facilitiesDescRef, facilitiesDescVisible] = useScrollAnimation();
-  const [facility1Ref, facility1Visible] = useScrollAnimation();
-  const [facility2Ref, facility2Visible] = useScrollAnimation();
-  const [facility3Ref, facility3Visible] = useScrollAnimation();
-  const [facility4Ref, facility4Visible] = useScrollAnimation();
-  const [ctaRef, ctaVisible] = useScrollAnimation();
+  // Temporarily disabled scroll animations for build fix
+  // const [heroTitleRef, heroTitleVisible] = useScrollAnimation();
+  // const [heroTaglineRef, heroTaglineVisible] = useScrollAnimation();
+  // const [servicesTitleRef, servicesTitleVisible] = useScrollAnimation();
+  // const [servicesDescRef, servicesDescVisible] = useScrollAnimation();
+  // const [service1Ref, service1Visible] = useScrollAnimation();
+  // const [service2Ref, service2Visible] = useScrollAnimation();
+  // const [service3Ref, service3Visible] = useScrollAnimation();
+  // const [service4Ref, service4Visible] = useScrollAnimation();
+  // const [service5Ref, service5Visible] = useScrollAnimation();
+  // const [service6Ref, service6Visible] = useScrollAnimation();
+  // const [modalitiesTitleRef, modalitiesTitleVisible] = useScrollAnimation();
+  // const [modalitiesDescRef, modalitiesDescVisible] = useScrollAnimation();
+  // const [modality1Ref, modality1Visible] = useScrollAnimation();
+  // const [modality2Ref, modality2Visible] = useScrollAnimation();
+  // const [modality3Ref, modality3Visible] = useScrollAnimation();
+  // const [modality4Ref, modality4Visible] = useScrollAnimation();
+  // const [facilitiesTitleRef, facilitiesTitleVisible] = useScrollAnimation();
+  // const [facilitiesDescRef, facilitiesDescVisible] = useScrollAnimation();
+  // const [facility1Ref, facility1Visible] = useScrollAnimation();
+  // const [facility2Ref, facility2Visible] = useScrollAnimation();
+  // const [facility3Ref, facility3Visible] = useScrollAnimation();
+  // const [facility4Ref, facility4Visible] = useScrollAnimation();
+  // const [ctaRef, ctaVisible] = useScrollAnimation();
 
   return (
     <div>
@@ -33,8 +34,8 @@ const Services = ({ t }) => {
       <section className="services-hero">
         <div className="hero-content">
           <h1 
-            ref={heroTitleRef}
-            className={`scroll-animate ${heroTitleVisible ? 'animate-in' : ''}`}
+            // ref={heroTitleRef}
+            className="scroll-animate"
           >
             <span data-en="OUR" data-sq="SHËRBIMET">
               {t('OUR', 'SHËRBIMET')}
@@ -45,8 +46,8 @@ const Services = ({ t }) => {
             </span>
           </h1>
           <p 
-            ref={heroTaglineRef}
-            className={`tagline scroll-animate scroll-animate-stagger-2 ${heroTaglineVisible ? 'animate-in' : ''}`}
+            // ref={heroTaglineRef}
+            // className={`tagline scroll-animate scroll-animate-stagger-2 ${heroTaglineVisible ? 'animate-in' : ''}`}
             data-en="COMPREHENSIVE PHYSIOTHERAPY SOLUTIONS" 
             data-sq="ZGJIDHJE GJITHËPËRFSHIRËSE FIZIOTERAPIE"
           >
@@ -60,16 +61,16 @@ const Services = ({ t }) => {
         <div className="container">
           <div className="services-content">
             <h2 
-              ref={servicesTitleRef}
-              className={`scroll-animate ${servicesTitleVisible ? 'animate-in' : ''}`}
+              // ref={servicesTitleRef}
+              // className={`scroll-animate ${servicesTitleVisible ? 'animate-in' : ''}`}
               data-en="Treatment Services" 
               data-sq="Shërbimet e Trajtimit"
             >
               {t('Treatment Services', 'Shërbimet e Trajtimit')}
             </h2>
             <p 
-              ref={servicesDescRef}
-              className={`scroll-animate scroll-animate-stagger-1 ${servicesDescVisible ? 'animate-in' : ''}`}
+              // ref={servicesDescRef}
+              // className={`scroll-animate scroll-animate-stagger-1 ${servicesDescVisible ? 'animate-in' : ''}`}
               data-en="Our comprehensive range of physiotherapy services addresses various conditions and injuries, helping you achieve optimal recovery and performance." 
               data-sq="Gama jonë gjithëpërfshirëse e shërbimeve të fizioterapisë trajton kushte dhe lëndime të ndryshme, duke ju ndihmuar të arrini rimëkëmbje dhe performancë optimale."
             >
@@ -81,8 +82,8 @@ const Services = ({ t }) => {
           </div>
           <div className="services-grid">
             <div 
-              ref={service1Ref}
-              className={`service-card service-card-animate scroll-animate-stagger-1 ${service1Visible ? 'animate-in' : ''}`}
+              // ref={service1Ref}
+              // className={`service-card service-card-animate scroll-animate-stagger-1 ${service1Visible ? 'animate-in' : ''}`}
             >
               <h3 data-en="Manual Therapy" data-sq="Terapia Manuale">
                 {t('Manual Therapy', 'Terapia Manuale')}
@@ -95,8 +96,8 @@ const Services = ({ t }) => {
               </p>
             </div>
             <div 
-              ref={service2Ref}
-              className={`service-card service-card-animate scroll-animate-stagger-2 ${service2Visible ? 'animate-in' : ''}`}
+              // ref={service2Ref}
+              // className={`service-card service-card-animate scroll-animate-stagger-2 ${service2Visible ? 'animate-in' : ''}`}
             >
               <h3 data-en="Exercise Therapy" data-sq="Terapia e Ushtrimeve">
                 {t('Exercise Therapy', 'Terapia e Ushtrimeve')}
@@ -109,8 +110,8 @@ const Services = ({ t }) => {
               </p>
             </div>
             <div 
-              ref={service3Ref}
-              className={`service-card service-card-animate scroll-animate-stagger-3 ${service3Visible ? 'animate-in' : ''}`}
+              // ref={service3Ref}
+              // className={`service-card service-card-animate scroll-animate-stagger-3 ${service3Visible ? 'animate-in' : ''}`}
             >
               <h3 data-en="Sports Rehabilitation" data-sq="Rehabilitimi Sportiv">
                 {t('Sports Rehabilitation', 'Rehabilitimi Sportiv')}
@@ -123,8 +124,8 @@ const Services = ({ t }) => {
               </p>
             </div>
             <div 
-              ref={service4Ref}
-              className={`service-card service-card-animate scroll-animate-stagger-4 ${service4Visible ? 'animate-in' : ''}`}
+              // ref={service4Ref}
+              // className={`service-card service-card-animate scroll-animate-stagger-4 ${service4Visible ? 'animate-in' : ''}`}
             >
               <h3 data-en="Women's Health" data-sq="Shëndeti i Gruas">
                 {t('Women\'s Health', 'Shëndeti i Gruas')}
@@ -137,8 +138,8 @@ const Services = ({ t }) => {
               </p>
             </div>
             <div 
-              ref={service5Ref}
-              className={`service-card service-card-animate scroll-animate-stagger-1 ${service5Visible ? 'animate-in' : ''}`}
+              // ref={service5Ref}
+              // className={`service-card service-card-animate scroll-animate-stagger-1 ${service5Visible ? 'animate-in' : ''}`}
             >
               <h3 data-en="Pain Management" data-sq="Menaxhimi i Dhimbjes">
                 {t('Pain Management', 'Menaxhimi i Dhimbjes')}
@@ -151,8 +152,8 @@ const Services = ({ t }) => {
               </p>
             </div>
             <div 
-              ref={service6Ref}
-              className={`service-card service-card-animate scroll-animate-stagger-2 ${service6Visible ? 'animate-in' : ''}`}
+              // ref={service6Ref}
+              // className={`service-card service-card-animate scroll-animate-stagger-2 ${service6Visible ? 'animate-in' : ''}`}
             >
               <h3 data-en="Post-Surgical Rehabilitation" data-sq="Rehabilitimi Pas-Kirurgjikal">
                 {t('Post-Surgical Rehabilitation', 'Rehabilitimi Pas-Kirurgjikal')}
@@ -173,16 +174,16 @@ const Services = ({ t }) => {
         <div className="container">
           <div className="modalities-content">
             <h2 
-              ref={modalitiesTitleRef}
-              className={`scroll-animate ${modalitiesTitleVisible ? 'animate-in' : ''}`}
+              // ref={modalitiesTitleRef}
+              // className={`scroll-animate ${modalitiesTitleVisible ? 'animate-in' : ''}`}
               data-en="Treatment Modalities" 
               data-sq="Modalitetet e Trajtimit"
             >
               {t('Treatment Modalities', 'Modalitetet e Trajtimit')}
             </h2>
             <p 
-              ref={modalitiesDescRef}
-              className={`scroll-animate scroll-animate-stagger-1 ${modalitiesDescVisible ? 'animate-in' : ''}`}
+              // ref={modalitiesDescRef}
+              // className={`scroll-animate scroll-animate-stagger-1 ${modalitiesDescVisible ? 'animate-in' : ''}`}
               data-en="We utilize the latest evidence-based treatment techniques and state-of-the-art equipment to provide the most effective care." 
               data-sq="Ne përdorim teknikat më të fundit të trajtimit të bazuar në prova dhe pajisje të fundit për të ofruar kujdesin më efektiv."
             >
@@ -194,8 +195,8 @@ const Services = ({ t }) => {
           </div>
           <div className="modalities-grid">
             <div 
-              ref={modality1Ref}
-              className={`modality-item scroll-animate-slide-left scroll-animate-stagger-1 ${modality1Visible ? 'animate-in' : ''}`}
+              // ref={modality1Ref}
+              // className={`modality-item scroll-animate-slide-left scroll-animate-stagger-1 ${modality1Visible ? 'animate-in' : ''}`}
             >
               <h3 data-en="Dry Needling" data-sq="Gjilpërimi i Thatë">
                 {t('Dry Needling', 'Gjilpërimi i Thatë')}
@@ -208,8 +209,8 @@ const Services = ({ t }) => {
               </p>
             </div>
             <div 
-              ref={modality2Ref}
-              className={`modality-item scroll-animate-slide-right scroll-animate-stagger-2 ${modality2Visible ? 'animate-in' : ''}`}
+              // ref={modality2Ref}
+              // className={`modality-item scroll-animate-slide-right scroll-animate-stagger-2 ${modality2Visible ? 'animate-in' : ''}`}
             >
               <h3 data-en="Ultrasound Therapy" data-sq="Terapia me Ultrazë">
                 {t('Ultrasound Therapy', 'Terapia me Ultrazë')}
@@ -222,8 +223,8 @@ const Services = ({ t }) => {
               </p>
             </div>
             <div 
-              ref={modality3Ref}
-              className={`modality-item scroll-animate-slide-left scroll-animate-stagger-3 ${modality3Visible ? 'animate-in' : ''}`}
+              // ref={modality3Ref}
+              // className={`modality-item scroll-animate-slide-left scroll-animate-stagger-3 ${modality3Visible ? 'animate-in' : ''}`}
             >
               <h3 data-en="Electrical Stimulation" data-sq="Stimulimi Elektrik">
                 {t('Electrical Stimulation', 'Stimulimi Elektrik')}
@@ -236,8 +237,8 @@ const Services = ({ t }) => {
               </p>
             </div>
             <div 
-              ref={modality4Ref}
-              className={`modality-item scroll-animate-slide-right scroll-animate-stagger-4 ${modality4Visible ? 'animate-in' : ''}`}
+              // ref={modality4Ref}
+              // className={`modality-item scroll-animate-slide-right scroll-animate-stagger-4 ${modality4Visible ? 'animate-in' : ''}`}
             >
               <h3 data-en="Heat/Cold Therapy" data-sq="Terapia me Nxehtësi/Ftohtësi">
                 {t('Heat/Cold Therapy', 'Terapia me Nxehtësi/Ftohtësi')}
@@ -258,16 +259,16 @@ const Services = ({ t }) => {
         <div className="container">
           <div className="facilities-content">
             <h2 
-              ref={facilitiesTitleRef}
-              className={`scroll-animate ${facilitiesTitleVisible ? 'animate-in' : ''}`}
+              // ref={facilitiesTitleRef}
+              // className={`scroll-animate ${facilitiesTitleVisible ? 'animate-in' : ''}`}
               data-en="Our Facilities" 
               data-sq="Mjediset Tona"
             >
               {t('Our Facilities', 'Mjediset Tona')}
             </h2>
             <p 
-              ref={facilitiesDescRef}
-              className={`scroll-animate scroll-animate-stagger-1 ${facilitiesDescVisible ? 'animate-in' : ''}`}
+              // ref={facilitiesDescRef}
+              // className={`scroll-animate scroll-animate-stagger-1 ${facilitiesDescVisible ? 'animate-in' : ''}`}
               data-en="Our modern clinic features state-of-the-art equipment and comfortable treatment spaces designed to support your recovery journey." 
               data-sq="Klinika jonë moderne ka pajisje të fundit dhe hapësira trajtimi të rehatshme të dizajnuara për të mbështetur udhëtimin tuaj të rimëkëmbjes."
             >
@@ -279,8 +280,8 @@ const Services = ({ t }) => {
           </div>
           <div className="facilities-grid">
             <div 
-              ref={facility1Ref}
-              className={`facility-card scroll-animate-scale scroll-animate-stagger-1 ${facility1Visible ? 'animate-in' : ''}`}
+              // ref={facility1Ref}
+              // className={`facility-card scroll-animate-scale scroll-animate-stagger-1 ${facility1Visible ? 'animate-in' : ''}`}
             >
               <h3 data-en="Treatment Rooms" data-sq="Dhomat e Trajtimit">
                 {t('Treatment Rooms', 'Dhomat e Trajtimit')}
@@ -293,8 +294,8 @@ const Services = ({ t }) => {
               </p>
             </div>
             <div 
-              ref={facility2Ref}
-              className={`facility-card scroll-animate-scale scroll-animate-stagger-2 ${facility2Visible ? 'animate-in' : ''}`}
+              // ref={facility2Ref}
+              // className={`facility-card scroll-animate-scale scroll-animate-stagger-2 ${facility2Visible ? 'animate-in' : ''}`}
             >
               <h3 data-en="Exercise Rehabilitation Area" data-sq="Zona e Rehabilitimit me Ushtrime">
                 {t('Exercise Rehabilitation Area', 'Zona e Rehabilitimit me Ushtrime')}
@@ -307,8 +308,8 @@ const Services = ({ t }) => {
               </p>
             </div>
             <div 
-              ref={facility3Ref}
-              className={`facility-card scroll-animate-scale scroll-animate-stagger-3 ${facility3Visible ? 'animate-in' : ''}`}
+              // ref={facility3Ref}
+              // className={`facility-card scroll-animate-scale scroll-animate-stagger-3 ${facility3Visible ? 'animate-in' : ''}`}
             >
               <h3 data-en="Hydrotherapy Pool" data-sq="Pishina e Hidroterapisë">
                 {t('Hydrotherapy Pool', 'Pishina e Hidroterapisë')}
@@ -321,8 +322,8 @@ const Services = ({ t }) => {
               </p>
             </div>
             <div 
-              ref={facility4Ref}
-              className={`facility-card scroll-animate-scale scroll-animate-stagger-4 ${facility4Visible ? 'animate-in' : ''}`}
+              // ref={facility4Ref}
+              // className={`facility-card scroll-animate-scale scroll-animate-stagger-4 ${facility4Visible ? 'animate-in' : ''}`}
             >
               <h3 data-en="Assessment Laboratory" data-sq="Laboratori i Vlerësimit">
                 {t('Assessment Laboratory', 'Laboratori i Vlerësimit')}
@@ -342,8 +343,8 @@ const Services = ({ t }) => {
       <section className="cta-section">
         <div className="container">
           <div 
-            ref={ctaRef}
-            className={`cta-content scroll-animate-scale ${ctaVisible ? 'animate-in' : ''}`}
+            // ref={ctaRef}
+            // className={`cta-content scroll-animate-scale ${ctaVisible ? 'animate-in' : ''}`}
           >
             <h2 data-en="Ready to Start Your Recovery?" data-sq="Gati të Filloni Rimëkëmbjen Tuaj?">
               {t('Ready to Start Your Recovery?', 'Gati të Filloni Rimëkëmbjen Tuaj?')}

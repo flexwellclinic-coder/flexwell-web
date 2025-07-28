@@ -1,42 +1,38 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import useScrollAnimation from '../hooks/useScrollAnimation';
+// import useScrollAnimation from '../hooks/useScrollAnimation';
 
 const Home = ({ t }) => {
-  const [titleRef, titleVisible] = useScrollAnimation();
-  const [subtitleRef, subtitleVisible] = useScrollAnimation();
-  const [videoContentRef, videoContentVisible] = useScrollAnimation();
-  const [servicesHeaderRef, servicesHeaderVisible] = useScrollAnimation();
-  const [service1Ref, service1Visible] = useScrollAnimation();
-  const [service2Ref, service2Visible] = useScrollAnimation();
-  const [service3Ref, service3Visible] = useScrollAnimation();
-  const [service4Ref, service4Visible] = useScrollAnimation();
-  const [ctaRef, ctaVisible] = useScrollAnimation();
+  // Temporarily disabled scroll animations for build fix
+  // const [titleRef, titleVisible] = useScrollAnimation();
+  // const [subtitleRef, subtitleVisible] = useScrollAnimation();
+  // const [videoContentRef, videoContentVisible] = useScrollAnimation();
+  // const [servicesHeaderRef, servicesHeaderVisible] = useScrollAnimation();
+  // const [service1Ref, service1Visible] = useScrollAnimation();
+  // const [service2Ref, service2Visible] = useScrollAnimation();
+  // const [service3Ref, service3Visible] = useScrollAnimation();
+  // const [service4Ref, service4Visible] = useScrollAnimation();
+  // const [ctaRef, ctaVisible] = useScrollAnimation();
 
   return (
-    <div>
+    <div className="home">
       {/* Hero Section */}
       <section className="hero">
-        <div className="hero-content">
+        <div className="container">
           <h1 
-            ref={titleRef}
-            className={`hero-title scroll-animate ${titleVisible ? 'animate-in' : ''}`}
+            // ref={titleRef}
+            className={`hero-title scroll-animate-fade`}
+            data-en="Welcome to Flex Well"
+            data-sq="Mirësevini në Flex Well"
           >
-            <span data-en="FLEX    WELL" data-sq="FLEX    WELL">
-              {t('FLEX    WELL', 'FLEX    WELL')}
-            </span>
-            <br />
-            <span className="accent" data-en="PHYSIOTHERAPY" data-sq="FIZIOTERAPI">
-              {t('PHYSIOTHERAPY', 'FIZIOTERAPI')}
-            </span>
+            {t('Welcome to Flex Well', 'Mirësevini në Flex Well')}
           </h1>
           <p 
-            ref={subtitleRef}
-            className={`hero-subtitle scroll-animate scroll-animate-stagger-2 ${subtitleVisible ? 'animate-in' : ''}`}
-            data-en="RESTORE YOUR MOVEMENT" 
-            data-sq="RIKTHENI LËVIZJEN TUAJ"
+            // ref={subtitleRef}
+            className={`hero-subtitle scroll-animate-slide-left`}
+            data-en="Your Trusted Physiotherapy and Wellness Partner"
+            data-sq="Partneri Juaj i Besuar për Fizioterapi dhe Mirëqenie"
           >
-            {t('RESTORE YOUR MOVEMENT', 'RIKTHENI LËVIZJEN TUAJ')}
+            {t('Your Trusted Physiotherapy and Wellness Partner', 'Partneri Juaj i Besuar për Fizioterapi dhe Mirëqenie')}
           </p>
         </div>
       </section>
@@ -44,20 +40,20 @@ const Home = ({ t }) => {
       {/* Video Welcome Section */}
       <section className="video-welcome-section">
         <div className="video-container">
-          <video 
-            className="background-video" 
-            autoPlay 
-            muted 
-            loop 
+          <video
+            className="background-video"
+            autoPlay
+            muted
+            loop
             playsInline
           >
-            <source src="/assets/reception.mp4" type="video/mp4" />
+            <source src="/assets/20250725_0110_Luxurious Clinic Reception_simple_compose_01k0zb752we978jb9esamq3pzq.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
           <div className="video-overlay"></div>
           <div 
-            ref={videoContentRef}
-            className={`video-content scroll-animate-scale ${videoContentVisible ? 'animate-in' : ''}`}
+            // ref={videoContentRef}
+            className={`video-content scroll-animate-scale`}
           >
             <h2 data-en="WELCOME" data-sq="MIRËSEVINI">
               {t('WELCOME', 'MIRËSEVINI')}
@@ -69,123 +65,103 @@ const Home = ({ t }) => {
         </div>
       </section>
 
-      {/* Services Preview Section */}
+      {/* Services Preview */}
       <section className="services-preview">
         <div className="container">
           <h2 
-            ref={servicesHeaderRef}
-            className={`scroll-animate ${servicesHeaderVisible ? 'animate-in' : ''}`}
-            data-en="OUR SERVICES" 
-            data-sq="SHËRBIMET TONA"
+            // ref={servicesHeaderRef}
+            className={`scroll-animate-fade`}
+            data-en="Our Specialized Services"
+            data-sq="Shërbimet Tona të Specializuara"
           >
-            {t('OUR SERVICES', 'SHËRBIMET TONA')}
+            {t('Our Specialized Services', 'Shërbimet Tona të Specializuara')}
           </h2>
+          
           <div className="services-grid">
             <div 
-              ref={service1Ref}
-              className={`service-card service-card-animate scroll-animate-stagger-1 ${service1Visible ? 'animate-in' : ''}`}
+              // ref={service1Ref}
+              className={`service-card service-card-animate`}
             >
+              <div className="service-icon">🩺</div>
+              <h3 data-en="Initial Consultation" data-sq="Konsultimi Fillestar">
+                {t('Initial Consultation', 'Konsultimi Fillestar')}
+              </h3>
+              <p data-en="Comprehensive assessment and personalized treatment plan" data-sq="Vlerësim gjithëpërfshirës dhe plan trajtimi të personalizuar">
+                {t('Comprehensive assessment and personalized treatment plan', 'Vlerësim gjithëpërfshirës dhe plan trajtimi të personalizuar')}
+              </p>
+            </div>
+            
+            <div 
+              // ref={service2Ref}
+              className={`service-card service-card-animate`}
+            >
+              <div className="service-icon">🤲</div>
               <h3 data-en="Manual Therapy" data-sq="Terapia Manuale">
                 {t('Manual Therapy', 'Terapia Manuale')}
               </h3>
-              <p data-en="Hands-on techniques to restore movement and reduce pain through specialized manipulation and mobilization." data-sq="Teknika praktike për të rikthyer lëvizjen dhe për të reduktuar dhimbjen përmes manipulimit dhe mobilizimit të specializuar.">
-                {t(
-                  'Hands-on techniques to restore movement and reduce pain through specialized manipulation and mobilization.',
-                  'Teknika praktike për të rikthyer lëvizjen dhe për të reduktuar dhimbjen përmes manipulimit dhe mobilizimit të specializuar.'
-                )}
+              <p data-en="Hands-on techniques for pain relief and mobility improvement" data-sq="Teknika me dorë për lehtësimin e dhimbjes dhe përmirësimin e lëvizshmërisë">
+                {t('Hands-on techniques for pain relief and mobility improvement', 'Teknika me dorë për lehtësimin e dhimbjes dhe përmirësimin e lëvizshmërisë')}
               </p>
             </div>
+            
             <div 
-              ref={service2Ref}
-              className={`service-card service-card-animate scroll-animate-stagger-2 ${service2Visible ? 'animate-in' : ''}`}
+              // ref={service3Ref}
+              className={`service-card service-card-animate`}
             >
-              <h3 data-en="Exercise Therapy" data-sq="Terapia e Ushtrimeve">
-                {t('Exercise Therapy', 'Terapia e Ushtrimeve')}
+              <div className="service-icon">🏃‍♂️</div>
+              <h3 data-en="Exercise Therapy" data-sq="Terapia me Ushtrime">
+                {t('Exercise Therapy', 'Terapia me Ushtrime')}
               </h3>
-              <p data-en="Customized exercise programs designed to strengthen, stabilize, and improve your functional capacity." data-sq="Programe ushtrimesh të personalizuara të dizajnuara për të forcuar, stabilizuar dhe përmirësuar kapacitetin tuaj funksional.">
-                {t(
-                  'Customized exercise programs designed to strengthen, stabilize, and improve your functional capacity.',
-                  'Programe ushtrimesh të personalizuara të dizajnuara për të forcuar, stabilizuar dhe përmirësuar kapacitetin tuaj funksional.'
-                )}
+              <p data-en="Customized exercise programs for strength and recovery" data-sq="Programe ushtrimesh të personalizuara për forcë dhe rikuperim">
+                {t('Customized exercise programs for strength and recovery', 'Programe ushtrimesh të personalizuara për forcë dhe rikuperim')}
               </p>
             </div>
+            
             <div 
-              ref={service3Ref}
-              className={`service-card service-card-animate scroll-animate-stagger-3 ${service3Visible ? 'animate-in' : ''}`}
+              // ref={service4Ref}
+              className={`service-card service-card-animate`}
             >
-              <h3 data-en="Pain Management" data-sq="Menaxhimi i Dhimbjes">
-                {t('Pain Management', 'Menaxhimi i Dhimbjes')}
+              <div className="service-icon">⚽</div>
+              <h3 data-en="Sports Rehabilitation" data-sq="Rihabilitimi Sportiv">
+                {t('Sports Rehabilitation', 'Rihabilitimi Sportiv')}
               </h3>
-              <p data-en="Comprehensive approach to chronic and acute pain using evidence-based treatment methods." data-sq="Qasje gjithëpërfshirëse ndaj dhimbjes kronike dhe akute duke përdorur metoda trajtimi të bazuara në prova.">
-                {t(
-                  'Comprehensive approach to chronic and acute pain using evidence-based treatment methods.',
-                  'Qasje gjithëpërfshirëse ndaj dhimbjes kronike dhe akute duke përdorur metoda trajtimi të bazuara në prova.'
-                )}
+              <p data-en="Specialized care for athletic injuries and performance" data-sq="Kujdes i specializuar për lëndimet atletike dhe performancën">
+                {t('Specialized care for athletic injuries and performance', 'Kujdes i specializuar për lëndimet atletike dhe performancën')}
               </p>
             </div>
-            <div 
-              ref={service4Ref}
-              className={`service-card service-card-animate scroll-animate-stagger-4 ${service4Visible ? 'animate-in' : ''}`}
-            >
-              <h3 data-en="Sports Rehabilitation" data-sq="Rehabilitimi Sportiv">
-                {t('Sports Rehabilitation', 'Rehabilitimi Sportiv')}
-              </h3>
-              <p data-en="Specialized recovery programs for athletes to return to peak performance safely and efficiently." data-sq="Programe rimëkëmbjeje të specializuara për atletët për t'u kthyer në performancën maksimale në mënyrë të sigurt dhe efikase.">
-                {t(
-                  'Specialized recovery programs for athletes to return to peak performance safely and efficiently.',
-                  'Programe rimëkëmbjeje të specializuara për atletët për t\'u kthyer në performancën maksimale në mënyrë të sigurt dhe efikase.'
-                )}
-              </p>
-            </div>
-          </div>
-          <div className="services-cta">
-            <Link 
-              to="/services" 
-              className="cta-btn"
-              data-en="VIEW ALL SERVICES" 
-              data-sq="SHIKO TË GJITHA SHËRBIMET"
-            >
-              {t('VIEW ALL SERVICES', 'SHIKO TË GJITHA SHËRBIMET')}
-            </Link>
           </div>
         </div>
       </section>
 
-      {/* Call to Action Section */}
+      {/* Call to Action */}
       <section className="cta-section">
-        <video 
-          className="cta-background-video" 
-          autoPlay 
-          muted 
-          loop 
+        <video
+          className="cta-background-video"
+          autoPlay
+          muted
+          loop
           playsInline
         >
-          <source src="/assets/Elegant Physiotherapy Room.mp4" type="video/mp4" />
+          <source src="/assets/reception.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         <div className="cta-video-overlay"></div>
         <div className="container">
           <div 
-            ref={ctaRef}
-            className={`cta-content scroll-animate-scale ${ctaVisible ? 'animate-in' : ''}`}
+            // ref={ctaRef}
+            className={`cta-content scroll-animate-scale`}
           >
-            <h2 data-en="Ready to Begin Your Recovery?" data-sq="Gati të Filloni Rimëkëmbjen Tuaj?">
-              {t('Ready to Begin Your Recovery?', 'Gati të Filloni Rimëkëmbjen Tuaj?')}
+            <h2 data-en="Ready to Begin Your Recovery?" data-sq="Gati të Filloni Rikuperimin Tuaj?">
+              {t('Ready to Begin Your Recovery?', 'Gati të Filloni Rikuperimin Tuaj?')}
             </h2>
-            <p data-en="Book your consultation today and take the first step towards optimal movement and pain-free living." data-sq="Rezervoni konsultimin tuaj sot dhe bëni hapin e parë drejt lëvizjes optimale dhe jetesës pa dhimbje.">
-              {t(
-                'Book your consultation today and take the first step towards optimal movement and pain-free living.',
-                'Rezervoni konsultimin tuaj sot dhe bëni hapin e parë drejt lëvizjes optimale dhe jetesës pa dhimbje.'
-              )}
+            <p data-en="Book your appointment today and take the first step towards better health" data-sq="Rezervoni takimin tuaj sot dhe bëni hapin e parë drejt shëndetit më të mirë">
+              {t('Book your appointment today and take the first step towards better health', 'Rezervoni takimin tuaj sot dhe bëni hapin e parë drejt shëndetit më të mirë')}
             </p>
-            <Link 
-              to="/appointment" 
-              className="cta-btn"
-              data-en="BOOK APPOINTMENT" 
-              data-sq="REZERVO TAKIM"
-            >
-              {t('BOOK APPOINTMENT', 'REZERVO TAKIM')}
-            </Link>
+            <a href="/appointment" className="cta-btn">
+              <span data-en="Book Appointment" data-sq="Rezervo Takim">
+                {t('Book Appointment', 'Rezervo Takim')}
+              </span>
+            </a>
           </div>
         </div>
       </section>
