@@ -168,41 +168,113 @@ export const healthCheck = async () => {
 // Fallback for localStorage (if server is down)
 export const localStorageBackup = {
   getAppointments: () => {
-    return JSON.parse(localStorage.getItem('appointments') || '[]');
+    try {
+      return JSON.parse(localStorage.getItem('appointments') || '[]');
+    } catch (error) {
+      console.error('Failed to parse appointments from localStorage:', error);
+      return [];
+    }
   },
   
   saveAppointments: (appointments) => {
-    localStorage.setItem('appointments', JSON.stringify(appointments));
+    try {
+      localStorage.setItem('appointments', JSON.stringify(appointments));
+      return true;
+    } catch (error) {
+      console.error('Failed to save appointments to localStorage:', error);
+      return false;
+    }
   },
   
   addAppointment: (appointment) => {
-    const appointments = localStorageBackup.getAppointments();
-    const newAppointment = {
-      ...appointment,
-      _id: Date.now().toString(),
-      createdAt: new Date().toISOString()
-    };
-    appointments.push(newAppointment);
-    localStorageBackup.saveAppointments(appointments);
-    return newAppointment;
+    try {
+      const appointments = localStorageBackup.getAppointments();
+      const newAppointment = {
+        ...appointment,
+        _id: appointment._id || Date.now().toString(),
+        id: appointment.id || Date.now().toString(),
+        status: appointment.status || 'pending',
+        createdAt: appointment.createdAt || new Date().toISOString()
+      };
+      appointments.push(newAppointment);
+      const success = localStorageBackup.saveAppointments(appointments);
+      return success ? newAppointment : null;
+    } catch (error) {
+      console.error('Failed to add appointment:', error);
+      return null;
+    }
   },
   
   updateAppointment: (id, updates) => {
-    const appointments = localStorageBackup.getAppointments();
-    const index = appointments.findIndex(apt => apt._id === id || apt.id === id);
-    if (index !== -1) {
-      appointments[index] = { ...appointments[index], ...updates, updatedAt: new Date().toISOString() };
-      localStorageBackup.saveAppointments(appointments);
-      return appointments[index];
+    try {
+      const appointments = localStorageBackup.getAppointments();
+      const index = appointments.findIndex(apt => 
+        apt._id === id || apt.id === id || 
+        apt._id === id.toString() || apt.id === id.toString()
+      );
+      
+      if (index !== -1) {
+        appointments[index] = { 
+          ...appointments[index], 
+          ...updates, 
+          updatedAt: new Date().toISOString() 
+        };
+        const success = localStorageBackup.saveAppointments(appointments);
+        console.log(`📝 Updated appointment ${id} with status: ${updates.status || 'N/A'} - Success: ${success}`);
+        return success;
+      } else {
+        console.warn(`⚠️ Appointment ${id} not found in localStorage`);
+        return false;
+      }
+    } catch (error) {
+      console.error('Failed to update appointment:', error);
+      return false;
     }
-    return null;
   },
   
   deleteAppointment: (id) => {
-    const appointments = localStorageBackup.getAppointments();
-    const filtered = appointments.filter(apt => apt._id !== id && apt.id !== id);
-    localStorageBackup.saveAppointments(filtered);
-    return true;
+    try {
+      const appointments = localStorageBackup.getAppointments();
+      const filtered = appointments.filter(apt => 
+        apt._id !== id && apt.id !== id &&
+        apt._id !== id.toString() && apt.id !== id.toString()
+      );
+      const success = localStorageBackup.saveAppointments(filtered);
+      console.log(`🗑️ Deleted appointment ${id} - Success: ${success}`);
+      return success;
+    } catch (error) {
+      console.error('Failed to delete appointment:', error);
+      return false;
+    }
+  },
+
+  // Get appointments by status
+  getAppointmentsByStatus: (status) => {
+    try {
+      const appointments = localStorageBackup.getAppointments();
+      return appointments.filter(apt => 
+        apt.status === status || (!apt.status && status === 'pending')
+      );
+    } catch (error) {
+      console.error('Failed to get appointments by status:', error);
+      return [];
+    }
+  },
+
+  // Clear confirmed appointments from pending list
+  removeConfirmedFromPending: () => {
+    try {
+      const appointments = localStorageBackup.getAppointments();
+      const pendingOnly = appointments.filter(apt => 
+        apt.status === 'pending' || !apt.status
+      );
+      const success = localStorageBackup.saveAppointments(pendingOnly);
+      console.log(`🧹 Cleaned up confirmed appointments - Success: ${success}`);
+      return success;
+    } catch (error) {
+      console.error('Failed to clean up appointments:', error);
+      return false;
+    }
   }
 };
 

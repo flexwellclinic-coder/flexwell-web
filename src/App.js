@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './components/Home';
@@ -10,7 +10,17 @@ import Admin from './components/Admin';
 import { useLanguage } from './hooks/useLanguage';
 
 function App() {
+  console.log('App component rendering...'); // Debug log
+  
   const { currentLanguage, updateLanguage, t } = useLanguage();
+
+  console.log('Language hook result:', { currentLanguage, t: !!t }); // Debug log
+
+  // Add error boundary for debugging
+  if (!t) {
+    console.error('Translation function not available');
+    return <div style={{ padding: '20px', textAlign: 'center' }}>Loading translations...</div>;
+  }
 
   return (
     <Router>

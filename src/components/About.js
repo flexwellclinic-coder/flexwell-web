@@ -1,182 +1,156 @@
-// import useScrollAnimation from '../hooks/useScrollAnimation';
 import React from 'react';
+import useScrollAnimation from '../hooks/useScrollAnimation';
 
 const About = ({ t }) => {
-  // Temporarily disabled scroll animations for build fix
-  // const [heroTitleRef, heroTitleVisible] = useScrollAnimation();
-  // const [heroTaglineRef, heroTaglineVisible] = useScrollAnimation();
-  // const [storyTitleRef, storyTitleVisible] = useScrollAnimation();
-  // const [storyP1Ref, storyP1Visible] = useScrollAnimation();
-  // const [storyP2Ref, storyP2Visible] = useScrollAnimation();
-  // const [storyP3Ref, storyP3Visible] = useScrollAnimation();
-  // const [teamTitleRef, teamTitleVisible] = useScrollAnimation();
-  // const [member1Ref, member1Visible] = useScrollAnimation();
-  // const [member2Ref, member2Visible] = useScrollAnimation();
-  // const [member3Ref, member3Visible] = useScrollAnimation();
-  // const [faqTitleRef, faqTitleVisible] = useScrollAnimation();
-  // const [faq1Ref, faq1Visible] = useScrollAnimation();
-  // const [faq2Ref, faq2Visible] = useScrollAnimation();
-  // const [faq3Ref, faq3Visible] = useScrollAnimation();
-  // const [faq4Ref, faq4Visible] = useScrollAnimation();
-  // const [contactTitleRef, contactTitleVisible] = useScrollAnimation();
-  // const [contactGridRef, contactGridVisible] = useScrollAnimation();
+  const [heroRef, heroVisible] = useScrollAnimation();
+  const [storyRef, storyVisible] = useScrollAnimation();
+  const [valuesRef, valuesVisible] = useScrollAnimation();
+  const [teamRef, teamVisible] = useScrollAnimation();
+  const [faqRef, faqVisible] = useScrollAnimation();
+  const [ctaRef, ctaVisible] = useScrollAnimation();
 
   return (
     <div className="about">
       {/* Hero Section */}
-      <section className="hero">
-        <div className="hero-content">
-          <h1 
-            // ref={heroTitleRef}
-            className="scroll-animate"
-          >
-            <span data-en="ABOUT" data-sq="RRETH">
-              {t('ABOUT', 'RRETH')}
-            </span>
-            <br />
-            <span className="accent" data-en="FLEX    WELL" data-sq="FLEX    WELL">
-              {t('FLEX    WELL', 'FLEX    WELL')}
-            </span>
-          </h1>
-          <p 
-            // ref={heroTaglineRef}
-            className="tagline scroll-animate scroll-animate-stagger-2"
-            data-en="YOUR TRUSTED PHYSIOTHERAPY PARTNER" 
-            data-sq="PARTNERI JUAJ I BESUAR I FIZIOTERAPISË"
-          >
-            {t('YOUR TRUSTED PHYSIOTHERAPY PARTNER', 'PARTNERI JUAJ I BESUAR I FIZIOTERAPISË')}
-          </p>
-        </div>
-      </section>
-
-      {/* Our Story Section */}
-      <section className="our-story">
+      <section className="about-hero">
         <div className="container">
-          <div className="story-content">
-            <h2 
-              // ref={storyTitleRef}
-              className="scroll-animate"
-              data-en="Our Story" 
-              data-sq="Historia Jonë"
-            >
-              {t('Our Story', 'Historia Jonë')}
-            </h2>
-            <p 
-              // ref={storyP1Ref}
-              className="scroll-animate scroll-animate-stagger-1"
-              data-en="Flex    Well Physiotherapy was founded with a simple yet powerful vision: to help every individual achieve their optimal physical potential. Located in the vibrant heart of Dublin, our clinic has become a trusted destination for those seeking expert physiotherapy care." 
-              data-sq="Flex    Well Physiotherapy u themelua me një vizion të thjeshtë por të fuqishëm: t'i ndihmojë çdo individ të arrijë potencialin e tyre optimal fizik. I vendosur në zemrën e gjallë të Dublinit, klinika jonë është bërë një destinacion i besuar për ata që kërkojnë kujdes ekspert fizioterapie."
-            >
-              {t(
-                'Flex    Well Physiotherapy was founded with a simple yet powerful vision: to help every individual achieve their optimal physical potential. Located in the vibrant heart of Dublin, our clinic has become a trusted destination for those seeking expert physiotherapy care.',
-                'Flex    Well Physiotherapy u themelua me një vizion të thjeshtë por të fuqishëm: t\'i ndihmojë çdo individ të arrijë potencialin e tyre optimal fizik. I vendosur në zemrën e gjallë të Dublinit, klinika jonë është bërë një destinacion i besuar për ata që kërkojnë kujdes ekspert fizioterapie.'
-              )}
-            </p>
-            <p 
-              // ref={storyP2Ref}
-              className="scroll-animate scroll-animate-stagger-2"
-              data-en="We believe that movement is medicine, and every person deserves to live without pain or physical limitations. Our approach combines cutting-edge techniques with time-tested methods, ensuring that each patient receives personalized care tailored to their unique needs and goals." 
-              data-sq="Ne besojmë se lëvizja është ilaç, dhe çdo person meriton të jetojë pa dhimbje ose kufizime fizike. Qasja jonë kombinon teknikat më të avancuara me metodat e provuara në kohë, duke siguruar që çdo pacient të marrë kujdes të personalizuar të përshtatur për nevojat dhe qëllimet e tyre unike."
-            >
-              {t(
-                'We believe that movement is medicine, and every person deserves to live without pain or physical limitations. Our approach combines cutting-edge techniques with time-tested methods, ensuring that each patient receives personalized care tailored to their unique needs and goals.',
-                'Ne besojmë se lëvizja është ilaç, dhe çdo person meriton të jetojë pa dhimbje ose kufizime fizike. Qasja jonë kombinon teknikat më të avancuara me metodat e provuara në kohë, duke siguruar që çdo pacient të marrë kujdes të personalizuar të përshtatur për nevojat dhe qëllimet e tyre unike.'
-              )}
-            </p>
-            <p 
-              // ref={storyP3Ref}
-              className="scroll-animate scroll-animate-stagger-3"
-              data-en="From weekend warriors to professional athletes, from office workers to active seniors, we've had the privilege of helping thousands of people reclaim their mobility and return to the activities they love." 
-              data-sq="Nga luftëtarët e fundjavës tek atletët profesionistë, nga punonjësit e zyrës tek të moshuarit aktiv, ne kemi pasur privilegjin të ndihmojmë mijëra njerëz të rifitojnë lëvizshmërinë e tyre dhe të kthehen në aktivitetet që duan."
-            >
-              {t(
-                'From weekend warriors to professional athletes, from office workers to active seniors, we\'ve had the privilege of helping thousands of people reclaim their mobility and return to the activities they love.',
-                'Nga luftëtarët e fundjavës tek atletët profesionistë, nga punonjësit e zyrës tek të moshuarit aktiv, ne kemi pasur privilegjin të ndihmojmë mijëra njerëz të rifitojnë lëvizshmërinë e tyre dhe të kthehen në aktivitetet që duan.'
-              )}
+          <div 
+            ref={heroRef}
+            className={`hero-content ${heroVisible ? 'scroll-animate-fade visible' : 'scroll-animate-fade'}`}
+          >
+            <h1 data-en="About Flex Well" data-sq="Rreth Flex Well">
+              {t('About Flex Well', 'Rreth Flex Well')}
+            </h1>
+            <p data-en="Dedicated to helping you achieve optimal health and mobility through expert physiotherapy care." data-sq="Të përkushtuar për t'ju ndihmuar të arrini shëndet dhe lëvizshmëri optimale përmes kujdesit ekspert fizioterapik.">
+              {t('Dedicated to helping you achieve optimal health and mobility through expert physiotherapy care.', 'Të përkushtuar për t\'ju ndihmuar të arrini shëndet dhe lëvizshmëri optimale përmes kujdesit ekspert fizioterapik.')}
             </p>
           </div>
         </div>
       </section>
 
-      {/* Team Section */}
-      <section className="team-section">
+      {/* Our Story */}
+      <section className="our-story">
+        <div className="container">
+          <div 
+            ref={storyRef}
+            className={`story-content ${storyVisible ? 'scroll-animate-slide-up visible' : 'scroll-animate-slide-up'}`}
+          >
+            <div className="story-text">
+              <h2 data-en="Our Story" data-sq="Historia Jonë">
+                {t('Our Story', 'Historia Jonë')}
+              </h2>
+              <p data-en="Founded with a passion for helping people overcome physical challenges and achieve their wellness goals, Flex Well has been serving the Dublin community with excellence in physiotherapy care." data-sq="E themeluar me një pasion për të ndihmuar njerëzit të kapërcejnë sfidat fizike dhe të arrijnë qëllimet e tyre të mirëqenies, Flex Well ka shërbyer komunitetin e Dublinit me përsosmëri në kujdesin fizioterapik.">
+                {t('Founded with a passion for helping people overcome physical challenges and achieve their wellness goals, Flex Well has been serving the Dublin community with excellence in physiotherapy care.', 'E themeluar me një pasion për të ndihmuar njerëzit të kapërcejnë sfidat fizike dhe të arrijnë qëllimet e tyre të mirëqenies, Flex Well ka shërbyer komunitetin e Dublinit me përsosmëri në kujdesin fizioterapik.')}
+              </p>
+              <p data-en="Our approach combines evidence-based treatments with personalized care, ensuring that every patient receives the attention and expertise they deserve." data-sq="Qasja jonë kombinon trajtimet e bazuara në evidenca me kujdesin e personalizuar, duke siguruar që çdo pacient të marrë vëmendjen dhe ekspertizën që meriton.">
+                {t('Our approach combines evidence-based treatments with personalized care, ensuring that every patient receives the attention and expertise they deserve.', 'Qasja jonë kombinon trajtimet e bazuara në evidenca me kujdesin e personalizuar, duke siguruar që çdo pacient të marrë vëmendjen dhe ekspertizën që meriton.')}
+              </p>
+            </div>
+            <div className="story-image">
+              <div className="image-placeholder">
+                <span>🏥</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Values */}
+      <section className="our-values">
         <div className="container">
           <h2 
-            // ref={teamTitleRef}
-            className="section-title scroll-animate"
-            data-en="Meet Our Expert Team" 
-            data-sq="Njihuni me Ekipin Tonë Ekspert"
+            ref={valuesRef}
+            className={`section-title ${valuesVisible ? 'scroll-animate-fade visible' : 'scroll-animate-fade'}`}
+            data-en="Our Values" 
+            data-sq="Vlerat Tona"
           >
-            {t('Meet Our Expert Team', 'Njihuni me Ekipin Tonë Ekspert')}
+            {t('Our Values', 'Vlerat Tona')}
           </h2>
-          <div className="team-members">
-            <div 
-              // ref={member1Ref}
-              className="team-member-detail scroll-animate-slide-left scroll-animate-stagger-1"
-            >
-              <div className="member-photo">
-                <div className="photo-placeholder">👨‍⚕️</div>
-              </div>
-              <div className="member-info">
-                <h3 data-en="Dr. Sarah Mitchell" data-sq="Dr. Sarah Mitchell">
-                  {t('Dr. Sarah Mitchell', 'Dr. Sarah Mitchell')}
-                </h3>
-                <p className="member-title" data-en="Senior Physiotherapist & Clinic Director" data-sq="Fizioterapiste Senior & Drejtoreshë e Klinikës">
-                  {t('Senior Physiotherapist & Clinic Director', 'Fizioterapiste Senior & Drejtoreshë e Klinikës')}
-                </p>
-                <p className="member-description" data-en="With over 15 years of experience, Dr. Mitchell specializes in sports injuries and chronic pain management. She completed her advanced training in manual therapy at Trinity College Dublin and has worked with several professional sports teams. Her patient-centered approach and expertise in movement analysis have helped countless athletes return to peak performance." data-sq="Me mbi 15 vjet përvojë, Dr. Mitchell specializohet në lëndimet sportive dhe menaxhimin e dhimbjes kronike. Ajo përfundoi trajnimin e saj të avancuar në terapi manuale në Trinity College Dublin dhe ka punuar me disa ekipe sportive profesioniste. Qasja e saj e orientuar nga pacienti dhe ekspertiza në analizën e lëvizjes ka ndihmuar atletë të panumërt të kthehen në performancën maksimale.">
-                  {t(
-                    'With over 15 years of experience, Dr. Mitchell specializes in sports injuries and chronic pain management. She completed her advanced training in manual therapy at Trinity College Dublin and has worked with several professional sports teams. Her patient-centered approach and expertise in movement analysis have helped countless athletes return to peak performance.',
-                    'Me mbi 15 vjet përvojë, Dr. Mitchell specializohet në lëndimet sportive dhe menaxhimin e dhimbjes kronike. Ajo përfundoi trajnimin e saj të avancuar në terapi manuale në Trinity College Dublin dhe ka punuar me disa ekipe sportive profesioniste. Qasja e saj e orientuar nga pacienti dhe ekspertiza në analizën e lëvizjes ka ndihmuar atletë të panumërt të kthehen në performancën maksimale.'
-                  )}
-                </p>
-              </div>
+          <div className="values-grid">
+            <div className="value-card">
+              <div className="value-icon">🎯</div>
+              <h3 data-en="Excellence" data-sq="Përsosmëria">
+                {t('Excellence', 'Përsosmëria')}
+              </h3>
+              <p data-en="We strive for the highest standards in everything we do" data-sq="Ne përpiqemi për standardet më të larta në gjithçka që bëjmë">
+                {t('We strive for the highest standards in everything we do', 'Ne përpiqemi për standardet më të larta në gjithçka që bëjmë')}
+              </p>
             </div>
-
-            <div 
-              // ref={member2Ref}
-              className="team-member-detail scroll-animate-slide-right scroll-animate-stagger-2"
-            >
-              <div className="member-photo">
-                <div className="photo-placeholder">👩‍⚕️</div>
-              </div>
-              <div className="member-info">
-                <h3 data-en="James O'Connor" data-sq="James O'Connor">
-                  {t('James O\'Connor', 'James O\'Connor')}
-                </h3>
-                <p className="member-title" data-en="Musculoskeletal Physiotherapist" data-sq="Fizioterapist Muskulo-Skeletor">
-                  {t('Musculoskeletal Physiotherapist', 'Fizioterapist Muskulo-Skeletor')}
-                </p>
-                <p className="member-description" data-en="James brings a unique blend of traditional physiotherapy and modern movement science to his practice. A former professional rugby player, he understands the demands of both competitive sports and everyday activities. His innovative exercise prescription and hands-on manual therapy techniques have made him a sought-after practitioner for both acute injuries and long-term rehabilitation." data-sq="James sjell një përzierje unike të fizioterapisë tradicionale dhe shkencës moderne të lëvizjes në praktikën e tij. Një ish-lojtar profesionist ragbi, ai kupton kërkesat e të dy sporteve konkurruese dhe aktiviteteve të përditshme. Përshkrimi i tij novator i ushtrimeve dhe teknikat praktike të terapisë manuale e kanë bërë atë një praktikant të kërkuar për të dy lëndimet akute dhe rehabilitimin afatgjatë.">
-                  {t(
-                    'James brings a unique blend of traditional physiotherapy and modern movement science to his practice. A former professional rugby player, he understands the demands of both competitive sports and everyday activities. His innovative exercise prescription and hands-on manual therapy techniques have made him a sought-after practitioner for both acute injuries and long-term rehabilitation.',
-                    'James sjell një përzierje unike të fizioterapisë tradicionale dhe shkencës moderne të lëvizjes në praktikën e tij. Një ish-lojtar profesionist ragbi, ai kupton kërkesat e të dy sporteve konkurruese dhe aktiviteteve të përditshme. Përshkrimi i tij novator i ushtrimeve dhe teknikat praktike të terapisë manuale e kanë bërë atë një praktikant të kërkuar për të dy lëndimet akute dhe rehabilitimin afatgjatë.'
-                  )}
-                </p>
-              </div>
+            <div className="value-card">
+              <div className="value-icon">❤️</div>
+              <h3 data-en="Compassion" data-sq="Dhembshuria">
+                {t('Compassion', 'Dhembshuria')}
+              </h3>
+              <p data-en="Every patient is treated with understanding and empathy" data-sq="Çdo pacient trajtohet me kuptim dhe empati">
+                {t('Every patient is treated with understanding and empathy', 'Çdo pacient trajtohet me kuptim dhe empati')}
+              </p>
             </div>
+            <div className="value-card">
+              <div className="value-icon">🔬</div>
+              <h3 data-en="Innovation" data-sq="Inovacioni">
+                {t('Innovation', 'Inovacioni')}
+              </h3>
+              <p data-en="We embrace the latest techniques and technologies" data-sq="Ne përqafojmë teknikat dhe teknologjitë më të fundit">
+                {t('We embrace the latest techniques and technologies', 'Ne përqafojmë teknikat dhe teknologjitë më të fundit')}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            <div 
-              // ref={member3Ref}
-              className="team-member-detail scroll-animate-slide-left scroll-animate-stagger-3"
-            >
-              <div className="member-photo">
-                <div className="photo-placeholder">👩‍⚕️</div>
+      {/* Our Team */}
+      <section className="our-team">
+        <div className="container">
+          <h2 
+            ref={teamRef}
+            className={`section-title ${teamVisible ? 'scroll-animate-fade visible' : 'scroll-animate-fade'}`}
+            data-en="Meet Our Team" 
+            data-sq="Takoni Ekipin Tonë"
+          >
+            {t('Meet Our Team', 'Takoni Ekipin Tonë')}
+          </h2>
+          <div className="team-grid">
+            <div className="team-member">
+              <div className="member-image">
+                <span>👨‍⚕️</span>
               </div>
-              <div className="member-info">
-                <h3 data-en="Dr. Emma Walsh" data-sq="Dr. Emma Walsh">
-                  {t('Dr. Emma Walsh', 'Dr. Emma Walsh')}
-                </h3>
-                <p className="member-title" data-en="Women's Health & Pelvic Floor Specialist" data-sq="Specialiste e Shëndetit të Grave & Dyshemesë Pelvike">
-                  {t('Women\'s Health & Pelvic Floor Specialist', 'Specialiste e Shëndetit të Grave & Dyshemesë Pelvike')}
-                </p>
-                <p className="member-description" data-en="Dr. Walsh is our dedicated women's health specialist, providing expert care for pregnancy-related musculoskeletal issues, postpartum recovery, and pelvic floor dysfunction. Her gentle, empathetic approach combined with evidence-based treatment methods has helped hundreds of women regain confidence in their bodies and return to active, pain-free lives." data-sq="Dr. Walsh është specialistja jonë e dedikuar e shëndetit të grave, duke ofruar kujdes ekspert për çështjet muskulo-skeletore të lidhura me shtatzëninë, rikuperimin pas lindjes dhe disfunksionin e dyshemesë pelvike. Qasja e saj e butë, empatike e kombinuar me metodat e trajtimit të bazuara në prova ka ndihmuar qindra gra të rifitojnë besimin në trupin e tyre dhe të kthehen në jetë aktive, pa dhimbje.">
-                  {t(
-                    'Dr. Walsh is our dedicated women\'s health specialist, providing expert care for pregnancy-related musculoskeletal issues, postpartum recovery, and pelvic floor dysfunction. Her gentle, empathetic approach combined with evidence-based treatment methods has helped hundreds of women regain confidence in their bodies and return to active, pain-free lives.',
-                    'Dr. Walsh është specialistja jonë e dedikuar e shëndetit të grave, duke ofruar kujdes ekspert për çështjet muskulo-skeletore të lidhura me shtatzëninë, rikuperimin pas lindjes dhe disfunksionin e dyshemesë pelvike. Qasja e saj e butë, empatike e kombinuar me metodat e trajtimit të bazuara në prova ka ndihmuar qindra gra të rifitojnë besimin në trupin e tyre dhe të kthehen në jetë aktive, pa dhimbje.'
-                  )}
-                </p>
+              <h3 data-en="Dr. Michael Johnson" data-sq="Dr. Michael Johnson">
+                {t('Dr. Michael Johnson', 'Dr. Michael Johnson')}
+              </h3>
+              <p className="member-title" data-en="Lead Physiotherapist" data-sq="Fizioterapeut Kryesor">
+                {t('Lead Physiotherapist', 'Fizioterapeut Kryesor')}
+              </p>
+              <p data-en="15+ years of experience in sports rehabilitation and manual therapy" data-sq="15+ vjet përvojë në rihabilitimin sportiv dhe terapinë manuale">
+                {t('15+ years of experience in sports rehabilitation and manual therapy', '15+ vjet përvojë në rihabilitimin sportiv dhe terapinë manuale')}
+              </p>
+            </div>
+            <div className="team-member">
+              <div className="member-image">
+                <span>👩‍⚕️</span>
               </div>
+              <h3 data-en="Dr. Sarah Williams" data-sq="Dr. Sarah Williams">
+                {t('Dr. Sarah Williams', 'Dr. Sarah Williams')}
+              </h3>
+              <p className="member-title" data-en="Musculoskeletal Specialist" data-sq="Specialiste e Sistemit Muskuloskeletal">
+                {t('Musculoskeletal Specialist', 'Specialiste e Sistemit Muskuloskeletal')}
+              </p>
+              <p data-en="Expert in treating chronic pain and movement disorders" data-sq="Eksperte në trajtimin e dhimbjes kronike dhe çrregullimeve të lëvizjes">
+                {t('Expert in treating chronic pain and movement disorders', 'Eksperte në trajtimin e dhimbjes kronike dhe çrregullimeve të lëvizjes')}
+              </p>
+            </div>
+            <div className="team-member">
+              <div className="member-image">
+                <span>👨‍⚕️</span>
+              </div>
+              <h3 data-en="Dr. James Chen" data-sq="Dr. James Chen">
+                {t('Dr. James Chen', 'Dr. James Chen')}
+              </h3>
+              <p className="member-title" data-en="Exercise Therapist" data-sq="Terapeut i Ushtrimeve">
+                {t('Exercise Therapist', 'Terapeut i Ushtrimeve')}
+              </p>
+              <p data-en="Specializes in functional movement and injury prevention programs" data-sq="Specializohet në lëvizjen funksionale dhe programet e parandalimit të lëndimeve">
+                {t('Specializes in functional movement and injury prevention programs', 'Specializohet në lëvizjen funksionale dhe programet e parandalimit të lëndimeve')}
+              </p>
             </div>
           </div>
         </div>
@@ -186,116 +160,60 @@ const About = ({ t }) => {
       <section className="faq-section">
         <div className="container">
           <h2 
-            // ref={faqTitleRef}
-            className="section-title scroll-animate"
+            ref={faqRef}
+            className={`section-title ${faqVisible ? 'scroll-animate-fade visible' : 'scroll-animate-fade'}`}
             data-en="Frequently Asked Questions" 
             data-sq="Pyetjet e Bëra Shpesh"
           >
             {t('Frequently Asked Questions', 'Pyetjet e Bëra Shpesh')}
           </h2>
-          <div className="faq-grid">
-            <div 
-              // ref={faq1Ref}
-              className="faq-item scroll-animate scroll-animate-stagger-1"
-            >
-              <h3 data-en="Do I need a referral?" data-sq="A më duhet një dërgim?">
-                {t('Do I need a referral?', 'A më duhet një dërgim?')}
+          <div className="faq-list">
+            <div className="faq-item">
+              <h3 data-en="What should I expect during my first visit?" data-sq="Çfarë duhet të pres gjatë vizitës së parë?">
+                {t('What should I expect during my first visit?', 'Çfarë duhet të pres gjatë vizitës së parë?')}
               </h3>
-              <p data-en="No, you can book directly with us. However, having a referral from your GP may help with insurance coverage." data-sq="Jo, mund të rezervoni drejtpërdrejt me ne. Megjithatë, të kesh një dërgim nga mjeku juaj mund të ndihmojë me mbulimin e sigurimit.">
-                {t(
-                  'No, you can book directly with us. However, having a referral from your GP may help with insurance coverage.',
-                  'Jo, mund të rezervoni drejtpërdrejt me ne. Megjithatë, të kesh një dërgim nga mjeku juaj mund të ndihmojë me mbulimin e sigurimit.'
-                )}
+              <p data-en="Your first visit includes a comprehensive assessment of your condition, medical history review, and development of a personalized treatment plan." data-sq="Vizita juaj e parë përfshin një vlerësim gjithëpërfshirës të gjendjes suaj, rishikim të historisë mjekësore dhe zhvillim të një plani trajtimi të personalizuar.">
+                {t('Your first visit includes a comprehensive assessment of your condition, medical history review, and development of a personalized treatment plan.', 'Vizita juaj e parë përfshin një vlerësim gjithëpërfshirës të gjendjes suaj, rishikim të historisë mjekësore dhe zhvillim të një plani trajtimi të personalizuar.')}
               </p>
             </div>
-            <div 
-              // ref={faq2Ref}
-              className="faq-item scroll-animate scroll-animate-stagger-2"
-            >
-              <h3 data-en="How long is each session?" data-sq="Sa zgjat çdo seancë?">
-                {t('How long is each session?', 'Sa zgjat çdo seancë?')}
+            <div className="faq-item">
+              <h3 data-en="How many sessions will I need?" data-sq="Sa seanca do të më duhen?">
+                {t('How many sessions will I need?', 'Sa seanca do të më duhen?')}
               </h3>
-              <p data-en="Initial consultations are 60 minutes, while follow-up sessions are typically 45 minutes." data-sq="Konsultimet fillestare janë 60 minuta, ndërsa seancët e ndjekjes janë zakonisht 45 minuta.">
-                {t(
-                  'Initial consultations are 60 minutes, while follow-up sessions are typically 45 minutes.',
-                  'Konsultimet fillestare janë 60 minuta, ndërsa seancët e ndjekjes janë zakonisht 45 minuta.'
-                )}
+              <p data-en="The number of sessions varies depending on your condition and goals. We'll discuss this during your assessment and adjust as needed." data-sq="Numri i seancave ndryshon në varësi të gjendjes dhe qëllimeve tuaja. Ne do ta diskutojmë këtë gjatë vlerësimit tuaj dhe do ta rregullojmë sipas nevojës.">
+                {t('The number of sessions varies depending on your condition and goals. We\'ll discuss this during your assessment and adjust as needed.', 'Numri i seancave ndryshon në varësi të gjendjes dhe qëllimeve tuaja. Ne do ta diskutojmë këtë gjatë vlerësimit tuaj dhe do ta rregullojmë sipas nevojës.')}
               </p>
             </div>
-            <div 
-              // ref={faq3Ref}
-              className="faq-item scroll-animate scroll-animate-stagger-3"
-            >
-              <h3 data-en="What should I wear?" data-sq="Çfarë duhet të vesh?">
-                {t('What should I wear?', 'Çfarë duhet të vesh?')}
+            <div className="faq-item">
+              <h3 data-en="Do you accept insurance?" data-sq="A pranoni sigurime?">
+                {t('Do you accept insurance?', 'A pranoni sigurime?')}
               </h3>
-              <p data-en="Comfortable, loose-fitting clothing that allows easy movement. We may need to access the area being treated." data-sq="Rroba të rehatshme, të lështa që lejojnë lëvizje të lehtë. Mund të na duhet të qasemi në zonën që po trajtohet.">
-                {t(
-                  'Comfortable, loose-fitting clothing that allows easy movement. We may need to access the area being treated.',
-                  'Rroba të rehatshme, të lështa që lejojnë lëvizje të lehtë. Mund të na duhet të qasemi në zonën që po trajtohet.'
-                )}
-              </p>
-            </div>
-            <div 
-              // ref={faq4Ref}
-              className="faq-item scroll-animate scroll-animate-stagger-4"
-            >
-              <h3 data-en="Do you accept insurance?" data-sq="A pranoni sigurimin?">
-                {t('Do you accept insurance?', 'A pranoni sigurimin?')}
-              </h3>
-              <p data-en="Yes, we work with most major insurance providers. Please contact us to verify your coverage." data-sq="Po, ne punojmë me shumicën e ofruesve kryesorë të sigurimit. Ju lutemi na kontaktoni për të verifikuar mbulimin tuaj.">
-                {t(
-                  'Yes, we work with most major insurance providers. Please contact us to verify your coverage.',
-                  'Po, ne punojmë me shumicën e ofruesve kryesorë të sigurimit. Ju lutemi na kontaktoni për të verifikuar mbulimin tuaj.'
-                )}
+              <p data-en="Yes, we work with most major insurance providers. Please contact us to verify your coverage." data-sq="Po, ne punojmë me shumicën e ofruesve kryesorë të sigurimit. Ju lutem na kontaktoni për të verifikuar mbulimin tuaj.">
+                {t('Yes, we work with most major insurance providers. Please contact us to verify your coverage.', 'Po, ne punojmë me shumicën e ofruesve kryesorë të sigurimit. Ju lutem na kontaktoni për të verifikuar mbulimin tuaj.')}
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section className="contact-section">
+      {/* Call to Action */}
+      <section className="about-cta">
         <div className="container">
-          <h2 
-            // ref={contactTitleRef}
-            className="section-title scroll-animate"
-            data-en="Get In Touch" 
-            data-sq="Kontaktoni me Ne"
-          >
-            {t('Get In Touch', 'Kontaktoni me Ne')}
-          </h2>
           <div 
-            // ref={contactGridRef}
-            className="contact-grid scroll-animate-scale scroll-animate-stagger-1"
+            ref={ctaRef}
+            className={`cta-content ${ctaVisible ? 'scroll-animate-scale visible' : 'scroll-animate-scale'}`}
           >
-            <div className="contact-item">
-              <div className="contact-icon">📍</div>
-              <h3 data-en="Visit Us" data-sq="Na Vizitoni">
-                {t('Visit Us', 'Na Vizitoni')}
-              </h3>
-              <p data-en="123 Wellness Street, Dublin 2, Ireland" data-sq="123 Wellness Street, Dublin 2, Irlandë">
-                {t('123 Wellness Street, Dublin 2, Ireland', '123 Wellness Street, Dublin 2, Irlandë')}
-              </p>
-            </div>
-            <div className="contact-item">
-              <div className="contact-icon">📞</div>
-              <h3 data-en="Call Us" data-sq="Na Telefononi">
-                {t('Call Us', 'Na Telefononi')}
-              </h3>
-              <p data-en="+353 1 234 5678" data-sq="+353 1 234 5678">
-                {t('+353 1 234 5678', '+353 1 234 5678')}
-              </p>
-            </div>
-            <div className="contact-item">
-              <div className="contact-icon">✉️</div>
-              <h3 data-en="Email Us" data-sq="Na Shkruani">
-                {t('Email Us', 'Na Shkruani')}
-              </h3>
-              <p data-en="info@flexwell.ie" data-sq="info@flexwell.ie">
-                {t('info@flexwell.ie', 'info@flexwell.ie')}
-              </p>
-            </div>
+            <h2 data-en="Ready to Start Your Journey?" data-sq="Gati të Filloni Udhëtimin Tuaj?">
+              {t('Ready to Start Your Journey?', 'Gati të Filloni Udhëtimin Tuaj?')}
+            </h2>
+            <p data-en="Take the first step towards better health and book your consultation today." data-sq="Bëni hapin e parë drejt shëndetit më të mirë dhe rezervoni konsultimin tuaj sot.">
+              {t('Take the first step towards better health and book your consultation today.', 'Bëni hapin e parë drejt shëndetit më të mirë dhe rezervoni konsultimin tuaj sot.')}
+            </p>
+            <a href="/appointment" className="cta-btn">
+              <span data-en="Book Consultation" data-sq="Rezervo Konsultim">
+                {t('Book Consultation', 'Rezervo Konsultim')}
+              </span>
+            </a>
           </div>
         </div>
       </section>
