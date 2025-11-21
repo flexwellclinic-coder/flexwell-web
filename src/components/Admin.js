@@ -240,7 +240,7 @@ const Admin = ({ t }) => {
       
       // Simple frontend-only check for production
       if (process.env.NODE_ENV === 'production') {
-        if (username === 'admin' && password === 'flexwell2024') {
+        if (username === 'admin' && password === '@Kumbulla&Shalq!(3024)') {
           localStorage.setItem('adminToken', 'frontend-admin-token');
           setIsAuthenticated(true);
           return;
@@ -375,8 +375,8 @@ const Admin = ({ t }) => {
               <p style={{ margin: '4px 0' }}>
                 <strong>Username:</strong> admin
               </p>
-              <p style={{ margin: '4px 0' }}>
-                <strong>Password:</strong> flexwell2024
+              <p style={{ margin: '4px 0', wordBreak: 'break-all' }}>
+                <strong>Password:</strong> @Kumbulla&Shalq!(3024)
               </p>
             </div>
           </div>

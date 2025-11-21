@@ -23,7 +23,7 @@ http://localhost:3000/#/admin
 ## 🔑 Login Credentials
 
 **Username:** `admin`  
-**Password:** `flexwell2024`
+**Password:** `@Kumbulla&Shalq!(3024)`
 
 ---
 
