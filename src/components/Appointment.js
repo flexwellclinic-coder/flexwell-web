@@ -523,21 +523,32 @@ const Appointment = ({ t }) => {
                 <h3 data-en="Phone" data-sq="Telefoni">
                   {t('Phone', 'Telefoni')}
                 </h3>
-                <p>+353 1 234 5678</p>
+                <a href="tel:+35312345678" className="contact-link">
+                  <p>+353 1 234 5678</p>
+                </a>
               </div>
               <div className="contact-item">
                 <h3 data-en="Email" data-sq="Email-i">
                   {t('Email', 'Email-i')}
                 </h3>
-                <p>info@flexwellphysio.ie</p>
+                <a href="mailto:flexwellclinic@gmail.com" className="contact-link">
+                  <p>flexwellclinic@gmail.com</p>
+                </a>
               </div>
               <div className="contact-item">
                 <h3 data-en="Address" data-sq="Adresa">
                   {t('Address', 'Adresa')}
                 </h3>
-                <p data-en="123 Grafton Street, Dublin 2, Ireland" data-sq="123 Grafton Street, Dublin 2, Irlandë">
-                  {t('123 Grafton Street, Dublin 2, Ireland', '123 Grafton Street, Dublin 2, Irlandë')}
-                </p>
+                <a 
+                  href="https://www.google.com/maps/search/?api=1&query=123+Grafton+Street+Dublin+2+Ireland" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="contact-link"
+                >
+                  <p data-en="123 Grafton Street, Dublin 2, Ireland" data-sq="123 Grafton Street, Dublin 2, Irlandë">
+                    {t('123 Grafton Street, Dublin 2, Ireland', '123 Grafton Street, Dublin 2, Irlandë')}
+                  </p>
+                </a>
               </div>
               <div className="contact-item">
                 <h3 data-en="Hours" data-sq="Orari">

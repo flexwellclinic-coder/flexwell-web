@@ -372,6 +372,26 @@
     font-size: 1rem;
 }
 
+.contact-link {
+    text-decoration: none;
+    color: inherit;
+    display: inline-block;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.contact-link:hover {
+    transform: scale(1.05);
+}
+
+.contact-link:hover p {
+    color: #34d399;
+    text-decoration: underline;
+}
+
+.contact-link:active {
+    transform: scale(0.98);
+}
+
 .emergency-info {
     background: rgba(239, 68, 68, 0.08);
     backdrop-filter: blur(20px);
