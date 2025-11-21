@@ -364,21 +364,6 @@ const Admin = ({ t }) => {
           <div className="login-header">
             <h2>🔐 Admin Login</h2>
             <p>Access the appointment confirmation panel</p>
-            <div style={{ 
-              marginTop: '16px', 
-              padding: '12px', 
-              background: 'rgba(16, 185, 129, 0.1)', 
-              borderRadius: '8px',
-              fontSize: '0.9rem',
-              color: 'rgba(255, 255, 255, 0.8)'
-            }}>
-              <p style={{ margin: '4px 0' }}>
-                <strong>Username:</strong> admin
-              </p>
-              <p style={{ margin: '4px 0', wordBreak: 'break-all' }}>
-                <strong>Password:</strong> @Kumbulla&Shalq!(3024)
-              </p>
-            </div>
           </div>
           
           <form onSubmit={handleLogin} className="login-form">
