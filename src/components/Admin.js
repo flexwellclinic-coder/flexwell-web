@@ -3,7 +3,7 @@ import { appointmentsAPI, authAPI, localStorageBackup } from '../services/api';
 
 const Admin = ({ t }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [loginForm, setLoginForm] = useState({ username: 'admin', password: '' });
+  const [loginForm, setLoginForm] = useState({ username: '', password: '' });
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [pendingAppointments, setPendingAppointments] = useState([]);
   const [confirmedPatients, setConfirmedPatients] = useState([]);
