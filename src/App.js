@@ -37,6 +37,7 @@ function App() {
             <Route path="/services" element={<Services t={t} />} />
             <Route path="/appointment" element={<Appointment t={t} />} />
             <Route path="/admin" element={<Admin t={t} />} />
+            <Route path="/admin/*" element={<Admin t={t} />} />
           </Routes>
         </main>
         <Footer t={t} />
