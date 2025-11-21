@@ -540,7 +540,7 @@ const Appointment = ({ t }) => {
                   {t('Address', 'Adresa')}
                 </h3>
                 <a 
-                  href="https://www.google.com/maps/search/?api=1&query=123+Grafton+Street+Dublin+2+Ireland" 
+                  href="https://maps.app.goo.gl/ntPjqr3s97foefo57" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="contact-link"
