@@ -135,47 +135,32 @@
     color: #ffffff;
 }
 
-.message-sq,
-.message-en {
-    margin-bottom: 32px;
-}
-
-.message-en {
-    margin-bottom: 0;
-}
-
-.message-sq p,
-.message-en p {
+.message-content p {
     font-size: 1.1rem;
     line-height: 1.8;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
     color: rgba(255, 255, 255, 0.9);
 }
 
-.message-sq .lead-text,
-.message-en .lead-text {
+.message-content p:last-child {
+    margin-bottom: 0;
+}
+
+.message-content .lead-text {
     font-size: 1.5rem;
     font-weight: 700;
     background: linear-gradient(135deg, #34d399, #10b981);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
-.message-sq .highlight-text,
-.message-en .highlight-text {
+.message-content .highlight-text {
     font-size: 1.2rem;
     font-weight: 600;
     color: #34d399;
-    margin-top: 24px;
-    margin-bottom: 0;
-}
-
-.message-divider {
-    height: 2px;
-    background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.5), transparent);
-    margin: 32px 0;
+    margin-top: 28px;
 }
 
 /* Modern Story Section */
@@ -482,21 +467,21 @@
         padding: 32px 24px;
     }
     
-    .message-sq p,
-    .message-en p {
+    .message-content p {
         font-size: 1rem;
         line-height: 1.7;
         text-align: left;
+        margin-bottom: 16px;
     }
     
-    .message-sq .lead-text,
-    .message-en .lead-text {
+    .message-content .lead-text {
         font-size: 1.3rem;
+        margin-bottom: 20px;
     }
     
-    .message-sq .highlight-text,
-    .message-en .highlight-text {
+    .message-content .highlight-text {
         font-size: 1.1rem;
+        margin-top: 20px;
     }
     
     /* Fix hero section text overflow */

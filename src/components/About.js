@@ -64,19 +64,18 @@ const About = ({ t }) => {
             </div>
             <div className="body-message">
               <div className="message-content">
-                <div className="message-sq">
-                  <p className="lead-text">A e dëgjoni trupin tuaj?</p>
-                  <p>A po ju thotë se ka nevojë për vëmendje, lëvizje ose lehtësim?</p>
-                  <p>Ne bëjmë më të mirën për të siguruar që trupi juaj të lëvizë lirshëm dhe pa dhimbje.</p>
-                  <p className="highlight-text">Le të punojmë së bashku! Jepi vetes kujdesin që meriton!</p>
-                </div>
-                <div className="message-divider"></div>
-                <div className="message-en">
-                  <p className="lead-text">Are you listening to your body?</p>
-                  <p>Is it telling you that it needs attention, movement, or relief?</p>
-                  <p>We do our best to ensure that your body moves freely and without pain.</p>
-                  <p className="highlight-text">Let's work together! Give yourself the care you deserve!</p>
-                </div>
+                <p className="lead-text" data-en="Are you listening to your body?" data-sq="A e dëgjoni trupin tuaj?">
+                  {t('Are you listening to your body?', 'A e dëgjoni trupin tuaj?')}
+                </p>
+                <p data-en="Is it telling you that it needs attention, movement, or relief?" data-sq="A po ju thotë se ka nevojë për vëmendje, lëvizje ose lehtësim?">
+                  {t('Is it telling you that it needs attention, movement, or relief?', 'A po ju thotë se ka nevojë për vëmendje, lëvizje ose lehtësim?')}
+                </p>
+                <p data-en="We do our best to ensure that your body moves freely and without pain." data-sq="Ne bëjmë më të mirën për të siguruar që trupi juaj të lëvizë lirshëm dhe pa dhimbje.">
+                  {t('We do our best to ensure that your body moves freely and without pain.', 'Ne bëjmë më të mirën për të siguruar që trupi juaj të lëvizë lirshëm dhe pa dhimbje.')}
+                </p>
+                <p className="highlight-text" data-en="Let's work together! Give yourself the care you deserve!" data-sq="Le të punojmë së bashku! Jepi vetes kujdesin që meriton!">
+                  {t('Let\'s work together! Give yourself the care you deserve!', 'Le të punojmë së bashku! Jepi vetes kujdesin që meriton!')}
+                </p>
               </div>
             </div>
           </div>
