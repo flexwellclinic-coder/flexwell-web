@@ -55,6 +55,34 @@ const About = ({ t }) => {
         </div>
       </section>
 
+      {/* Listen to Your Body Section */}
+      <section className="listen-body-section">
+        <div className="container">
+          <div className="listen-body-content">
+            <div className="body-image">
+              <img src="/assets/about.jpeg" alt="Exercise Therapy" />
+            </div>
+            <div className="body-message">
+              <div className="message-content">
+                <div className="message-sq">
+                  <p className="lead-text">A e dëgjoni trupin tuaj?</p>
+                  <p>A po ju thotë se ka nevojë për vëmendje, lëvizje ose lehtësim?</p>
+                  <p>Ne bëjmë më të mirën për të siguruar që trupi juaj të lëvizë lirshëm dhe pa dhimbje.</p>
+                  <p className="highlight-text">Le të punojmë së bashku! Jepi vetes kujdesin që meriton!</p>
+                </div>
+                <div className="message-divider"></div>
+                <div className="message-en">
+                  <p className="lead-text">Are you listening to your body?</p>
+                  <p>Is it telling you that it needs attention, movement, or relief?</p>
+                  <p>We do our best to ensure that your body moves freely and without pain.</p>
+                  <p className="highlight-text">Let's work together! Give yourself the care you deserve!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Our Values */}
       <section className="our-values">
         <div className="container">
