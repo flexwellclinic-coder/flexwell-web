@@ -87,7 +87,7 @@ const About = ({ t }) => {
         <div className="container">
           <div className="mission-content">
             <div className="mission-logo">
-              <img src="/assets/flex-well-logo.jpeg" alt="Flex Well Logo" />
+              <img src="/assets/secili_shkon.jpeg" alt="Flex Well Mission" />
             </div>
             <div className="mission-text">
               <p className="mission-intro" data-en="Flex Well was created to be your destination for long-term healing and wellness. 😌" data-sq="Flex Well është krijuar për të qenë destinacioni juaj për një shërim dhe mirëqenie afatgjatë. 😌">
