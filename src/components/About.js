@@ -107,6 +107,31 @@ const About = ({ t }) => {
         </div>
       </section>
 
+      {/* Time for Change Section */}
+      <section className="time-for-change-section">
+        <div className="container">
+          <div className="change-content">
+            <div className="change-text">
+              <p className="change-lead" data-en="If pain or movement limitation has stopped you ⛔, it's time for a change. 🔁" data-sq="Nëse dhimbja apo kufizimi i lëvizjes ju ka ndalur ⛔, është koha për ndryshim. 🔁">
+                {t('If pain or movement limitation has stopped you ⛔, it\'s time for a change. 🔁', 'Nëse dhimbja apo kufizimi i lëvizjes ju ka ndalur ⛔, është koha për ndryshim. 🔁')}
+              </p>
+              <p data-en="Regardless that each person comes with a unique story and pain, our only goal is to ensure that everyone leaves with a feeling of relief and a stronger, lighter step. 😊" data-sq="Pavarësisht se çdo person vjen me një histori dhe dhimbje unike, qëllimi ynë i vetëm është të sigurohemi që të gjithë të largohen me një ndjesi çlirimi dhe një hap më të fortë dhe më të lehtë. 😊">
+                {t('Regardless that each person comes with a unique story and pain, our only goal is to ensure that everyone leaves with a feeling of relief and a stronger, lighter step. 😊', 'Pavarësisht se çdo person vjen me një histori dhe dhimbje unike, qëllimi ynë i vetëm është të sigurohemi që të gjithë të largohen me një ndjesi çlirimi dhe një hap më të fortë dhe më të lehtë. 😊')}
+              </p>
+              <p className="change-question" data-en="Why suffer 🧍‍♂️ when you can walk, run or move without obstacles? 🏃‍♂️" data-sq="Pse të vuani 🧍‍♂️ kur mund të ecni, të vraponi apo të lëvizni pa pengesa? 🏃‍♂️">
+                {t('Why suffer 🧍‍♂️ when you can walk, run or move without obstacles? 🏃‍♂️', 'Pse të vuani 🧍‍♂️ kur mund të ecni, të vraponi apo të lëvizni pa pengesa? 🏃‍♂️')}
+              </p>
+              <p className="change-motto" data-en="THE BODY SPEAKS 🗣️, WE LISTEN 👂" data-sq="TRUPI FLET 🗣️, NE E DËGJOJMË 👂">
+                {t('THE BODY SPEAKS 🗣️, WE LISTEN 👂', 'TRUPI FLET 🗣️, NE E DËGJOJMË 👂')}
+              </p>
+            </div>
+            <div className="change-image">
+              <img src="/assets/secili_vjen.jpeg" alt="Time for Change" />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Our Values */}
       <section className="our-values">
         <div className="container">

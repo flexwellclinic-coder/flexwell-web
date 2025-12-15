@@ -260,6 +260,99 @@
     text-align: left;
 }
 
+/* Time for Change Section */
+.time-for-change-section {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #3b82f6 100%);
+    padding: 120px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.time-for-change-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 70% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 30% 70%, rgba(30, 64, 175, 0.08) 0%, transparent 50%);
+    opacity: 0.8;
+}
+
+.change-content {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.change-text {
+    color: #ffffff;
+}
+
+.change-text p {
+    font-size: 1.15rem;
+    line-height: 1.9;
+    margin-bottom: 24px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.change-text p:last-child {
+    margin-bottom: 0;
+}
+
+.change-text .change-lead {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 28px;
+}
+
+.change-text .change-question {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #93c5fd;
+    margin-top: 32px;
+    margin-bottom: 32px;
+}
+
+.change-text .change-motto {
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #60a5fa, #93c5fd);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-top: 40px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.change-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 24px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.change-image:hover {
+    transform: scale(1.02) translateY(-8px);
+}
+
+.change-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 24px;
+    border: 2px solid rgba(96, 165, 250, 0.3);
+}
+
 /* Modern Story Section */
 .story-section {
     background: #0a0f0a;
@@ -626,6 +719,53 @@
     .mission-text .mission-closing {
         font-size: 1.15rem;
         margin-top: 24px;
+    }
+    
+    /* Time for Change Section - Mobile */
+    .time-for-change-section {
+        padding: 60px 0;
+    }
+    
+    .change-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 0 16px;
+    }
+    
+    .change-text {
+        order: 2;
+        text-align: left;
+    }
+    
+    .change-text p {
+        font-size: 1rem;
+        line-height: 1.7;
+        margin-bottom: 20px;
+    }
+    
+    .change-text .change-lead {
+        font-size: 1.2rem;
+        margin-bottom: 24px;
+    }
+    
+    .change-text .change-question {
+        font-size: 1.15rem;
+        margin-top: 24px;
+        margin-bottom: 24px;
+    }
+    
+    .change-text .change-motto {
+        font-size: 1.25rem;
+        margin-top: 32px;
+    }
+    
+    .change-image {
+        order: 1;
+    }
+    
+    .change-image img {
+        width: 100%;
+        max-width: 100%;
     }
     
     /* Fix hero section text overflow */
