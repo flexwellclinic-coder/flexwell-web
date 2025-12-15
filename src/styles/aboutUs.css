@@ -262,7 +262,7 @@
 
 /* Time for Change Section */
 .time-for-change-section {
-    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #3b82f6 100%);
+    background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
     padding: 120px 0;
     position: relative;
     overflow: hidden;
@@ -275,8 +275,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at 70% 30%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 30% 70%, rgba(30, 64, 175, 0.08) 0%, transparent 50%);
+    background: radial-gradient(circle at 70% 30%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 30% 70%, rgba(52, 211, 153, 0.08) 0%, transparent 50%);
     opacity: 0.8;
 }
 
@@ -316,7 +316,7 @@
 .change-text .change-question {
     font-size: 1.3rem;
     font-weight: 600;
-    color: #93c5fd;
+    color: #34d399;
     margin-top: 32px;
     margin-bottom: 32px;
 }
@@ -324,7 +324,7 @@
 .change-text .change-motto {
     font-size: 1.5rem;
     font-weight: 800;
-    background: linear-gradient(135deg, #60a5fa, #93c5fd);
+    background: linear-gradient(135deg, #34d399, #10b981);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -350,7 +350,7 @@
     height: auto;
     display: block;
     border-radius: 24px;
-    border: 2px solid rgba(96, 165, 250, 0.3);
+    border: 2px solid rgba(16, 185, 129, 0.3);
 }
 
 /* Modern Story Section */
