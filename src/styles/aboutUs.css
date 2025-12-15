@@ -163,6 +163,105 @@
     margin-top: 28px;
 }
 
+/* Flex Well Mission Section */
+.flexwell-mission-section {
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 50%, #a7f3d0 100%);
+    padding: 120px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.flexwell-mission-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(52, 211, 153, 0.08) 0%, transparent 50%);
+}
+
+.mission-content {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.mission-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 60px;
+    border-radius: 24px;
+    border: 2px solid rgba(16, 185, 129, 0.2);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mission-logo:hover {
+    transform: scale(1.05) translateY(-8px);
+}
+
+.mission-logo img {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    display: block;
+    border-radius: 12px;
+}
+
+.mission-text {
+    color: #064e3b;
+}
+
+.mission-text p {
+    font-size: 1.15rem;
+    line-height: 1.9;
+    margin-bottom: 24px;
+    color: #047857;
+}
+
+.mission-text p:last-child {
+    margin-bottom: 0;
+}
+
+.mission-text .mission-intro {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #065f46;
+}
+
+.mission-text .mission-motto {
+    font-size: 1.2rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #059669, #047857);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 2;
+    padding: 20px 0;
+    border-left: 4px solid #10b981;
+    padding-left: 24px;
+    margin: 32px 0;
+}
+
+.mission-text .mission-closing {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #10b981;
+    margin-top: 32px;
+    text-align: left;
+}
+
 /* Modern Story Section */
 .story-section {
     background: #0a0f0a;
@@ -482,6 +581,53 @@
     .message-content .highlight-text {
         font-size: 1.1rem;
         margin-top: 20px;
+    }
+    
+    /* Flex Well Mission Section - Mobile */
+    .flexwell-mission-section {
+        padding: 60px 0;
+    }
+    
+    .mission-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 0 16px;
+    }
+    
+    .mission-logo {
+        padding: 40px 24px;
+        order: 1;
+    }
+    
+    .mission-logo img {
+        max-width: 280px;
+    }
+    
+    .mission-text {
+        order: 2;
+        text-align: left;
+    }
+    
+    .mission-text p {
+        font-size: 1rem;
+        line-height: 1.7;
+        margin-bottom: 20px;
+    }
+    
+    .mission-text .mission-intro {
+        font-size: 1.15rem;
+    }
+    
+    .mission-text .mission-motto {
+        font-size: 1.05rem;
+        line-height: 1.8;
+        padding: 16px 0 16px 20px;
+        margin: 24px 0;
+    }
+    
+    .mission-text .mission-closing {
+        font-size: 1.15rem;
+        margin-top: 24px;
     }
     
     /* Fix hero section text overflow */

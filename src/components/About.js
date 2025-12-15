@@ -82,6 +82,31 @@ const About = ({ t }) => {
         </div>
       </section>
 
+      {/* Flex Well Mission Section */}
+      <section className="flexwell-mission-section">
+        <div className="container">
+          <div className="mission-content">
+            <div className="mission-logo">
+              <img src="/assets/flex-well-logo.jpeg" alt="Flex Well Logo" />
+            </div>
+            <div className="mission-text">
+              <p className="mission-intro" data-en="Flex Well was created to be your destination for long-term healing and wellness. 😌" data-sq="Flex Well është krijuar për të qenë destinacioni juaj për një shërim dhe mirëqenie afatgjatë. 😌">
+                {t('Flex Well was created to be your destination for long-term healing and wellness. 😌', 'Flex Well është krijuar për të qenë destinacioni juaj për një shërim dhe mirëqenie afatgjatë. 😌')}
+              </p>
+              <p className="mission-motto" data-en="THE BODY SPEAKS 🗣, WE LISTEN 👂🏻 - is not just a slogan - it is the core foundation which day by day is creating an environment to be more dignified and closer to you. 🧩" data-sq="TRUPI FLET 🗣, NE E DËGJOJMË 👂🏻 - nuk është vetëm një slogan - është gurthemeli kryesor i cili ditë-ditës po krijon një ambient për të qenë më dinjitoz dhe më afër jush. 🧩">
+                {t('THE BODY SPEAKS 🗣, WE LISTEN 👂🏻 - is not just a slogan - it is the core foundation which day by day is creating an environment to be more dignified and closer to you. 🧩', 'TRUPI FLET 🗣, NE E DËGJOJMË 👂🏻 - nuk është vetëm një slogan - është gurthemeli kryesor i cili ditë-ditës po krijon një ambient për të qenë më dinjitoz dhe më afër jush. 🧩')}
+              </p>
+              <p data-en="We do not offer quick fixes ⚡️, but personalized treatments that go beyond the symptoms, addressing the real cause. ✅" data-sq="Ne nuk ofrojmë zgjidhje të shpejta ⚡️, por trajtime të personalizuara që shkojnë përtej simptomave, duke adresuar shkakun e vërtetë. ✅">
+                {t('We do not offer quick fixes ⚡️, but personalized treatments that go beyond the symptoms, addressing the real cause. ✅', 'Ne nuk ofrojmë zgjidhje të shpejta ⚡️, por trajtime të personalizuara që shkojnë përtej simptomave, duke adresuar shkakun e vërtetë. ✅')}
+              </p>
+              <p className="mission-closing" data-en="Move with confidence 💪🏻. Move well. 🤸🏻‍♂️" data-sq="Lëvizni me besim 💪🏻. Lëvizni mirë. 🤸🏻‍♂️">
+                {t('Move with confidence 💪🏻. Move well. 🤸🏻‍♂️', 'Lëvizni me besim 💪🏻. Lëvizni mirë. 🤸🏻‍♂️')}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Our Values */}
       <section className="our-values">
         <div className="container">
