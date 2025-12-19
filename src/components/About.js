@@ -132,6 +132,25 @@ const About = ({ t }) => {
         </div>
       </section>
 
+      {/* Return to Movement Section */}
+      <section className="return-movement-section">
+        <div className="container">
+          <div className="movement-content">
+            <div className="movement-image">
+              <img src="/assets/trupi_yt.jpeg" alt="Return to Movement" />
+            </div>
+            <div className="movement-text">
+              <p className="movement-message" data-en="Don't let pain limit you. 🚫 The body heals when you give it the right tools, the right technique, and the necessary patience." data-sq="Mos e lër dhimbjen të të kufizojë. 🚫 Trupi shërohet kur i jep mjetet e duhura, teknikën e saktë dhe durimin e nevojshëm.">
+                {t('Don\'t let pain limit you. 🚫 The body heals when you give it the right tools, the right technique, and the necessary patience.', 'Mos e lër dhimbjen të të kufizojë. 🚫 Trupi shërohet kur i jep mjetet e duhura, teknikën e saktë dhe durimin e nevojshëm.')}
+              </p>
+              <p className="movement-tagline" data-en="Return to movement, return to yourself with Flex Well. 🏃‍♂️✨" data-sq="Rikthehu në lëvizje, rikthehu te vetja me Flex Well. 🏃‍♂️✨">
+                {t('Return to movement, return to yourself with Flex Well. 🏃‍♂️✨', 'Rikthehu në lëvizje, rikthehu te vetja me Flex Well. 🏃‍♂️✨')}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Our Values */}
       <section className="our-values">
         <div className="container">

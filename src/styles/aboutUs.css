@@ -353,6 +353,87 @@
     border: 2px solid rgba(16, 185, 129, 0.3);
 }
 
+/* Return to Movement Section */
+.return-movement-section {
+    background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+    padding: 120px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.return-movement-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(52, 211, 153, 0.08) 0%, transparent 50%);
+    opacity: 0.8;
+}
+
+.movement-content {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 80px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.movement-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 24px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.movement-image:hover {
+    transform: scale(1.02) translateY(-8px);
+}
+
+.movement-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 24px;
+    border: 2px solid rgba(16, 185, 129, 0.3);
+}
+
+.movement-text {
+    color: #ffffff;
+}
+
+.movement-text p {
+    font-size: 1.2rem;
+    line-height: 1.9;
+    margin-bottom: 28px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.movement-text p:last-child {
+    margin-bottom: 0;
+}
+
+.movement-text .movement-message {
+    font-size: 1.25rem;
+    line-height: 2;
+}
+
+.movement-text .movement-tagline {
+    font-size: 1.4rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #34d399, #10b981);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-top: 32px;
+}
+
 /* Modern Story Section */
 .story-section {
     background: #0a0f0a;
@@ -766,6 +847,47 @@
     .change-image img {
         width: 100%;
         max-width: 100%;
+    }
+    
+    /* Return to Movement Section - Mobile */
+    .return-movement-section {
+        padding: 60px 0;
+    }
+    
+    .movement-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        padding: 0 16px;
+    }
+    
+    .movement-image {
+        order: 1;
+    }
+    
+    .movement-image img {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .movement-text {
+        order: 2;
+        text-align: left;
+    }
+    
+    .movement-text p {
+        font-size: 1rem;
+        line-height: 1.7;
+        margin-bottom: 24px;
+    }
+    
+    .movement-text .movement-message {
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+    
+    .movement-text .movement-tagline {
+        font-size: 1.2rem;
+        margin-top: 28px;
     }
     
     /* Fix hero section text overflow */
