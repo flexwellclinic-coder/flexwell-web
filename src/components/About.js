@@ -151,6 +151,28 @@ const About = ({ t }) => {
         </div>
       </section>
 
+      {/* Mind Body Connection Section */}
+      <section className="mind-body-section">
+        <div className="container">
+          <div className="mind-body-content">
+            <div className="mind-body-text">
+              <p className="mind-body-question" data-en="What is your favorite movement to start the day? 📅" data-sq="Cila është lëvizja jote e preferuar për të nisur ditën? 📅">
+                {t('What is your favorite movement to start the day? 📅', 'Cila është lëvizja jote e preferuar për të nisur ditën? 📅')}
+              </p>
+              <p data-en="Your body listens to everything your mind says. Keep your mind flexible and your body strong. 💪✨" data-sq="Trupi yt dëgjon gjithçka që mendja jote thotë. Mbaje mendjen fleksibile dhe trupin e fortë. 💪✨">
+                {t('Your body listens to everything your mind says. Keep your mind flexible and your body strong. 💪✨', 'Trupi yt dëgjon gjithçka që mendja jote thotë. Mbaje mendjen fleksibile dhe trupin e fortë. 💪✨')}
+              </p>
+              <p className="mind-body-motto" data-en="THE BODY SPEAKS 🗣️, WE LISTEN 👂" data-sq="TRUPI FLET 🗣️, NE E DËGJOJMË 👂">
+                {t('THE BODY SPEAKS 🗣️, WE LISTEN 👂', 'TRUPI FLET 🗣️, NE E DËGJOJMË 👂')}
+              </p>
+            </div>
+            <div className="mind-body-image">
+              <img src="/assets/foto_fundit.jpeg" alt="Mind Body Connection" />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Our Values */}
       <section className="our-values">
         <div className="container">
