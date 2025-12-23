@@ -60,7 +60,7 @@ const About = ({ t }) => {
         <div className="container">
           <div className="listen-body-content">
             <div className="body-image">
-              <img src="/assets/about.jpeg" alt="Exercise Therapy" />
+              <img src="/assets/ne_bejme.jpeg" alt="Exercise Therapy" />
             </div>
             <div className="body-message">
               <div className="message-content">
