@@ -274,6 +274,28 @@ const About = ({ t }) => {
         </div>
       </section>
 
+      {/* Join Our Team Section */}
+      <section className="join-team-section">
+        <div className="container">
+          <div className="join-team-content">
+            <div className="join-team-image">
+              <img src="/assets/kerkojm-punonjes.jpg" alt="Join Our Team" />
+            </div>
+            <div className="join-team-text">
+              <h2 data-en="Join Our Team" data-sq="Bashkohu me Ekipin Tonë">
+                {t('Join Our Team', 'Bashkohu me Ekipin Tonë')}
+              </h2>
+              <p data-en="Are you passionate about helping others achieve their wellness goals? We're always looking for talented professionals to join our team." data-sq="Jeni të apasionuar për të ndihmuar të tjerët të arrijnë qëllimet e tyre të mirëqenies? Ne jemi gjithmonë në kërkim të profesionistëve të talentuar për t'u bashkuar me ekipin tonë.">
+                {t('Are you passionate about helping others achieve their wellness goals? We\'re always looking for talented professionals to join our team.', 'Jeni të apasionuar për të ndihmuar të tjerët të arrijnë qëllimet e tyre të mirëqenies? Ne jemi gjithmonë në kërkim të profesionistëve të talentuar për t\'u bashkuar me ekipin tonë.')}
+              </p>
+              <p data-en="Contact us to learn about current opportunities." data-sq="Na kontaktoni për të mësuar rreth mundësive aktuale.">
+                {t('Contact us to learn about current opportunities.', 'Na kontaktoni për të mësuar rreth mundësive aktuale.')}
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* FAQ Section */}
       <section className="faq-section">
         <div className="container">
