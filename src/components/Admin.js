@@ -32,7 +32,7 @@ const Admin = ({ t }) => {
   // Reserve Again state
   const [showReserveModal, setShowReserveModal] = useState(false);
   const [reservePatient, setReservePatient] = useState(null);
-  const [reserveForm, setReserveForm] = useState({ date: '', time: '', service: '' });
+  const [reserveForm, setReserveForm] = useState({ date: '', time: '', service: '', doctor: '' });
 
   // Reschedule state
   const [showRescheduleModal, setShowRescheduleModal] = useState(false);
@@ -42,7 +42,7 @@ const Admin = ({ t }) => {
   // Manual Booking state
   const [showManualBookModal, setShowManualBookModal] = useState(false);
   const [manualBookForm, setManualBookForm] = useState({
-    firstName: '', lastName: '', email: '', phone: '', date: '', time: '', service: '', notes: ''
+    firstName: '', lastName: '', email: '', phone: '', date: '', time: '', service: '', notes: '', doctor: ''
   });
 
   // Edit Appointment state
@@ -447,7 +447,7 @@ const Admin = ({ t }) => {
   const handleReserveAgain = (patient, e) => {
     if (e) e.stopPropagation();
     setReservePatient(patient);
-    setReserveForm({ date: '', time: '', service: patient.lastService || '' });
+    setReserveForm({ date: '', time: '', service: patient.lastService || '', doctor: '' });
     setShowReserveModal(true);
   };
 
@@ -469,6 +469,7 @@ const Admin = ({ t }) => {
         time: reserveForm.time,
         service: reserveForm.service,
         notes: 'Rebooked by admin',
+        doctor: reserveForm.doctor || '',
         previousInjury: false,
         createdBy: 'admin'
       };
@@ -563,7 +564,7 @@ const Admin = ({ t }) => {
   // Manual Booking
   const handleManualBook = () => {
     setManualBookForm({
-      firstName: '', lastName: '', email: '', phone: '', date: '', time: '', service: '', notes: ''
+      firstName: '', lastName: '', email: '', phone: '', date: '', time: '', service: '', notes: '', doctor: ''
     });
     setShowManualBookModal(true);
   };
@@ -581,6 +582,7 @@ const Admin = ({ t }) => {
       const appointmentData = {
         firstName, lastName, email, phone, date, time, service,
         notes: manualBookForm.notes || 'Booked by admin',
+        doctor: manualBookForm.doctor || '',
         previousInjury: false,
         createdBy: 'admin'
       };
@@ -1102,6 +1104,16 @@ const Admin = ({ t }) => {
                     {Object.entries(SERVICE_LABELS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
                   </select>
                 </div>
+                <div className="form-group">
+                  <label>👨‍⚕️ Doctor</label>
+                  <select value={reserveForm.doctor}
+                    onChange={(e) => setReserveForm({ ...reserveForm, doctor: e.target.value })}>
+                    <option value="">Select a doctor</option>
+                    {doctors.map(doc => (
+                      <option key={doc.id} value={doc.name}>{doc.name}{doc.specialty ? ` (${doc.specialty})` : ''}</option>
+                    ))}
+                  </select>
+                </div>
                 <div className="reserve-actions">
                   <button type="button" className="cancel-reserve-btn"
                     onClick={() => setShowReserveModal(false)}>Cancel</button>
@@ -1210,6 +1222,16 @@ const Admin = ({ t }) => {
                     onChange={(e) => setManualBookForm({ ...manualBookForm, service: e.target.value })} required>
                     <option value="">Select a service</option>
                     {Object.entries(SERVICE_LABELS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label>👨‍⚕️ Doctor</label>
+                  <select value={manualBookForm.doctor}
+                    onChange={(e) => setManualBookForm({ ...manualBookForm, doctor: e.target.value })}>
+                    <option value="">Select a doctor</option>
+                    {doctors.map(doc => (
+                      <option key={doc.id} value={doc.name}>{doc.name}{doc.specialty ? ` (${doc.specialty})` : ''}</option>
+                    ))}
                   </select>
                 </div>
                 <div className="form-group">
