@@ -134,10 +134,10 @@ export const appointmentsAPI = {
     }
   },
 
-  // Update appointment status
+  // Update appointment status (uses PUT since Netlify functions handle PUT)
   updateStatus: async (id, status) => {
     try {
-      const response = await api.patch(`/appointments/${id}/status`, { status });
+      const response = await api.put(`/appointments/${id}`, { status });
       return response.data;
     } catch (error) {
       throw error.response?.data || { success: false, message: 'Failed to update status' };
