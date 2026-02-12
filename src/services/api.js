@@ -87,16 +87,17 @@ export const appointmentsAPI = {
   // Get all appointments with optional filtering
   getAll: async (params = {}) => {
     try {
-      const response = await api.get('/appointments', { params });
+      // Try Netlify database first
+      const response = await api.get('/appointments-netlify');
       return response.data;
     } catch (error) {
-      console.warn('Main appointments API failed, trying simple fallback:', error.message);
+      console.warn('Netlify database failed, trying MongoDB:', error.message);
       try {
-        const fallbackResponse = await api.get('/appointments-simple');
-        return fallbackResponse.data;
-      } catch (fallbackError) {
-        console.error('Fallback also failed:', fallbackError);
-        throw error.response?.data || { success: false, message: 'Failed to fetch appointments' };
+        const mongoResponse = await api.get('/appointments', { params });
+        return mongoResponse.data;
+      } catch (mongoError) {
+        console.warn('MongoDB failed, trying localStorage fallback:', mongoError.message);
+        return { success: true, data: localStorageBackup.getAppointments() };
       }
     }
   },
@@ -114,16 +115,18 @@ export const appointmentsAPI = {
   // Create new appointment
   create: async (appointmentData) => {
     try {
-      const response = await api.post('/appointments', appointmentData);
+      // Try Netlify database first
+      const response = await api.post('/appointments-netlify', appointmentData);
       return response.data;
     } catch (error) {
-      console.warn('Main create API failed, trying simple fallback:', error.message);
+      console.warn('Netlify create failed, trying MongoDB:', error.message);
       try {
-        const fallbackResponse = await api.post('/appointments-simple', appointmentData);
-        return fallbackResponse.data;
-      } catch (fallbackError) {
-        console.error('Fallback create also failed:', fallbackError);
-        throw error.response?.data || { success: false, message: 'Failed to create appointment' };
+        const mongoResponse = await api.post('/appointments', appointmentData);
+        return mongoResponse.data;
+      } catch (mongoError) {
+        console.warn('MongoDB failed, using localStorage:', mongoError.message);
+        const saved = localStorageBackup.addAppointment(appointmentData);
+        return saved ? { success: true, data: saved } : { success: false, message: 'Failed to save' };
       }
     }
   },
@@ -131,16 +134,18 @@ export const appointmentsAPI = {
   // Update appointment (uses dedicated function - no sub-path needed)
   update: async (id, appointmentData) => {
     try {
-      const response = await api.post('/appointment-update', { id, ...appointmentData });
+      // Try Netlify database first
+      const response = await api.post('/appointments-netlify', { action: 'update', id, ...appointmentData });
       return response.data;
     } catch (error) {
-      console.warn('Main update API failed, trying simple fallback:', error.message);
+      console.warn('Netlify update failed, trying MongoDB:', error.message);
       try {
-        const fallbackResponse = await api.post('/appointments-simple', { action: 'update', id, ...appointmentData });
-        return fallbackResponse.data;
-      } catch (fallbackError) {
-        console.error('Fallback update also failed:', fallbackError);
-        throw error.response?.data || { success: false, message: 'Failed to update appointment' };
+        const mongoResponse = await api.post('/appointment-update', { id, ...appointmentData });
+        return mongoResponse.data;
+      } catch (mongoError) {
+        console.warn('MongoDB failed, using localStorage:', mongoError.message);
+        const success = localStorageBackup.updateAppointment(id, appointmentData);
+        return success ? { success: true, message: 'Updated locally' } : { success: false, message: 'Failed to update' };
       }
     }
   },
@@ -148,16 +153,18 @@ export const appointmentsAPI = {
   // Delete appointment (uses dedicated function - no sub-path needed)
   delete: async (id) => {
     try {
-      const response = await api.post('/appointment-delete', { id });
+      // Try Netlify database first
+      const response = await api.post('/appointments-netlify', { action: 'delete', id });
       return response.data;
     } catch (error) {
-      console.warn('Main delete API failed, trying simple fallback:', error.message);
+      console.warn('Netlify delete failed, trying MongoDB:', error.message);
       try {
-        const fallbackResponse = await api.post('/appointments-simple', { action: 'delete', id });
-        return fallbackResponse.data;
-      } catch (fallbackError) {
-        console.error('Fallback delete also failed:', fallbackError);
-        throw error.response?.data || { success: false, message: 'Failed to delete appointment' };
+        const mongoResponse = await api.post('/appointment-delete', { id });
+        return mongoResponse.data;
+      } catch (mongoError) {
+        console.warn('MongoDB failed, using localStorage:', mongoError.message);
+        const success = localStorageBackup.deleteAppointment(id);
+        return success ? { success: true, message: 'Deleted locally' } : { success: false, message: 'Failed to delete' };
       }
     }
   },
@@ -165,16 +172,18 @@ export const appointmentsAPI = {
   // Update appointment status
   updateStatus: async (id, status) => {
     try {
-      const response = await api.post('/appointment-update', { id, status });
+      // Try Netlify database first
+      const response = await api.post('/appointments-netlify', { action: 'update', id, status });
       return response.data;
     } catch (error) {
-      console.warn('Main status update API failed, trying simple fallback:', error.message);
+      console.warn('Netlify status update failed, trying MongoDB:', error.message);
       try {
-        const fallbackResponse = await api.post('/appointments-simple', { action: 'update', id, status });
-        return fallbackResponse.data;
-      } catch (fallbackError) {
-        console.error('Fallback status update also failed:', fallbackError);
-        throw error.response?.data || { success: false, message: 'Failed to update status' };
+        const mongoResponse = await api.post('/appointment-update', { id, status });
+        return mongoResponse.data;
+      } catch (mongoError) {
+        console.warn('MongoDB failed, using localStorage:', mongoError.message);
+        const success = localStorageBackup.updateAppointment(id, { status });
+        return success ? { success: true, message: 'Status updated locally' } : { success: false, message: 'Failed to update status' };
       }
     }
   },
