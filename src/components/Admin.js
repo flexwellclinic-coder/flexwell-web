@@ -35,6 +35,19 @@ const Admin = ({ t }) => {
   const [rescheduleAppointment, setRescheduleAppointment] = useState(null);
   const [rescheduleForm, setRescheduleForm] = useState({ date: '', time: '' });
 
+  // Manual Booking state
+  const [showManualBookModal, setShowManualBookModal] = useState(false);
+  const [manualBookForm, setManualBookForm] = useState({
+    firstName: '', lastName: '', email: '', phone: '', date: '', time: '', service: '', notes: ''
+  });
+
+  // Edit Appointment state
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editAppointment, setEditAppointment] = useState(null);
+  const [editForm, setEditForm] = useState({
+    firstName: '', lastName: '', email: '', phone: '', date: '', time: '', service: '', notes: '', adminNotes: ''
+  });
+
   // Calendar state
   const [calendarDate, setCalendarDate] = useState(() => {
     const today = new Date();
@@ -474,6 +487,134 @@ const Admin = ({ t }) => {
     }
   };
 
+  // Manual Booking
+  const handleManualBook = () => {
+    setManualBookForm({
+      firstName: '', lastName: '', email: '', phone: '', date: '', time: '', service: '', notes: ''
+    });
+    setShowManualBookModal(true);
+  };
+
+  const handleManualBookSubmit = async (e) => {
+    e.preventDefault();
+    const { firstName, lastName, email, phone, date, time, service } = manualBookForm;
+    if (!firstName || !lastName || !email || !phone || !date || !time || !service) {
+      alert('Please fill in all required fields.');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const appointmentData = {
+        firstName, lastName, email, phone, date, time, service,
+        notes: manualBookForm.notes || 'Booked by admin',
+        previousInjury: false,
+        createdBy: 'admin'
+      };
+
+      let newId = null;
+      try {
+        const res = await appointmentsAPI.create(appointmentData);
+        if (res.success && res.data) {
+          newId = res.data._id || res.data.id;
+        } else {
+          throw new Error(res.message || 'Failed to create');
+        }
+      } catch (apiErr) {
+        const msg = apiErr.message || 'Could not create appointment';
+        alert(`Could not book: ${msg}`);
+        setLoading(false);
+        return;
+      }
+
+      // Auto-confirm since admin is booking
+      if (newId) {
+        try {
+          await appointmentsAPI.updateStatus(newId, 'confirmed');
+        } catch (statusErr) {
+          console.warn('Could not auto-confirm:', statusErr);
+        }
+      }
+
+      setShowManualBookModal(false);
+      await loadAppointments();
+      alert(`Appointment booked for ${firstName} ${lastName}!\nDate: ${new Date(date + 'T12:00:00').toLocaleDateString()}\nTime: ${time}`);
+    } catch (err) {
+      console.error('Manual booking failed:', err);
+      alert('Failed to create appointment.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Edit Appointment
+  const handleEditAppointment = (appointment, e) => {
+    if (e) e.stopPropagation();
+    const dateNormalized = appointment.date ? (typeof appointment.date === 'string' ? appointment.date.split('T')[0] : appointment.date) : '';
+    setEditAppointment(appointment);
+    setEditForm({
+      firstName: appointment.firstName || '',
+      lastName: appointment.lastName || '',
+      email: appointment.email || '',
+      phone: appointment.phone || '',
+      date: dateNormalized,
+      time: appointment.time || '',
+      service: appointment.service || '',
+      notes: appointment.notes || '',
+      adminNotes: appointment.adminNotes || ''
+    });
+    setShowEditModal(true);
+  };
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    if (!editAppointment) return;
+
+    const { firstName, lastName, email, phone, date, time, service } = editForm;
+    if (!firstName || !lastName || !email || !phone || !date || !time || !service) {
+      alert('Please fill in all required fields.');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const id = editAppointment._id || editAppointment.id;
+      const updates = {
+        firstName: editForm.firstName,
+        lastName: editForm.lastName,
+        email: editForm.email,
+        phone: editForm.phone,
+        date: editForm.date,
+        time: editForm.time,
+        service: editForm.service,
+        notes: editForm.notes,
+        adminNotes: editForm.adminNotes
+      };
+
+      try {
+        const res = await appointmentsAPI.update(id, updates);
+        if (!res.success) {
+          throw new Error(res.message || 'Update failed');
+        }
+      } catch (apiErr) {
+        const msg = apiErr.message || apiErr?.response?.data?.message || 'Unknown error';
+        alert(`Could not update: ${msg}`);
+        setLoading(false);
+        return;
+      }
+
+      setShowEditModal(false);
+      setEditAppointment(null);
+      await loadAppointments();
+      alert(`Updated appointment for ${firstName} ${lastName}!`);
+    } catch (err) {
+      console.error('Edit failed:', err);
+      alert('Failed to update appointment.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handlePatientClick = (patient) => {
     setSelectedPatient(patient);
     setShowPatientDetails(true);
@@ -568,9 +709,14 @@ const Admin = ({ t }) => {
           <div className="pending-appointments-section">
             <div className="section-header">
               <h2>⏳ Pending Appointments ({pendingAppointments.length})</h2>
-              <button onClick={loadAppointments} className="refresh-btn" disabled={loading}>
-                {loading ? '🔄' : '↻'} Refresh
-              </button>
+              <div className="section-header-actions">
+                <button onClick={handleManualBook} className="manual-book-btn" disabled={loading}>
+                  ➕ Manual Booking
+                </button>
+                <button onClick={loadAppointments} className="refresh-btn" disabled={loading}>
+                  {loading ? '🔄' : '↻'} Refresh
+                </button>
+              </div>
             </div>
 
             {loading ? (
@@ -621,6 +767,10 @@ const Admin = ({ t }) => {
                       <button onClick={() => handleReschedule(appointment)}
                         className="reschedule-btn" disabled={loading}>
                         📅 Reschedule
+                      </button>
+                      <button onClick={(e) => handleEditAppointment(appointment, e)}
+                        className="edit-btn" disabled={loading}>
+                        ✏️ Edit
                       </button>
                       <button onClick={() => handleDeleteAppointment(appointment)}
                         className="delete-btn" disabled={loading}>
@@ -721,6 +871,23 @@ const Admin = ({ t }) => {
                         title="Book another appointment">
                         🔄 Reserve Again
                       </button>
+                      {patient.appointments && patient.appointments[0] && (
+                        <button className="edit-patient-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            const latestApt = patient.appointments[0];
+                            handleEditAppointment({
+                              ...latestApt,
+                              firstName: patient.firstName,
+                              lastName: patient.lastName,
+                              email: patient.email,
+                              phone: patient.phone
+                            }, e);
+                          }}
+                          title="Edit patient info">
+                          ✏️ Edit Info
+                        </button>
+                      )}
                       <span className="click-indicator">👁️ View History</span>
                     </div>
                   </div>
@@ -833,6 +1000,177 @@ const Admin = ({ t }) => {
                     onClick={() => setShowReserveModal(false)}>Cancel</button>
                   <button type="submit" className="submit-reserve-btn" disabled={loading}>
                     {loading ? '🔄 Booking...' : '✅ Confirm Booking'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Manual Booking Modal */}
+      {showManualBookModal && (
+        <div className="modal-overlay" onClick={() => setShowManualBookModal(false)}>
+          <div className="modal-content manual-book-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>➕ Manual Booking</h2>
+              <button className="close-btn" onClick={() => setShowManualBookModal(false)}>✖️</button>
+            </div>
+            <div className="modal-body">
+              <form onSubmit={handleManualBookSubmit} className="reserve-form">
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>👤 First Name *</label>
+                    <input type="text" value={manualBookForm.firstName}
+                      onChange={(e) => setManualBookForm({ ...manualBookForm, firstName: e.target.value })}
+                      placeholder="First name" required />
+                  </div>
+                  <div className="form-group">
+                    <label>👤 Last Name *</label>
+                    <input type="text" value={manualBookForm.lastName}
+                      onChange={(e) => setManualBookForm({ ...manualBookForm, lastName: e.target.value })}
+                      placeholder="Last name" required />
+                  </div>
+                </div>
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>📧 Email *</label>
+                    <input type="email" value={manualBookForm.email}
+                      onChange={(e) => setManualBookForm({ ...manualBookForm, email: e.target.value })}
+                      placeholder="email@example.com" required />
+                  </div>
+                  <div className="form-group">
+                    <label>📞 Phone *</label>
+                    <input type="tel" value={manualBookForm.phone}
+                      onChange={(e) => setManualBookForm({ ...manualBookForm, phone: e.target.value })}
+                      placeholder="+355..." required />
+                  </div>
+                </div>
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>📅 Date *</label>
+                    <input type="date" value={manualBookForm.date}
+                      onChange={(e) => setManualBookForm({ ...manualBookForm, date: e.target.value })}
+                      min={new Date().toISOString().split('T')[0]} required />
+                  </div>
+                  <div className="form-group">
+                    <label>🕐 Time *</label>
+                    <select value={manualBookForm.time}
+                      onChange={(e) => setManualBookForm({ ...manualBookForm, time: e.target.value })} required>
+                      <option value="">Select a time</option>
+                      {TIME_SLOTS.map(s => <option key={s} value={s}>{s}</option>)}
+                    </select>
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label>🏥 Service *</label>
+                  <select value={manualBookForm.service}
+                    onChange={(e) => setManualBookForm({ ...manualBookForm, service: e.target.value })} required>
+                    <option value="">Select a service</option>
+                    {Object.entries(SERVICE_LABELS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label>📝 Notes (optional)</label>
+                  <textarea value={manualBookForm.notes}
+                    onChange={(e) => setManualBookForm({ ...manualBookForm, notes: e.target.value })}
+                    placeholder="Any notes about the appointment..."
+                    rows="3" />
+                </div>
+                <div className="reserve-actions">
+                  <button type="button" className="cancel-reserve-btn"
+                    onClick={() => setShowManualBookModal(false)}>Cancel</button>
+                  <button type="submit" className="submit-reserve-btn" disabled={loading}>
+                    {loading ? '🔄 Booking...' : '✅ Book & Confirm'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Appointment Modal */}
+      {showEditModal && editAppointment && (
+        <div className="modal-overlay" onClick={() => setShowEditModal(false)}>
+          <div className="modal-content edit-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>✏️ Edit Appointment</h2>
+              <button className="close-btn" onClick={() => setShowEditModal(false)}>✖️</button>
+            </div>
+            <div className="modal-body">
+              <form onSubmit={handleEditSubmit} className="reserve-form">
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>👤 First Name *</label>
+                    <input type="text" value={editForm.firstName}
+                      onChange={(e) => setEditForm({ ...editForm, firstName: e.target.value })}
+                      required />
+                  </div>
+                  <div className="form-group">
+                    <label>👤 Last Name *</label>
+                    <input type="text" value={editForm.lastName}
+                      onChange={(e) => setEditForm({ ...editForm, lastName: e.target.value })}
+                      required />
+                  </div>
+                </div>
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>📧 Email *</label>
+                    <input type="email" value={editForm.email}
+                      onChange={(e) => setEditForm({ ...editForm, email: e.target.value })}
+                      required />
+                  </div>
+                  <div className="form-group">
+                    <label>📞 Phone *</label>
+                    <input type="tel" value={editForm.phone}
+                      onChange={(e) => setEditForm({ ...editForm, phone: e.target.value })}
+                      required />
+                  </div>
+                </div>
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>📅 Date *</label>
+                    <input type="date" value={editForm.date}
+                      onChange={(e) => setEditForm({ ...editForm, date: e.target.value })}
+                      required />
+                  </div>
+                  <div className="form-group">
+                    <label>🕐 Time *</label>
+                    <select value={editForm.time}
+                      onChange={(e) => setEditForm({ ...editForm, time: e.target.value })} required>
+                      <option value="">Select a time</option>
+                      {TIME_SLOTS.map(s => <option key={s} value={s}>{s}</option>)}
+                    </select>
+                  </div>
+                </div>
+                <div className="form-group">
+                  <label>🏥 Service *</label>
+                  <select value={editForm.service}
+                    onChange={(e) => setEditForm({ ...editForm, service: e.target.value })} required>
+                    <option value="">Select a service</option>
+                    {Object.entries(SERVICE_LABELS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label>📝 Patient Notes</label>
+                  <textarea value={editForm.notes}
+                    onChange={(e) => setEditForm({ ...editForm, notes: e.target.value })}
+                    placeholder="Patient notes..."
+                    rows="2" />
+                </div>
+                <div className="form-group">
+                  <label>🔒 Admin Notes (only visible to admin)</label>
+                  <textarea value={editForm.adminNotes}
+                    onChange={(e) => setEditForm({ ...editForm, adminNotes: e.target.value })}
+                    placeholder="Private admin notes - diagnoses, treatment plan, etc."
+                    rows="3" />
+                </div>
+                <div className="reserve-actions">
+                  <button type="button" className="cancel-reserve-btn"
+                    onClick={() => setShowEditModal(false)}>Cancel</button>
+                  <button type="submit" className="submit-reserve-btn" disabled={loading}>
+                    {loading ? '🔄 Saving...' : '💾 Save Changes'}
                   </button>
                 </div>
               </form>
