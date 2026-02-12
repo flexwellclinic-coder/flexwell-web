@@ -1,5 +1,15 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { appointmentsAPI, authAPI, localStorageBackup } from '../services/api';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { appointmentsAPI, authAPI, localStorageBackup, notificationAPI } from '../services/api';
+
+const TIME_SLOTS = ['9:00', '10:00', '11:00', '14:00', '15:00', '16:00'];
+
+const SERVICE_LABELS = {
+  'initial-consultation': 'Initial Consultation',
+  'manual-therapy': 'Manual Therapy',
+  'exercise-therapy': 'Exercise Therapy',
+  'sports-rehab': 'Sports Rehab',
+  'womens-health': "Women's Health"
+};
 
 const Admin = ({ t }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -11,6 +21,26 @@ const Admin = ({ t }) => {
   const [showPatientDetails, setShowPatientDetails] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  // Reserve Again state
+  const [showReserveModal, setShowReserveModal] = useState(false);
+  const [reservePatient, setReservePatient] = useState(null);
+  const [reserveForm, setReserveForm] = useState({ date: '', time: '', service: '' });
+
+  // Reschedule state
+  const [showRescheduleModal, setShowRescheduleModal] = useState(false);
+  const [rescheduleAppointment, setRescheduleAppointment] = useState(null);
+  const [rescheduleForm, setRescheduleForm] = useState({ date: '', time: '' });
+
+  // Calendar state
+  const [calendarDate, setCalendarDate] = useState(() => {
+    const today = new Date();
+    const dayOfWeek = today.getDay();
+    const monday = new Date(today);
+    monday.setDate(today.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
+    monday.setHours(0, 0, 0, 0);
+    return monday;
+  });
 
   const checkAuthentication = async () => {
     try {
@@ -80,7 +110,7 @@ const Admin = ({ t }) => {
   const loadPendingAppointments = useCallback(async () => {
     setLoading(true);
     try {
-      // Get all appointments
+      // Get all appointments from API
       let allAppointments = [];
       
       try {
@@ -93,14 +123,82 @@ const Admin = ({ t }) => {
         allAppointments = localStorageBackup.getAppointments();
       }
 
-      // Get confirmed appointment IDs to exclude them
+      // ===== SYNC: Build patient database from confirmed API appointments =====
+      const confirmedFromAPI = allAppointments.filter(apt =>
+        apt.status === 'confirmed' || apt.status === 'completed'
+      );
+
+      if (confirmedFromAPI.length > 0) {
+        const patientsDB = getConfirmedPatientsDB();
+        let updated = false;
+
+        confirmedFromAPI.forEach(apt => {
+          if (!apt.email || !apt.phone) return;
+          const patientKey = `${apt.email.toLowerCase()}_${apt.phone}`;
+
+          const appointmentRecord = {
+            id: apt._id || apt.id,
+            _id: apt._id,
+            date: apt.date,
+            time: apt.time,
+            service: apt.service,
+            notes: apt.notes || '',
+            confirmedAt: apt.confirmedAt || apt.updatedAt || new Date().toISOString(),
+            status: apt.status || 'confirmed'
+          };
+
+          if (patientsDB[patientKey]) {
+            // Existing patient — check if this appointment is already tracked
+            const exists = patientsDB[patientKey].appointments.some(a =>
+              (a.id && a.id === appointmentRecord.id) ||
+              (a._id && a._id === appointmentRecord._id) ||
+              (a.id && a.id === appointmentRecord._id)
+            );
+            if (!exists) {
+              patientsDB[patientKey].appointments.push(appointmentRecord);
+              patientsDB[patientKey].totalAppointments = patientsDB[patientKey].appointments.length;
+              patientsDB[patientKey].lastAppointmentDate = apt.date;
+              patientsDB[patientKey].lastService = apt.service;
+              patientsDB[patientKey].monthlyStats = calculateMonthlyStats(patientsDB[patientKey].appointments);
+              updated = true;
+            }
+          } else {
+            // New patient from API
+            patientsDB[patientKey] = {
+              id: patientKey,
+              firstName: apt.firstName,
+              lastName: apt.lastName,
+              email: apt.email,
+              phone: apt.phone,
+              createdAt: apt.createdAt || new Date().toISOString(),
+              lastAppointmentDate: apt.date,
+              lastService: apt.service,
+              lastConfirmedAt: apt.confirmedAt || new Date().toISOString(),
+              totalAppointments: 1,
+              appointments: [appointmentRecord],
+              monthlyStats: calculateMonthlyStats([appointmentRecord])
+            };
+            updated = true;
+          }
+        });
+
+        if (updated) {
+          saveConfirmedPatientsDB(patientsDB);
+          // Update confirmed patients state directly
+          setConfirmedPatients(Object.values(patientsDB));
+          console.log('🔄 Synced confirmed patients from API');
+        }
+      }
+      // ===== END SYNC =====
+
+      // Get confirmed appointment IDs to exclude them from pending
       const confirmedDB = getConfirmedPatientsDB();
       const confirmedAppointmentIds = new Set();
       
       Object.values(confirmedDB).forEach(patient => {
         patient.appointments.forEach(apt => {
-          confirmedAppointmentIds.add(apt.id);
-          confirmedAppointmentIds.add(apt._id);
+          if (apt.id) confirmedAppointmentIds.add(apt.id);
+          if (apt._id) confirmedAppointmentIds.add(apt._id);
         });
       });
 
@@ -121,7 +219,7 @@ const Admin = ({ t }) => {
     } finally {
       setLoading(false);
     }
-  }, [getConfirmedPatientsDB]);
+  }, [getConfirmedPatientsDB, saveConfirmedPatientsDB]);
 
   // NOW useEffect can use the functions since they're defined above
   useEffect(() => {
@@ -332,6 +430,105 @@ const Admin = ({ t }) => {
     }
   };
 
+  const handleDeleteAppointment = async (appointment) => {
+    if (!window.confirm(`Delete appointment for ${appointment.firstName} ${appointment.lastName}?\n\nThis action cannot be undone.`)) {
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const appointmentId = appointment._id || appointment.id;
+
+      // Delete from API
+      try {
+        await appointmentsAPI.delete(appointmentId);
+        console.log('✅ Deleted from API');
+      } catch (apiError) {
+        console.warn('API delete failed, removing from localStorage:', apiError);
+      }
+
+      // Delete from localStorage
+      localStorageBackup.deleteAppointment(appointmentId);
+
+      // Remove from pending list immediately
+      setPendingAppointments(prev => prev.filter(apt => {
+        const aptId = apt._id || apt.id;
+        return aptId !== appointmentId;
+      }));
+
+      alert(`🗑️ Appointment deleted.\n\nPatient: ${appointment.firstName} ${appointment.lastName}`);
+
+    } catch (error) {
+      console.error('Delete failed:', error);
+      alert('❌ Failed to delete appointment. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleReschedule = (appointment) => {
+    setRescheduleAppointment(appointment);
+    setRescheduleForm({ date: '', time: '' });
+    setShowRescheduleModal(true);
+  };
+
+  const handleRescheduleSubmit = async (e) => {
+    e.preventDefault();
+    if (!rescheduleAppointment) return;
+
+    if (!rescheduleForm.date || !rescheduleForm.time) {
+      alert('Please select a new date and time.');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const appointmentId = rescheduleAppointment._id || rescheduleAppointment.id;
+
+      // Update in API
+      try {
+        await appointmentsAPI.update(appointmentId, {
+          date: rescheduleForm.date,
+          time: rescheduleForm.time
+        });
+        console.log('✅ Rescheduled in API');
+      } catch (apiError) {
+        console.warn('API update failed, updating localStorage:', apiError);
+        localStorageBackup.updateAppointment(appointmentId, {
+          date: rescheduleForm.date,
+          time: rescheduleForm.time
+        });
+      }
+
+      // Update in pending list immediately
+      setPendingAppointments(prev => prev.map(apt => {
+        const aptId = apt._id || apt.id;
+        if (aptId === appointmentId) {
+          return { ...apt, date: rescheduleForm.date, time: rescheduleForm.time };
+        }
+        return apt;
+      }));
+
+      setShowRescheduleModal(false);
+      setRescheduleAppointment(null);
+      setRescheduleForm({ date: '', time: '' });
+
+      const newDate = new Date(rescheduleForm.date + 'T12:00:00').toLocaleDateString('en-US', {
+        weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+      });
+
+      alert(`📅 Appointment rescheduled!\n\nPatient: ${rescheduleAppointment.firstName} ${rescheduleAppointment.lastName}\nNew Date: ${newDate}\nNew Time: ${rescheduleForm.time}`);
+
+    } catch (error) {
+      console.error('Reschedule failed:', error);
+      alert('❌ Failed to reschedule. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handlePatientClick = (patient) => {
     setSelectedPatient(patient);
     setShowPatientDetails(true);
@@ -355,6 +552,177 @@ const Admin = ({ t }) => {
     const currentMonthKey = `${currentDate.getFullYear()}-${currentDate.getMonth() + 1}`;
     return patient.monthlyStats?.[currentMonthKey]?.count || 0;
   };
+
+  // ==============================
+  // CALENDAR HELPERS
+  // ==============================
+  const getWeekDays = useCallback((startDate) => {
+    const days = [];
+    for (let i = 0; i < 6; i++) { // Mon-Sat
+      const day = new Date(startDate);
+      day.setDate(startDate.getDate() + i);
+      days.push(day);
+    }
+    return days;
+  }, []);
+
+  const formatDateShort = (date) => {
+    return date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  };
+
+  const isToday = (date) => {
+    const today = new Date();
+    return date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear();
+  };
+
+  const calendarAppointments = useMemo(() => {
+    const weekDays = getWeekDays(calendarDate);
+    const startStr = weekDays[0].toISOString().split('T')[0];
+    const endStr = weekDays[weekDays.length - 1].toISOString().split('T')[0];
+
+    const allAppointments = [];
+
+    // Add pending appointments
+    pendingAppointments.forEach(apt => {
+      allAppointments.push({
+        ...apt,
+        displayStatus: 'pending',
+        patientName: `${apt.firstName} ${apt.lastName}`
+      });
+    });
+
+    // Add confirmed appointments from patient database
+    confirmedPatients.forEach(patient => {
+      patient.appointments.forEach(apt => {
+        allAppointments.push({
+          ...apt,
+          displayStatus: apt.status || 'confirmed',
+          patientName: `${patient.firstName} ${patient.lastName}`,
+          email: patient.email,
+          phone: patient.phone
+        });
+      });
+    });
+
+    // Filter to current week
+    return allAppointments.filter(apt => {
+      return apt.date >= startStr && apt.date <= endStr;
+    });
+  }, [pendingAppointments, confirmedPatients, calendarDate, getWeekDays]);
+
+  const getAppointmentForSlot = useCallback((date, time) => {
+    const dateStr = date.toISOString().split('T')[0];
+    return calendarAppointments.find(apt => apt.date === dateStr && apt.time === time);
+  }, [calendarAppointments]);
+
+  const navigateCalendar = (direction) => {
+    setCalendarDate(prev => {
+      const newDate = new Date(prev);
+      newDate.setDate(prev.getDate() + (direction === 'next' ? 7 : -7));
+      return newDate;
+    });
+  };
+
+  const goToCurrentWeek = () => {
+    const today = new Date();
+    const dayOfWeek = today.getDay();
+    const monday = new Date(today);
+    monday.setDate(today.getDate() - (dayOfWeek === 0 ? 6 : dayOfWeek - 1));
+    monday.setHours(0, 0, 0, 0);
+    setCalendarDate(monday);
+  };
+
+  const getServiceLabel = (service) => {
+    return SERVICE_LABELS[service] || service || 'N/A';
+  };
+
+  // ==============================
+  // RESERVE AGAIN HANDLERS
+  // ==============================
+  const handleReserveAgain = (patient, e) => {
+    if (e) e.stopPropagation();
+    setReservePatient(patient);
+    setReserveForm({
+      date: '',
+      time: '',
+      service: patient.lastService || ''
+    });
+    setShowReserveModal(true);
+  };
+
+  const handleReserveSubmit = async (e) => {
+    e.preventDefault();
+    if (!reservePatient) return;
+
+    if (!reserveForm.date || !reserveForm.time || !reserveForm.service) {
+      alert('Please fill in all fields.');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const appointmentData = {
+        firstName: reservePatient.firstName,
+        lastName: reservePatient.lastName,
+        email: reservePatient.email,
+        phone: reservePatient.phone,
+        date: reserveForm.date,
+        time: reserveForm.time,
+        service: reserveForm.service,
+        notes: 'Rebooked by admin',
+        previousInjury: false,
+        createdBy: 'admin'
+      };
+
+      let savedAppointment = { ...appointmentData, id: `apt_${Date.now()}` };
+
+      // Save to API
+      try {
+        const response = await appointmentsAPI.create(appointmentData);
+        if (response.success && response.data) {
+          savedAppointment = { ...appointmentData, _id: response.data._id, id: response.data._id };
+          // Update status to confirmed
+          try {
+            await appointmentsAPI.updateStatus(response.data._id, 'confirmed');
+          } catch (statusErr) {
+            console.warn('Could not update status:', statusErr);
+          }
+        }
+      } catch (apiError) {
+        console.warn('API failed, using localStorage:', apiError);
+        const local = localStorageBackup.addAppointment(appointmentData);
+        if (local) {
+          savedAppointment = local;
+        }
+      }
+
+      // Add to patient database (auto-confirm)
+      addOrUpdatePatient(savedAppointment);
+
+      setShowReserveModal(false);
+      setShowPatientDetails(false);
+      setReservePatient(null);
+      setReserveForm({ date: '', time: '', service: '' });
+
+      // Reload pending appointments
+      await loadPendingAppointments();
+
+      alert(`✅ Appointment booked!\n\nPatient: ${appointmentData.firstName} ${appointmentData.lastName}\nDate: ${new Date(appointmentData.date + 'T12:00:00').toLocaleDateString()}\nTime: ${appointmentData.time}\nService: ${getServiceLabel(appointmentData.service)}`);
+
+    } catch (error) {
+      console.error('Reserve failed:', error);
+      alert('❌ Failed to create appointment. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ==============================
+  // RENDER
+  // ==============================
 
   // Login Form
   if (!isAuthenticated) {
@@ -405,6 +773,9 @@ const Admin = ({ t }) => {
   }
 
   // Admin Dashboard
+  const weekDays = getWeekDays(calendarDate);
+  const weekLabel = `${formatDateShort(weekDays[0])} — ${formatDateShort(weekDays[weekDays.length - 1])}`;
+
   return (
     <div className="admin-dashboard">
       <header className="admin-header">
@@ -508,7 +879,7 @@ const Admin = ({ t }) => {
                       </div>
                       <div className="detail-row">
                         <span className="detail-label">🏥 Service:</span>
-                        <span className="detail-value">{appointment.service}</span>
+                        <span className="detail-value">{getServiceLabel(appointment.service)}</span>
                       </div>
                       {appointment.notes && (
                         <div className="detail-row">
@@ -524,13 +895,92 @@ const Admin = ({ t }) => {
                         className="confirm-btn"
                         disabled={loading}
                       >
-                        ✅ CONFIRM APPOINTMENT
+                        ✅ Confirm
+                      </button>
+                      <button
+                        onClick={() => handleReschedule(appointment)}
+                        className="reschedule-btn"
+                        disabled={loading}
+                      >
+                        📅 Reschedule
+                      </button>
+                      <button
+                        onClick={() => handleDeleteAppointment(appointment)}
+                        className="delete-btn"
+                        disabled={loading}
+                      >
+                        🗑️ Delete
                       </button>
                     </div>
                   </div>
                 ))}
               </div>
             )}
+          </div>
+
+          {/* Calendar View */}
+          <div className="calendar-section">
+            <div className="section-header">
+              <h2>📅 Appointment Calendar</h2>
+              <div className="calendar-nav">
+                <button onClick={() => navigateCalendar('prev')} className="cal-nav-btn">◀</button>
+                <button onClick={goToCurrentWeek} className="cal-nav-today">Today</button>
+                <span className="cal-week-label">{weekLabel}</span>
+                <button onClick={() => navigateCalendar('next')} className="cal-nav-btn">▶</button>
+              </div>
+            </div>
+
+            <div className="calendar-table-wrapper">
+              <table className="calendar-table">
+                <thead>
+                  <tr>
+                    <th className="cal-time-header">Time</th>
+                    {weekDays.map((day, i) => (
+                      <th key={i} className={`cal-day-header ${isToday(day) ? 'today' : ''}`}>
+                        {formatDateShort(day)}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {TIME_SLOTS.map((time, tIdx) => (
+                    <React.Fragment key={time}>
+                      {tIdx === 3 && (
+                        <tr className="cal-break-row">
+                          <td colSpan={weekDays.length + 1} className="cal-break-cell">
+                            🍽️ Lunch Break
+                          </td>
+                        </tr>
+                      )}
+                      <tr>
+                        <td className="cal-time-cell">{time}</td>
+                        {weekDays.map((day, dIdx) => {
+                          const apt = getAppointmentForSlot(day, time);
+                          return (
+                            <td
+                              key={dIdx}
+                              className={`cal-slot ${isToday(day) ? 'today' : ''} ${apt ? (apt.displayStatus === 'pending' ? 'has-pending' : 'has-confirmed') : 'empty'}`}
+                            >
+                              {apt ? (
+                                <div className="cal-appointment">
+                                  <span className="cal-apt-name">{apt.patientName}</span>
+                                  <span className="cal-apt-service">{getServiceLabel(apt.service)}</span>
+                                  <span className={`cal-apt-badge ${apt.displayStatus}`}>
+                                    {apt.displayStatus === 'pending' ? '⏳' : '✅'}
+                                  </span>
+                                </div>
+                              ) : (
+                                <span className="cal-empty">—</span>
+                              )}
+                            </td>
+                          );
+                        })}
+                      </tr>
+                    </React.Fragment>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
 
           {/* Confirmed Patients Database */}
@@ -564,9 +1014,18 @@ const Admin = ({ t }) => {
                       <span className="last-appointment">
                         Last: {new Date(patient.lastAppointmentDate).toLocaleDateString()}
                       </span>
-                      <span className="last-service">{patient.lastService}</span>
+                      <span className="last-service">{getServiceLabel(patient.lastService)}</span>
                     </div>
-                    <div className="click-indicator">👁️ View Full History</div>
+                    <div className="patient-actions-col">
+                      <button
+                        className="reserve-again-btn"
+                        onClick={(e) => handleReserveAgain(patient, e)}
+                        title="Book another appointment for this patient"
+                      >
+                        🔄 Reserve Again
+                      </button>
+                      <span className="click-indicator">👁️ View History</span>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -598,6 +1057,12 @@ const Admin = ({ t }) => {
                   <p><strong>📅 Total Appointments:</strong> {selectedPatient.totalAppointments}</p>
                   <p><strong>👤 Patient Since:</strong> {new Date(selectedPatient.createdAt).toLocaleDateString()}</p>
                 </div>
+                <button
+                  className="reserve-again-btn modal-reserve-btn"
+                  onClick={(e) => handleReserveAgain(selectedPatient, e)}
+                >
+                  🔄 Reserve Again
+                </button>
               </div>
 
               {/* Monthly Statistics */}
@@ -631,7 +1096,7 @@ const Admin = ({ t }) => {
                           </span>
                         </div>
                         <div className="timeline-details">
-                          <p><strong>Service:</strong> {appointment.service}</p>
+                          <p><strong>Service:</strong> {getServiceLabel(appointment.service)}</p>
                           <p><strong>Status:</strong> {appointment.status}</p>
                           <p><strong>Confirmed:</strong> {new Date(appointment.confirmedAt).toLocaleDateString()}</p>
                           {appointment.notes && (
@@ -647,8 +1112,164 @@ const Admin = ({ t }) => {
           </div>
         </div>
       )}
+
+      {/* Reserve Again Modal */}
+      {showReserveModal && reservePatient && (
+        <div className="modal-overlay" onClick={() => setShowReserveModal(false)}>
+          <div className="modal-content reserve-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>🔄 Reserve Again</h2>
+              <button 
+                className="close-btn"
+                onClick={() => setShowReserveModal(false)}
+              >
+                ✖️
+              </button>
+            </div>
+            
+            <div className="modal-body">
+              <div className="reserve-patient-info">
+                <h3>{reservePatient.firstName} {reservePatient.lastName}</h3>
+                <p>📧 {reservePatient.email} &nbsp;|&nbsp; 📞 {reservePatient.phone}</p>
+                <p className="reserve-total">Total appointments: {reservePatient.totalAppointments}</p>
+              </div>
+
+              <form onSubmit={handleReserveSubmit} className="reserve-form">
+                <div className="form-group">
+                  <label>📅 Date *</label>
+                  <input
+                    type="date"
+                    value={reserveForm.date}
+                    onChange={(e) => setReserveForm({ ...reserveForm, date: e.target.value })}
+                    min={new Date().toISOString().split('T')[0]}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>🕐 Time *</label>
+                  <select
+                    value={reserveForm.time}
+                    onChange={(e) => setReserveForm({ ...reserveForm, time: e.target.value })}
+                    required
+                  >
+                    <option value="">Select a time</option>
+                    {TIME_SLOTS.map(slot => (
+                      <option key={slot} value={slot}>{slot}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="form-group">
+                  <label>🏥 Service *</label>
+                  <select
+                    value={reserveForm.service}
+                    onChange={(e) => setReserveForm({ ...reserveForm, service: e.target.value })}
+                    required
+                  >
+                    <option value="">Select a service</option>
+                    {Object.entries(SERVICE_LABELS).map(([value, label]) => (
+                      <option key={value} value={value}>{label}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="reserve-actions">
+                  <button
+                    type="button"
+                    className="cancel-reserve-btn"
+                    onClick={() => setShowReserveModal(false)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="submit-reserve-btn"
+                    disabled={loading}
+                  >
+                    {loading ? '🔄 Booking...' : '✅ Confirm Booking'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Reschedule Modal */}
+      {showRescheduleModal && rescheduleAppointment && (
+        <div className="modal-overlay" onClick={() => setShowRescheduleModal(false)}>
+          <div className="modal-content reschedule-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>📅 Reschedule Appointment</h2>
+              <button 
+                className="close-btn"
+                onClick={() => setShowRescheduleModal(false)}
+              >
+                ✖️
+              </button>
+            </div>
+            
+            <div className="modal-body">
+              <div className="reserve-patient-info">
+                <h3>{rescheduleAppointment.firstName} {rescheduleAppointment.lastName}</h3>
+                <p>📧 {rescheduleAppointment.email} &nbsp;|&nbsp; 📞 {rescheduleAppointment.phone}</p>
+                <div className="current-schedule">
+                  <p><strong>Current Date:</strong> {formatDate(rescheduleAppointment.date)}</p>
+                  <p><strong>Current Time:</strong> {formatTime(rescheduleAppointment.time)}</p>
+                  <p><strong>Service:</strong> {getServiceLabel(rescheduleAppointment.service)}</p>
+                </div>
+              </div>
+
+              <form onSubmit={handleRescheduleSubmit} className="reserve-form">
+                <div className="form-group">
+                  <label>📅 New Date *</label>
+                  <input
+                    type="date"
+                    value={rescheduleForm.date}
+                    onChange={(e) => setRescheduleForm({ ...rescheduleForm, date: e.target.value })}
+                    min={new Date().toISOString().split('T')[0]}
+                    required
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label>🕐 New Time *</label>
+                  <select
+                    value={rescheduleForm.time}
+                    onChange={(e) => setRescheduleForm({ ...rescheduleForm, time: e.target.value })}
+                    required
+                  >
+                    <option value="">Select a time</option>
+                    {TIME_SLOTS.map(slot => (
+                      <option key={slot} value={slot}>{slot}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="reserve-actions">
+                  <button
+                    type="button"
+                    className="cancel-reserve-btn"
+                    onClick={() => setShowRescheduleModal(false)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="submit-reserve-btn"
+                    disabled={loading}
+                  >
+                    {loading ? '🔄 Saving...' : '📅 Reschedule'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default Admin; 
+export default Admin;

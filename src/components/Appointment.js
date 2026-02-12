@@ -1,6 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import useScrollAnimation from '../hooks/useScrollAnimation';
-import { appointmentsAPI, localStorageBackup } from '../services/api';
+import { appointmentsAPI, localStorageBackup, notificationAPI } from '../services/api';
+
+const ALL_TIME_SLOTS = [
+  { value: '9:00', labelEn: '9:00 AM', labelSq: '9:00 AM' },
+  { value: '10:00', labelEn: '10:00 AM', labelSq: '10:00 AM' },
+  { value: '11:00', labelEn: '11:00 AM', labelSq: '11:00 AM' },
+  { value: '14:00', labelEn: '2:00 PM', labelSq: '2:00 PM' },
+  { value: '15:00', labelEn: '3:00 PM', labelSq: '3:00 PM' },
+  { value: '16:00', labelEn: '4:00 PM', labelSq: '4:00 PM' },
+];
 
 const Appointment = ({ t }) => {
   const [heroTitleRef, heroTitleVisible] = useScrollAnimation();
@@ -24,8 +33,52 @@ const Appointment = ({ t }) => {
     additionalNotes: ''
   });
 
+  const [availableSlots, setAvailableSlots] = useState([]);
+  const [loadingSlots, setLoadingSlots] = useState(false);
+  const [slotsLoaded, setSlotsLoaded] = useState(false);
+
+  const fetchAvailableSlots = useCallback(async (date) => {
+    if (!date) {
+      setAvailableSlots([]);
+      setSlotsLoaded(false);
+      return;
+    }
+
+    setLoadingSlots(true);
+    setSlotsLoaded(false);
+
+    try {
+      const response = await appointmentsAPI.getAvailableSlots(date);
+      if (response.success && response.data) {
+        setAvailableSlots(response.data.availableSlots || []);
+      } else {
+        // Fallback: show all slots if API fails
+        setAvailableSlots(ALL_TIME_SLOTS.map(s => s.value));
+      }
+    } catch (error) {
+      console.warn('Failed to fetch available slots, showing all:', error);
+      // Fallback: show all slots
+      setAvailableSlots(ALL_TIME_SLOTS.map(s => s.value));
+    } finally {
+      setLoadingSlots(false);
+      setSlotsLoaded(true);
+    }
+  }, []);
+
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
+
+    // When date changes, fetch available slots and reset time
+    if (name === 'preferredDate') {
+      setFormData(prev => ({
+        ...prev,
+        preferredDate: value,
+        preferredTime: '' // reset time when date changes
+      }));
+      fetchAvailableSlots(value);
+      return;
+    }
+
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value
@@ -65,6 +118,14 @@ const Appointment = ({ t }) => {
       if (response.success) {
         console.log('✅ Appointment saved to database successfully');
         
+        // Send email notification to clinic (non-blocking)
+        notificationAPI.sendAppointmentNotification(appointment)
+          .then(res => {
+            if (res.success) console.log('📧 Email notification sent');
+            else console.warn('📧 Email notification skipped or failed');
+          })
+          .catch(err => console.warn('📧 Email notification error:', err));
+        
         // Reset form on success
         setFormData({
           firstName: '',
@@ -82,8 +143,8 @@ const Appointment = ({ t }) => {
         });
 
         setSubmitMessage(t(
-          '✅ Thank you! Your appointment request has been submitted successfully. We will contact you within 24 hours to confirm.\n\n🎉 You can book additional appointments anytime - just fill out the form again!', 
-          '✅ Faleminderit! Kërkesa juaj për takim është dërguar me sukses. Ne do t\'ju kontaktojmë brenda 24 orëve për të konfirmuar.\n\n🎉 Mund të rezervoni takime shtesë në çdo kohë - thjesht plotësoni formularin përsëri!'
+          '✅ Thank you for your appointment! We will contact you as soon as possible.', 
+          '✅ Faleminderit për takimin tuaj! Ne do t\'ju kontaktojmë sa më shpejt të jetë e mundur.'
         ));
       }
 
@@ -122,8 +183,8 @@ const Appointment = ({ t }) => {
             });
             
             setSubmitMessage(t(
-              '⚠️ Your appointment has been saved locally. We will process it as soon as possible.\n\n🎉 You can book additional appointments anytime!', 
-              '⚠️ Takimi juaj është ruajtur lokalisht. Ne do ta përpunojmë sa më shpejt të jetë e mundur.\n\n🎉 Mund të rezervoni takime shtesë në çdo kohë!'
+              '✅ Thank you for your appointment! We will contact you as soon as possible.', 
+              '✅ Faleminderit për takimin tuaj! Ne do t\'ju kontaktojmë sa më shpejt të jetë e mundur.'
             ));
           } else {
             throw new Error('Failed to save locally');
@@ -305,29 +366,45 @@ const Appointment = ({ t }) => {
                       value={formData.preferredTime}
                       onChange={handleInputChange}
                       required
+                      disabled={!formData.preferredDate || loadingSlots}
                     >
-                      <option value="" data-en="Select a time" data-sq="Zgjidhni një orë">
-                        {t('Select a time', 'Zgjidhni një orë')}
-                      </option>
-                      <option value="9:00" data-en="9:00 AM" data-sq="9:00 AM">
-                        {t('9:00 AM', '9:00 AM')}
-                      </option>
-                      <option value="10:00" data-en="10:00 AM" data-sq="10:00 AM">
-                        {t('10:00 AM', '10:00 AM')}
-                      </option>
-                      <option value="11:00" data-en="11:00 AM" data-sq="11:00 AM">
-                        {t('11:00 AM', '11:00 AM')}
-                      </option>
-                      <option value="14:00" data-en="2:00 PM" data-sq="2:00 PM">
-                        {t('2:00 PM', '2:00 PM')}
-                      </option>
-                      <option value="15:00" data-en="3:00 PM" data-sq="3:00 PM">
-                        {t('3:00 PM', '3:00 PM')}
-                      </option>
-                      <option value="16:00" data-en="4:00 PM" data-sq="4:00 PM">
-                        {t('4:00 PM', '4:00 PM')}
-                      </option>
+                      {!formData.preferredDate ? (
+                        <option value="">
+                          {t('Select a date first', 'Zgjidhni një datë fillimisht')}
+                        </option>
+                      ) : loadingSlots ? (
+                        <option value="">
+                          {t('Loading available times...', 'Duke ngarkuar oraret e lira...')}
+                        </option>
+                      ) : slotsLoaded && availableSlots.length === 0 ? (
+                        <option value="">
+                          {t('No available times for this date', 'Nuk ka orare të lira për këtë datë')}
+                        </option>
+                      ) : (
+                        <>
+                          <option value="">
+                            {t('Select a time', 'Zgjidhni një orë')}
+                          </option>
+                          {ALL_TIME_SLOTS.map(slot => {
+                            const isAvailable = availableSlots.includes(slot.value);
+                            return isAvailable ? (
+                              <option key={slot.value} value={slot.value}>
+                                {t(slot.labelEn, slot.labelSq)}
+                              </option>
+                            ) : (
+                              <option key={slot.value} value={slot.value} disabled>
+                                {t(slot.labelEn + ' — Booked', slot.labelSq + ' — E zënë')}
+                              </option>
+                            );
+                          })}
+                        </>
+                      )}
                     </select>
+                    {slotsLoaded && availableSlots.length === 0 && formData.preferredDate && !loadingSlots && (
+                      <span className="slots-warning">
+                        {t('All time slots are booked for this date. Please select another date.', 'Të gjitha oraret janë të zëna për këtë datë. Ju lutem zgjidhni një datë tjetër.')}
+                      </span>
+                    )}
                     {formErrors.preferredTime && <span className="error">{formErrors.preferredTime}</span>}
                   </div>
                 </div>

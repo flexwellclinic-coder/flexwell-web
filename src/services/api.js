@@ -155,6 +155,20 @@ export const appointmentsAPI = {
   }
 };
 
+// Notification API
+export const notificationAPI = {
+  // Send email notification for new appointment
+  sendAppointmentNotification: async (appointmentData) => {
+    try {
+      const response = await api.post('/send-notification', appointmentData);
+      return response.data;
+    } catch (error) {
+      console.warn('Email notification failed (non-blocking):', error.message);
+      return { success: false, message: 'Notification failed' };
+    }
+  }
+};
+
 // Health check
 export const healthCheck = async () => {
   try {

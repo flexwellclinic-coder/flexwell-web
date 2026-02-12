@@ -696,4 +696,27 @@
     color: #ef4444;
     font-size: 14px;
     font-weight: 500;
-} 
+}
+
+/* Available slots */
+.form-group select:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.form-group select option:disabled {
+    color: #999;
+    background: #f0f0f0;
+}
+
+.slots-warning {
+    display: block;
+    margin-top: 8px;
+    color: #f59e0b;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 12px;
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+    border-radius: 8px;
+}
