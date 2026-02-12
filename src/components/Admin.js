@@ -2,6 +2,10 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { appointmentsAPI, authAPI, localStorageBackup, doctorsAPI } from '../services/api';
 
 const TIME_SLOTS = ['9:00', '10:00', '11:00', '14:00', '15:00', '16:00'];
+const CALENDAR_SLOTS = [
+  '9:00', '10:00', '11:00', '12:00', '13:00',
+  '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'
+];
 
 const SERVICE_LABELS = {
   'initial-consultation': 'Initial Consultation',
@@ -892,37 +896,27 @@ const Admin = ({ t }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {TIME_SLOTS.map((time, tIdx) => (
-                    <React.Fragment key={time}>
-                      {tIdx === 3 && (
-                        <tr className="cal-break-row">
-                          <td colSpan={weekDays.length + 1} className="cal-break-cell">🍽️ Lunch Break</td>
-                        </tr>
-                      )}
-                      <tr>
-                        <td className="cal-time-cell">{time}</td>
-                        {weekDays.map((day, dIdx) => {
-                          const apt = getAppointmentForSlot(day, time);
-                          return (
-                            <td key={dIdx}
-                              className={`cal-slot ${isToday(day) ? 'today' : ''} ${apt ? (apt.displayStatus === 'pending' ? 'has-pending' : 'has-confirmed') : 'empty'}`}>
-                              {apt ? (
-                                <div className="cal-appointment">
-                                  <span className="cal-apt-name">{apt.patientName}</span>
-                                  <span className="cal-apt-service">{getServiceLabel(apt.service)}</span>
-                                  {apt.doctor && <span className="cal-apt-doctor">👨‍⚕️ {apt.doctor}</span>}
-                                  <span className={`cal-apt-badge ${apt.displayStatus}`}>
-                                    {apt.displayStatus === 'pending' ? '⏳' : '✅'}
-                                  </span>
-                                </div>
-                              ) : (
-                                <span className="cal-empty">—</span>
-                              )}
-                            </td>
-                          );
-                        })}
-                      </tr>
-                    </React.Fragment>
+                  {CALENDAR_SLOTS.map((time) => (
+                    <tr key={time}>
+                      <td className="cal-time-cell">{time}</td>
+                      {weekDays.map((day, dIdx) => {
+                        const apt = getAppointmentForSlot(day, time);
+                        return (
+                          <td key={dIdx}
+                            className={`cal-slot ${isToday(day) ? 'today' : ''} ${apt ? (apt.displayStatus === 'pending' ? 'has-pending' : 'has-confirmed') : 'empty'}`}>
+                            {apt ? (
+                              <div className="cal-appointment">
+                                <span className="cal-apt-name">{apt.patientName}</span>
+                                <span className="cal-apt-service">{getServiceLabel(apt.service)}</span>
+                                <span className="cal-apt-doctor">{apt.doctor ? `👨‍⚕️ ${apt.doctor}` : (apt.displayStatus === 'pending' ? '⏳ No doctor' : '⏳ No doctor')}</span>
+                              </div>
+                            ) : (
+                              <span className="cal-empty">—</span>
+                            )}
+                          </td>
+                        );
+                      })}
+                    </tr>
                   ))}
                 </tbody>
               </table>
