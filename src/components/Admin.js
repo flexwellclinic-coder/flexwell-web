@@ -135,6 +135,19 @@ const Admin = ({ t }) => {
   // ==============================
   // DATA LOADING (ALL FROM API)
   // ==============================
+  // Force date to YYYY-MM-DD - prevents +1 day from UTC/timezone conversion
+  const toDateString = useCallback((val) => {
+    if (val == null || val === '') return '';
+    if (typeof val === 'string') return val.split('T')[0];
+    if (val instanceof Date) {
+      const y = val.getUTCFullYear();
+      const m = String(val.getUTCMonth() + 1).padStart(2, '0');
+      const d = String(val.getUTCDate()).padStart(2, '0');
+      return `${y}-${m}-${d}`;
+    }
+    return String(val).split('T')[0] || '';
+  }, []);
+
   const loadAppointments = useCallback(async () => {
     setLoading(true);
     try {
@@ -148,7 +161,12 @@ const Admin = ({ t }) => {
         console.warn('API failed, trying localStorage fallback:', apiError);
         appointments = localStorageBackup.getAppointments();
       }
-      setAllAppointments(appointments);
+      // Normalize every date to YYYY-MM-DD - prevents +1 day display bug
+      const normalized = appointments.map(apt => ({
+        ...apt,
+        date: toDateString(apt.date) || String(apt.date || '').split('T')[0]
+      }));
+      setAllAppointments(normalized);
       console.log(`📋 Loaded ${appointments.length} total appointments from database`);
     } catch (err) {
       console.error('Failed to load appointments:', err);
@@ -156,7 +174,7 @@ const Admin = ({ t }) => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [toDateString]);
 
   const loadDoctors = useCallback(async () => {
     try {
@@ -263,12 +281,11 @@ const Admin = ({ t }) => {
   }
 
   const formatDate = (dateString) => {
-    if (!dateString) return 'N/A';
-    // Normalize: take only the YYYY-MM-DD part to avoid timezone shifts
-    const dateOnly = typeof dateString === 'string' ? dateString.split('T')[0] : dateString;
-    const [year, month, day] = dateOnly.split('-').map(Number);
-    const d = new Date(year, month - 1, day); // local date, no timezone shift
-    return d.toLocaleDateString('en-US', {
+    const d = toDateString(dateString);
+    if (!d) return 'N/A';
+    const [year, month, day] = d.split('-').map(Number);
+    const date = new Date(year, month - 1, day); // local calendar date, no UTC
+    return date.toLocaleDateString('en-US', {
       weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
     });
   };
