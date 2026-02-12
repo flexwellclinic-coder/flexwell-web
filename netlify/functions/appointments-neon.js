@@ -34,7 +34,7 @@ const initializeDatabase = async () => {
         last_name VARCHAR(100) NOT NULL,
         email VARCHAR(255) NOT NULL,
         phone VARCHAR(20) NOT NULL,
-        date DATE NOT NULL,
+        date VARCHAR(10) NOT NULL,
         time VARCHAR(10) NOT NULL,
         service VARCHAR(50) NOT NULL,
         notes TEXT,
@@ -46,6 +46,13 @@ const initializeDatabase = async () => {
       )
     `;
     
+    // Migrate: if date column is still DATE type, convert to VARCHAR
+    try {
+      await sql`ALTER TABLE appointments ALTER COLUMN date TYPE VARCHAR(10) USING TO_CHAR(date, 'YYYY-MM-DD')`;
+    } catch (e) {
+      // Already VARCHAR or migration not needed
+    }
+    
     // Add doctor column if table already exists without it
     try {
       await sql`ALTER TABLE appointments ADD COLUMN IF NOT EXISTS doctor VARCHAR(100) DEFAULT ''`;
@@ -53,11 +60,11 @@ const initializeDatabase = async () => {
       // Column might already exist, ignore
     }
     
-    // Create index for better performance
-    await sql`
-      CREATE INDEX IF NOT EXISTS idx_appointments_date_time 
-      ON appointments(date, time)
-    `;
+    // Create indexes for better performance
+    try {
+      await sql`DROP INDEX IF EXISTS idx_appointments_date_time`;
+      await sql`CREATE INDEX IF NOT EXISTS idx_appointments_date_time ON appointments(date, time)`;
+    } catch (e) { /* ignore */ }
     
     await sql`
       CREATE INDEX IF NOT EXISTS idx_appointments_status 
@@ -128,7 +135,7 @@ exports.handler = async (event, context) => {
           last_name as "lastName",
           email,
           phone,
-          TO_CHAR(date, 'YYYY-MM-DD') as date,
+          date,
           time,
           service,
           notes,
@@ -231,7 +238,7 @@ exports.handler = async (event, context) => {
             last_name as "lastName",
             email,
             phone,
-            TO_CHAR(date, 'YYYY-MM-DD') as date,
+            date,
             time,
             service,
             notes,
@@ -311,7 +318,7 @@ exports.handler = async (event, context) => {
           last_name as "lastName",
           email,
           phone,
-          TO_CHAR(date, 'YYYY-MM-DD') as date,
+          date,
           time,
           service,
           notes,
