@@ -87,11 +87,11 @@ export const appointmentsAPI = {
   // Get all appointments with optional filtering
   getAll: async (params = {}) => {
     try {
-      // Try Netlify database first
-      const response = await api.get('/appointments-netlify');
+      // Try Neon database first (PostgreSQL)
+      const response = await api.get('/appointments-neon');
       return response.data;
     } catch (error) {
-      console.warn('Netlify database failed, trying MongoDB:', error.message);
+      console.warn('Neon database failed, trying MongoDB:', error.message);
       try {
         const mongoResponse = await api.get('/appointments', { params });
         return mongoResponse.data;
@@ -115,11 +115,11 @@ export const appointmentsAPI = {
   // Create new appointment
   create: async (appointmentData) => {
     try {
-      // Try Netlify database first
-      const response = await api.post('/appointments-netlify', appointmentData);
+      // Try Neon database first (PostgreSQL)
+      const response = await api.post('/appointments-neon', appointmentData);
       return response.data;
     } catch (error) {
-      console.warn('Netlify create failed, trying MongoDB:', error.message);
+      console.warn('Neon create failed, trying MongoDB:', error.message);
       try {
         const mongoResponse = await api.post('/appointments', appointmentData);
         return mongoResponse.data;
@@ -134,11 +134,11 @@ export const appointmentsAPI = {
   // Update appointment (uses dedicated function - no sub-path needed)
   update: async (id, appointmentData) => {
     try {
-      // Try Netlify database first
-      const response = await api.post('/appointments-netlify', { action: 'update', id, ...appointmentData });
+      // Try Neon database first (PostgreSQL)
+      const response = await api.post('/appointments-neon', { action: 'update', id, ...appointmentData });
       return response.data;
     } catch (error) {
-      console.warn('Netlify update failed, trying MongoDB:', error.message);
+      console.warn('Neon update failed, trying MongoDB:', error.message);
       try {
         const mongoResponse = await api.post('/appointment-update', { id, ...appointmentData });
         return mongoResponse.data;
@@ -153,11 +153,11 @@ export const appointmentsAPI = {
   // Delete appointment (uses dedicated function - no sub-path needed)
   delete: async (id) => {
     try {
-      // Try Netlify database first
-      const response = await api.post('/appointments-netlify', { action: 'delete', id });
+      // Try Neon database first (PostgreSQL)
+      const response = await api.post('/appointments-neon', { action: 'delete', id });
       return response.data;
     } catch (error) {
-      console.warn('Netlify delete failed, trying MongoDB:', error.message);
+      console.warn('Neon delete failed, trying MongoDB:', error.message);
       try {
         const mongoResponse = await api.post('/appointment-delete', { id });
         return mongoResponse.data;
@@ -172,11 +172,11 @@ export const appointmentsAPI = {
   // Update appointment status
   updateStatus: async (id, status) => {
     try {
-      // Try Netlify database first
-      const response = await api.post('/appointments-netlify', { action: 'update', id, status });
+      // Try Neon database first (PostgreSQL)
+      const response = await api.post('/appointments-neon', { action: 'update', id, status });
       return response.data;
     } catch (error) {
-      console.warn('Netlify status update failed, trying MongoDB:', error.message);
+      console.warn('Neon status update failed, trying MongoDB:', error.message);
       try {
         const mongoResponse = await api.post('/appointment-update', { id, status });
         return mongoResponse.data;

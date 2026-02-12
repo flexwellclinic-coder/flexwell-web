@@ -5,6 +5,7 @@
   "homepage": ".",
   "dependencies": {
     "@netlify/blobs": "^10.6.0",
+    "@netlify/neon": "^0.1.2",
     "axios": "^0.27.2",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
