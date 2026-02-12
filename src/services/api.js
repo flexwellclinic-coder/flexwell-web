@@ -336,4 +336,37 @@ export const localStorageBackup = {
   }
 };
 
+// Doctors API
+export const doctorsAPI = {
+  getAll: async () => {
+    try {
+      const response = await api.get('/doctors');
+      return response.data;
+    } catch (error) {
+      console.warn('Failed to fetch doctors:', error.message);
+      return { success: true, data: [] };
+    }
+  },
+
+  create: async (doctorData) => {
+    try {
+      const response = await api.post('/doctors', doctorData);
+      return response.data;
+    } catch (error) {
+      console.error('Failed to create doctor:', error);
+      throw error.response?.data || { success: false, message: 'Failed to create doctor' };
+    }
+  },
+
+  delete: async (id) => {
+    try {
+      const response = await api.post('/doctors', { action: 'delete', id });
+      return response.data;
+    } catch (error) {
+      console.error('Failed to delete doctor:', error);
+      throw error.response?.data || { success: false, message: 'Failed to delete doctor' };
+    }
+  }
+};
+
 export default api; 

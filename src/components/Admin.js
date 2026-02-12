@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { appointmentsAPI, authAPI, localStorageBackup } from '../services/api';
+import { appointmentsAPI, authAPI, localStorageBackup, doctorsAPI } from '../services/api';
 
 const TIME_SLOTS = ['9:00', '10:00', '11:00', '14:00', '15:00', '16:00'];
 
@@ -47,6 +47,11 @@ const Admin = ({ t }) => {
   const [editForm, setEditForm] = useState({
     firstName: '', lastName: '', email: '', phone: '', date: '', time: '', service: '', notes: '', adminNotes: ''
   });
+
+  // Doctors state
+  const [doctors, setDoctors] = useState([]);
+  const [showAddDoctorModal, setShowAddDoctorModal] = useState(false);
+  const [addDoctorForm, setAddDoctorForm] = useState({ name: '', specialty: '' });
 
   // Calendar state
   const [calendarDate, setCalendarDate] = useState(() => {
@@ -149,11 +154,25 @@ const Admin = ({ t }) => {
     }
   }, []);
 
+  const loadDoctors = useCallback(async () => {
+    try {
+      const response = await doctorsAPI.getAll();
+      if (response.success) {
+        setDoctors(response.data || []);
+      }
+    } catch (err) {
+      console.error('Failed to load doctors:', err);
+    }
+  }, []);
+
   useEffect(() => { checkAuthentication(); }, []);
 
   useEffect(() => {
-    if (isAuthenticated) { loadAppointments(); }
-  }, [isAuthenticated, loadAppointments]);
+    if (isAuthenticated) {
+      loadAppointments();
+      loadDoctors();
+    }
+  }, [isAuthenticated, loadAppointments, loadDoctors]);
 
   // ==============================
   // DERIVED DATA (from API response)
@@ -487,6 +506,56 @@ const Admin = ({ t }) => {
     }
   };
 
+  // Doctor Management
+  const handleAddDoctor = async (e) => {
+    e.preventDefault();
+    if (!addDoctorForm.name) {
+      alert('Please enter a doctor name.');
+      return;
+    }
+    setLoading(true);
+    try {
+      const res = await doctorsAPI.create(addDoctorForm);
+      if (res.success) {
+        setShowAddDoctorModal(false);
+        setAddDoctorForm({ name: '', specialty: '' });
+        await loadDoctors();
+        alert(`Doctor ${addDoctorForm.name} added!`);
+      } else {
+        alert(`Failed: ${res.message}`);
+      }
+    } catch (err) {
+      alert(`Error: ${err.message || 'Failed to add doctor'}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteDoctor = async (doctor) => {
+    if (!window.confirm(`Remove Dr. ${doctor.name} from the team?`)) return;
+    setLoading(true);
+    try {
+      await doctorsAPI.delete(doctor.id);
+      await loadDoctors();
+      alert(`Dr. ${doctor.name} removed.`);
+    } catch (err) {
+      alert(`Error: ${err.message || 'Failed to delete doctor'}`);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAssignDoctor = async (appointment, doctorName) => {
+    const id = appointment._id || appointment.id;
+    try {
+      await appointmentsAPI.update(id, { doctor: doctorName });
+      await loadAppointments();
+    } catch (err) {
+      console.error('Failed to assign doctor:', err);
+      alert('Failed to assign doctor.');
+    }
+  };
+
   // Manual Booking
   const handleManualBook = () => {
     setManualBookForm({
@@ -713,6 +782,9 @@ const Admin = ({ t }) => {
                 <button onClick={handleManualBook} className="manual-book-btn" disabled={loading}>
                   ➕ Manual Booking
                 </button>
+                <button onClick={() => { setAddDoctorForm({ name: '', specialty: '' }); setShowAddDoctorModal(true); }} className="manage-doctors-btn" disabled={loading}>
+                  👨‍⚕️ Add Doctor
+                </button>
                 <button onClick={loadAppointments} className="refresh-btn" disabled={loading}>
                   {loading ? '🔄' : '↻'} Refresh
                 </button>
@@ -758,6 +830,19 @@ const Admin = ({ t }) => {
                           <span className="detail-value">{appointment.notes}</span>
                         </div>
                       )}
+                      <div className="detail-row doctor-assign-row">
+                        <span className="detail-label">👨‍⚕️ Doctor:</span>
+                        <select
+                          className="doctor-select"
+                          value={appointment.doctor || ''}
+                          onChange={(e) => handleAssignDoctor(appointment, e.target.value)}
+                        >
+                          <option value="">Select a doctor</option>
+                          {doctors.map(doc => (
+                            <option key={doc.id} value={doc.name}>{doc.name}{doc.specialty ? ` (${doc.specialty})` : ''}</option>
+                          ))}
+                        </select>
+                      </div>
                     </div>
                     <div className="appointment-actions">
                       <button onClick={() => handleConfirmAppointment(appointment)}
@@ -825,6 +910,7 @@ const Admin = ({ t }) => {
                                 <div className="cal-appointment">
                                   <span className="cal-apt-name">{apt.patientName}</span>
                                   <span className="cal-apt-service">{getServiceLabel(apt.service)}</span>
+                                  {apt.doctor && <span className="cal-apt-doctor">👨‍⚕️ {apt.doctor}</span>}
                                   <span className={`cal-apt-badge ${apt.displayStatus}`}>
                                     {apt.displayStatus === 'pending' ? '⏳' : '✅'}
                                   </span>
@@ -842,6 +928,33 @@ const Admin = ({ t }) => {
               </table>
             </div>
           </div>
+
+          {/* Doctors Team */}
+          {doctors.length > 0 && (
+            <div className="doctors-section">
+              <div className="section-header">
+                <h2>👨‍⚕️ Doctors ({doctors.length})</h2>
+                <button onClick={() => { setAddDoctorForm({ name: '', specialty: '' }); setShowAddDoctorModal(true); }}
+                  className="manage-doctors-btn">
+                  ➕ Add Doctor
+                </button>
+              </div>
+              <div className="doctors-grid">
+                {doctors.map(doc => (
+                  <div key={doc.id} className="doctor-card">
+                    <div className="doctor-avatar">👨‍⚕️</div>
+                    <div className="doctor-info">
+                      <span className="doctor-name">{doc.name}</span>
+                      <span className="doctor-specialty">{doc.specialty || 'Physiotherapist'}</span>
+                    </div>
+                    <button className="doctor-delete-btn" onClick={() => handleDeleteDoctor(doc)} title="Remove doctor">
+                      🗑️
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Patient Database */}
           {confirmedPatients.length > 0 && (
@@ -1000,6 +1113,41 @@ const Admin = ({ t }) => {
                     onClick={() => setShowReserveModal(false)}>Cancel</button>
                   <button type="submit" className="submit-reserve-btn" disabled={loading}>
                     {loading ? '🔄 Booking...' : '✅ Confirm Booking'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Add Doctor Modal */}
+      {showAddDoctorModal && (
+        <div className="modal-overlay" onClick={() => setShowAddDoctorModal(false)}>
+          <div className="modal-content add-doctor-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>👨‍⚕️ Add New Doctor</h2>
+              <button className="close-btn" onClick={() => setShowAddDoctorModal(false)}>✖️</button>
+            </div>
+            <div className="modal-body">
+              <form onSubmit={handleAddDoctor} className="reserve-form">
+                <div className="form-group">
+                  <label>👤 Doctor Name *</label>
+                  <input type="text" value={addDoctorForm.name}
+                    onChange={(e) => setAddDoctorForm({ ...addDoctorForm, name: e.target.value })}
+                    placeholder="e.g. Paola" required />
+                </div>
+                <div className="form-group">
+                  <label>🏥 Specialty</label>
+                  <input type="text" value={addDoctorForm.specialty}
+                    onChange={(e) => setAddDoctorForm({ ...addDoctorForm, specialty: e.target.value })}
+                    placeholder="e.g. Physiotherapist" />
+                </div>
+                <div className="reserve-actions">
+                  <button type="button" className="cancel-reserve-btn"
+                    onClick={() => setShowAddDoctorModal(false)}>Cancel</button>
+                  <button type="submit" className="submit-reserve-btn" disabled={loading}>
+                    {loading ? '🔄 Adding...' : '✅ Add Doctor'}
                   </button>
                 </div>
               </form>

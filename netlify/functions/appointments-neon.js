@@ -39,11 +39,19 @@ const initializeDatabase = async () => {
         service VARCHAR(50) NOT NULL,
         notes TEXT,
         admin_notes TEXT,
+        doctor VARCHAR(100) DEFAULT '',
         status VARCHAR(20) DEFAULT 'pending',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )
     `;
+    
+    // Add doctor column if table already exists without it
+    try {
+      await sql`ALTER TABLE appointments ADD COLUMN IF NOT EXISTS doctor VARCHAR(100) DEFAULT ''`;
+    } catch (e) {
+      // Column might already exist, ignore
+    }
     
     // Create index for better performance
     await sql`
@@ -125,6 +133,7 @@ exports.handler = async (event, context) => {
           service,
           notes,
           admin_notes as "adminNotes",
+          doctor,
           status,
           created_at as "createdAt",
           updated_at as "updatedAt"
@@ -223,6 +232,9 @@ exports.handler = async (event, context) => {
         if (updates.status) {
           await sql`UPDATE appointments SET status = ${updates.status} WHERE id = ${id}`;
         }
+        if (updates.doctor !== undefined) {
+          await sql`UPDATE appointments SET doctor = ${updates.doctor} WHERE id = ${id}`;
+        }
         
         // Always update the timestamp
         await sql`UPDATE appointments SET updated_at = CURRENT_TIMESTAMP WHERE id = ${id}`;
@@ -240,6 +252,7 @@ exports.handler = async (event, context) => {
             service,
             notes,
             admin_notes as "adminNotes",
+            doctor,
             status,
             created_at as "createdAt",
             updated_at as "updatedAt"
@@ -297,7 +310,7 @@ exports.handler = async (event, context) => {
       await sql`
         INSERT INTO appointments (
           id, first_name, last_name, email, phone, date, time, 
-          service, notes, admin_notes, status
+          service, notes, admin_notes, doctor, status
         ) VALUES (
           ${appointmentId},
           ${data.firstName},
@@ -309,6 +322,7 @@ exports.handler = async (event, context) => {
           ${data.service},
           ${data.notes || ''},
           ${data.adminNotes || ''},
+          ${data.doctor || ''},
           ${data.status || 'pending'}
         )
       `;
@@ -326,6 +340,7 @@ exports.handler = async (event, context) => {
           service,
           notes,
           admin_notes as "adminNotes",
+          doctor,
           status,
           created_at as "createdAt",
           updated_at as "updatedAt"

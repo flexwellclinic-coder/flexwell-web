@@ -1055,6 +1055,159 @@ body {
 }
 
 /* ==============================
+   DOCTORS SECTION
+   ============================== */
+.doctors-section {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.doctors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.doctor-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.doctor-card:hover {
+  background: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.15);
+}
+
+.doctor-avatar {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.doctor-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.doctor-name {
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.doctor-specialty {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.82rem;
+  font-style: italic;
+}
+
+.doctor-delete-btn {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.doctor-delete-btn:hover {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: rgba(239, 68, 68, 0.5);
+  transform: scale(1.1);
+}
+
+.manage-doctors-btn {
+  background: linear-gradient(135deg, #06b6d4, #0891b2);
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+  white-space: nowrap;
+}
+
+.manage-doctors-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
+  background: linear-gradient(135deg, #0891b2, #0e7490);
+}
+
+.manage-doctors-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.add-doctor-modal {
+  max-width: 450px;
+}
+
+/* Doctor Select in Appointment Card */
+.doctor-assign-row {
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-bottom: none !important;
+}
+
+.doctor-select {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: #ffffff;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex: 1;
+  margin-left: 12px;
+  max-width: 220px;
+}
+
+.doctor-select:hover,
+.doctor-select:focus {
+  border-color: rgba(139, 92, 246, 0.6);
+  background: rgba(255, 255, 255, 0.12);
+  outline: none;
+}
+
+.doctor-select option {
+  background: #1a1a1a;
+  color: #ffffff;
+}
+
+/* Doctor in Calendar */
+.cal-apt-doctor {
+  color: rgba(139, 92, 246, 0.9);
+  font-size: 0.7rem;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+/* ==============================
    MANUAL BOOKING BUTTON
    ============================== */
 .section-header-actions {
@@ -1488,6 +1641,34 @@ body {
   .edit-patient-btn {
     font-size: 0.8rem;
     padding: 8px 12px;
+  }
+
+  .doctors-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .doctor-card {
+    padding: 14px 16px;
+  }
+
+  .doctor-select {
+    max-width: 100%;
+    margin-left: 0;
+  }
+
+  .doctor-assign-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .manage-doctors-btn {
+    width: 100%;
+    padding: 12px 20px;
+  }
+
+  .add-doctor-modal {
+    max-width: 95%;
   }
 
   .login-container {
