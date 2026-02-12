@@ -1,7 +1,7 @@
 const { neon } = require('@netlify/neon');
 
-// Initialize Neon database connection
-const sql = neon(process.env.NETLIFY_DATABASE_URL);
+// Initialize Neon database connection (auto-uses NETLIFY_DATABASE_URL)
+const sql = neon();
 
 // Helper functions
 const generateId = () => Date.now().toString() + Math.random().toString(36).substr(2, 9);
@@ -162,7 +162,7 @@ exports.handler = async (event, context) => {
 
       // UPDATE operation
       if (data.action === 'update') {
-        const { id, ...updates } = data;
+        const { id, action, ...updates } = data;
         
         // Check if appointment exists
         const existing = await sql`
@@ -192,59 +192,40 @@ exports.handler = async (event, context) => {
           }
         }
 
-        // Build update query dynamically
-        const updateFields = [];
-        const updateValues = [];
-        
+        // Use individual UPDATE statements for each field
         if (updates.firstName) {
-          updateFields.push('first_name = $' + (updateFields.length + 1));
-          updateValues.push(updates.firstName);
+          await sql`UPDATE appointments SET first_name = ${updates.firstName} WHERE id = ${id}`;
         }
         if (updates.lastName) {
-          updateFields.push('last_name = $' + (updateFields.length + 1));
-          updateValues.push(updates.lastName);
+          await sql`UPDATE appointments SET last_name = ${updates.lastName} WHERE id = ${id}`;
         }
         if (updates.email) {
-          updateFields.push('email = $' + (updateFields.length + 1));
-          updateValues.push(updates.email);
+          await sql`UPDATE appointments SET email = ${updates.email} WHERE id = ${id}`;
         }
         if (updates.phone) {
-          updateFields.push('phone = $' + (updateFields.length + 1));
-          updateValues.push(updates.phone);
+          await sql`UPDATE appointments SET phone = ${updates.phone} WHERE id = ${id}`;
         }
         if (updates.date) {
-          updateFields.push('date = $' + (updateFields.length + 1));
-          updateValues.push(updates.date);
+          await sql`UPDATE appointments SET date = ${updates.date} WHERE id = ${id}`;
         }
         if (updates.time) {
-          updateFields.push('time = $' + (updateFields.length + 1));
-          updateValues.push(updates.time);
+          await sql`UPDATE appointments SET time = ${updates.time} WHERE id = ${id}`;
         }
         if (updates.service) {
-          updateFields.push('service = $' + (updateFields.length + 1));
-          updateValues.push(updates.service);
+          await sql`UPDATE appointments SET service = ${updates.service} WHERE id = ${id}`;
         }
         if (updates.notes !== undefined) {
-          updateFields.push('notes = $' + (updateFields.length + 1));
-          updateValues.push(updates.notes);
+          await sql`UPDATE appointments SET notes = ${updates.notes} WHERE id = ${id}`;
         }
         if (updates.adminNotes !== undefined) {
-          updateFields.push('admin_notes = $' + (updateFields.length + 1));
-          updateValues.push(updates.adminNotes);
+          await sql`UPDATE appointments SET admin_notes = ${updates.adminNotes} WHERE id = ${id}`;
         }
         if (updates.status) {
-          updateFields.push('status = $' + (updateFields.length + 1));
-          updateValues.push(updates.status);
+          await sql`UPDATE appointments SET status = ${updates.status} WHERE id = ${id}`;
         }
         
-        updateFields.push('updated_at = CURRENT_TIMESTAMP');
-        updateValues.push(id);
-
-        await sql`
-          UPDATE appointments 
-          SET ${sql.unsafe(updateFields.join(', '))}
-          WHERE id = ${id}
-        `;
+        // Always update the timestamp
+        await sql`UPDATE appointments SET updated_at = CURRENT_TIMESTAMP WHERE id = ${id}`;
 
         const updatedAppointment = await sql`
           SELECT 
@@ -280,16 +261,19 @@ exports.handler = async (event, context) => {
       if (data.action === 'delete') {
         const { id } = data;
         
-        const result = await sql`
-          DELETE FROM appointments WHERE id = ${id}
+        // Check if exists first
+        const existing = await sql`
+          SELECT id FROM appointments WHERE id = ${id}
         `;
         
-        if (result.count === 0) {
+        if (existing.length === 0) {
           return {
             statusCode: 404, headers,
             body: JSON.stringify({ success: false, message: 'Appointment not found' })
           };
         }
+
+        await sql`DELETE FROM appointments WHERE id = ${id}`;
 
         return {
           statusCode: 200, headers,
