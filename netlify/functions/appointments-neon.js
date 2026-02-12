@@ -153,12 +153,20 @@ exports.handler = async (event, context) => {
       validateAppointment(data);
       const appointmentId = generateId();
       const dateInt = toDateInt(data.date);
+      const dateStr = fromDateInt(dateInt);
       if (dateInt == null) throw new Error('Invalid date format');
 
-      await sql`
-        INSERT INTO appointments (id, first_name, last_name, email, phone, date_int, time, service, notes, admin_notes, doctor, status)
-        VALUES (${appointmentId}, ${data.firstName}, ${data.lastName}, ${data.email}, ${data.phone}, ${dateInt}, ${data.time}, ${data.service}, ${data.notes || ''}, ${data.adminNotes || ''}, ${data.doctor || ''}, ${data.status || 'pending'})
-      `;
+      try {
+        await sql`
+          INSERT INTO appointments (id, first_name, last_name, email, phone, date_int, time, service, notes, admin_notes, doctor, status)
+          VALUES (${appointmentId}, ${data.firstName}, ${data.lastName}, ${data.email}, ${data.phone}, ${dateInt}, ${data.time}, ${data.service}, ${data.notes || ''}, ${data.adminNotes || ''}, ${data.doctor || ''}, ${data.status || 'pending'})
+        `;
+      } catch (e) {
+        await sql`
+          INSERT INTO appointments (id, first_name, last_name, email, phone, date, time, service, notes, admin_notes, doctor, status)
+          VALUES (${appointmentId}, ${data.firstName}, ${data.lastName}, ${data.email}, ${data.phone}, ${dateStr}, ${data.time}, ${data.service}, ${data.notes || ''}, ${data.adminNotes || ''}, ${data.doctor || ''}, ${data.status || 'pending'})
+        `;
+      }
 
       const [created] = await sql`
         SELECT id as _id, id, first_name as "firstName", last_name as "lastName",
