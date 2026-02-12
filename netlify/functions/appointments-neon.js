@@ -1,10 +1,34 @@
 const { neon } = require('@netlify/neon');
 
-// Initialize Neon database connection (auto-uses NETLIFY_DATABASE_URL)
 const sql = neon();
 
-// Helper functions
 const generateId = () => Date.now().toString() + Math.random().toString(36).substr(2, 9);
+
+// Force any date value into YYYY-MM-DD string, no matter what format comes in
+const fixDate = (d) => {
+  if (!d) return '';
+  const s = String(d);
+  // Already YYYY-MM-DD
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+  // Has T (ISO timestamp) - just take the date part
+  if (s.includes('T')) return s.split('T')[0];
+  // Try parsing but force to UTC to avoid shift
+  try {
+    const parsed = new Date(s + 'T12:00:00Z');
+    const y = parsed.getUTCFullYear();
+    const m = String(parsed.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(parsed.getUTCDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  } catch (e) {
+    return s;
+  }
+};
+
+// Fix all date fields in an appointment row
+const fixRow = (row) => {
+  if (!row) return row;
+  return { ...row, date: fixDate(row.date) };
+};
 
 const validateAppointment = (data) => {
   const required = ['firstName', 'lastName', 'email', 'phone', 'date', 'time', 'service'];
@@ -12,19 +36,8 @@ const validateAppointment = (data) => {
   if (missing.length > 0) {
     throw new Error(`Missing required fields: ${missing.join(', ')}`);
   }
-  
-  const validTimes = ['9:00', '10:00', '11:00', '14:00', '15:00', '16:00'];
-  if (!validTimes.includes(data.time)) {
-    throw new Error('Invalid time slot');
-  }
-  
-  const validServices = ['initial-consultation', 'manual-therapy', 'exercise-therapy', 'sports-rehab', 'womens-health'];
-  if (!validServices.includes(data.service)) {
-    throw new Error('Invalid service type');
-  }
 };
 
-// Initialize database table if it doesn't exist
 const initializeDatabase = async () => {
   try {
     await sql`
@@ -49,27 +62,15 @@ const initializeDatabase = async () => {
     // Migrate: if date column is still DATE type, convert to VARCHAR
     try {
       await sql`ALTER TABLE appointments ALTER COLUMN date TYPE VARCHAR(10) USING TO_CHAR(date, 'YYYY-MM-DD')`;
-    } catch (e) {
-      // Already VARCHAR or migration not needed
-    }
+    } catch (e) { /* already VARCHAR */ }
     
-    // Add doctor column if table already exists without it
     try {
       await sql`ALTER TABLE appointments ADD COLUMN IF NOT EXISTS doctor VARCHAR(100) DEFAULT ''`;
-    } catch (e) {
-      // Column might already exist, ignore
-    }
+    } catch (e) { /* already exists */ }
     
-    // Create indexes for better performance
     try {
-      await sql`DROP INDEX IF EXISTS idx_appointments_date_time`;
-      await sql`CREATE INDEX IF NOT EXISTS idx_appointments_date_time ON appointments(date, time)`;
+      await sql`CREATE INDEX IF NOT EXISTS idx_appointments_status ON appointments(status)`;
     } catch (e) { /* ignore */ }
-    
-    await sql`
-      CREATE INDEX IF NOT EXISTS idx_appointments_status 
-      ON appointments(status)
-    `;
     
     return true;
   } catch (error) {
@@ -78,34 +79,17 @@ const initializeDatabase = async () => {
   }
 };
 
-const isSlotAvailable = async (date, time, excludeId = null) => {
-  try {
-    let result;
-    if (excludeId) {
-      result = await sql`
-        SELECT COUNT(*) as count 
-        FROM appointments 
-        WHERE date = ${date} 
-        AND time = ${time} 
-        AND id != ${excludeId}
-        AND status IN ('pending', 'confirmed')
-      `;
-    } else {
-      result = await sql`
-        SELECT COUNT(*) as count 
-        FROM appointments 
-        WHERE date = ${date} 
-        AND time = ${time} 
-        AND status IN ('pending', 'confirmed')
-      `;
-    }
-    
-    return parseInt(result[0].count) === 0;
-  } catch (error) {
-    console.error('Error checking slot availability:', error);
-    return false;
-  }
-};
+const SELECT_FIELDS = `
+  id as _id, id,
+  first_name as "firstName", last_name as "lastName",
+  email, phone,
+  CAST(date AS TEXT) as date,
+  time, service, notes,
+  admin_notes as "adminNotes",
+  doctor, status,
+  created_at as "createdAt",
+  updated_at as "updatedAt"
+`;
 
 exports.handler = async (event, context) => {
   const headers = {
@@ -120,33 +104,27 @@ exports.handler = async (event, context) => {
   }
 
   try {
-    // Initialize database
     await initializeDatabase();
-    
     const method = event.httpMethod;
 
     // GET - List all appointments
     if (method === 'GET') {
-      const appointments = await sql`
+      const raw = await sql`
         SELECT 
-          id as _id,
-          id,
-          first_name as "firstName",
-          last_name as "lastName",
-          email,
-          phone,
-          date,
-          time,
-          service,
-          notes,
+          id as _id, id,
+          first_name as "firstName", last_name as "lastName",
+          email, phone,
+          CAST(date AS TEXT) as date,
+          time, service, notes,
           admin_notes as "adminNotes",
-          doctor,
-          status,
+          doctor, status,
           created_at as "createdAt",
           updated_at as "updatedAt"
-        FROM appointments 
-        ORDER BY created_at DESC
+        FROM appointments ORDER BY created_at DESC
       `;
+      
+      // Force-fix every single date
+      const appointments = raw.map(fixRow);
 
       const stats = await sql`
         SELECT 
@@ -172,185 +150,97 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // POST - Handle different operations
+    // POST
     if (method === 'POST') {
       const data = JSON.parse(event.body);
 
-      // UPDATE operation
+      // UPDATE
       if (data.action === 'update') {
         const { id, action, ...updates } = data;
         
-        // Check if appointment exists
-        const existing = await sql`
-          SELECT * FROM appointments WHERE id = ${id}
-        `;
-        
+        const existing = await sql`SELECT id FROM appointments WHERE id = ${id}`;
         if (existing.length === 0) {
-          return {
-            statusCode: 404, headers,
-            body: JSON.stringify({ success: false, message: 'Appointment not found' })
-          };
+          return { statusCode: 404, headers, body: JSON.stringify({ success: false, message: 'Appointment not found' }) };
         }
 
-        // Use individual UPDATE statements for each field
-        if (updates.firstName) {
-          await sql`UPDATE appointments SET first_name = ${updates.firstName} WHERE id = ${id}`;
-        }
-        if (updates.lastName) {
-          await sql`UPDATE appointments SET last_name = ${updates.lastName} WHERE id = ${id}`;
-        }
-        if (updates.email) {
-          await sql`UPDATE appointments SET email = ${updates.email} WHERE id = ${id}`;
-        }
-        if (updates.phone) {
-          await sql`UPDATE appointments SET phone = ${updates.phone} WHERE id = ${id}`;
-        }
-        if (updates.date) {
-          await sql`UPDATE appointments SET date = ${updates.date} WHERE id = ${id}`;
-        }
-        if (updates.time) {
-          await sql`UPDATE appointments SET time = ${updates.time} WHERE id = ${id}`;
-        }
-        if (updates.service) {
-          await sql`UPDATE appointments SET service = ${updates.service} WHERE id = ${id}`;
-        }
-        if (updates.notes !== undefined) {
-          await sql`UPDATE appointments SET notes = ${updates.notes} WHERE id = ${id}`;
-        }
-        if (updates.adminNotes !== undefined) {
-          await sql`UPDATE appointments SET admin_notes = ${updates.adminNotes} WHERE id = ${id}`;
-        }
-        if (updates.status) {
-          await sql`UPDATE appointments SET status = ${updates.status} WHERE id = ${id}`;
-        }
-        if (updates.doctor !== undefined) {
-          await sql`UPDATE appointments SET doctor = ${updates.doctor} WHERE id = ${id}`;
-        }
-        
-        // Always update the timestamp
+        if (updates.firstName) await sql`UPDATE appointments SET first_name = ${updates.firstName} WHERE id = ${id}`;
+        if (updates.lastName) await sql`UPDATE appointments SET last_name = ${updates.lastName} WHERE id = ${id}`;
+        if (updates.email) await sql`UPDATE appointments SET email = ${updates.email} WHERE id = ${id}`;
+        if (updates.phone) await sql`UPDATE appointments SET phone = ${updates.phone} WHERE id = ${id}`;
+        if (updates.date) await sql`UPDATE appointments SET date = ${fixDate(updates.date)} WHERE id = ${id}`;
+        if (updates.time) await sql`UPDATE appointments SET time = ${updates.time} WHERE id = ${id}`;
+        if (updates.service) await sql`UPDATE appointments SET service = ${updates.service} WHERE id = ${id}`;
+        if (updates.notes !== undefined) await sql`UPDATE appointments SET notes = ${updates.notes} WHERE id = ${id}`;
+        if (updates.adminNotes !== undefined) await sql`UPDATE appointments SET admin_notes = ${updates.adminNotes} WHERE id = ${id}`;
+        if (updates.status) await sql`UPDATE appointments SET status = ${updates.status} WHERE id = ${id}`;
+        if (updates.doctor !== undefined) await sql`UPDATE appointments SET doctor = ${updates.doctor} WHERE id = ${id}`;
         await sql`UPDATE appointments SET updated_at = CURRENT_TIMESTAMP WHERE id = ${id}`;
 
-        const updatedAppointment = await sql`
+        const updated = await sql`
           SELECT 
-            id as _id,
-            id,
-            first_name as "firstName",
-            last_name as "lastName",
-            email,
-            phone,
-            date,
-            time,
-            service,
-            notes,
+            id as _id, id,
+            first_name as "firstName", last_name as "lastName",
+            email, phone,
+            CAST(date AS TEXT) as date,
+            time, service, notes,
             admin_notes as "adminNotes",
-            doctor,
-            status,
+            doctor, status,
             created_at as "createdAt",
             updated_at as "updatedAt"
-          FROM appointments 
-          WHERE id = ${id}
+          FROM appointments WHERE id = ${id}
         `;
 
         return {
           statusCode: 200, headers,
-          body: JSON.stringify({ 
-            success: true, 
-            message: 'Appointment updated successfully', 
-            data: updatedAppointment[0] 
-          })
+          body: JSON.stringify({ success: true, message: 'Appointment updated successfully', data: fixRow(updated[0]) })
         };
       }
 
-      // DELETE operation
+      // DELETE
       if (data.action === 'delete') {
         const { id } = data;
-        
-        // Check if exists first
-        const existing = await sql`
-          SELECT id FROM appointments WHERE id = ${id}
-        `;
-        
+        const existing = await sql`SELECT id FROM appointments WHERE id = ${id}`;
         if (existing.length === 0) {
-          return {
-            statusCode: 404, headers,
-            body: JSON.stringify({ success: false, message: 'Appointment not found' })
-          };
+          return { statusCode: 404, headers, body: JSON.stringify({ success: false, message: 'Appointment not found' }) };
         }
-
         await sql`DELETE FROM appointments WHERE id = ${id}`;
-
-        return {
-          statusCode: 200, headers,
-          body: JSON.stringify({ success: true, message: 'Appointment deleted successfully' })
-        };
+        return { statusCode: 200, headers, body: JSON.stringify({ success: true, message: 'Appointment deleted successfully' }) };
       }
 
-      // CREATE operation (default)
+      // CREATE
       validateAppointment(data);
-
       const appointmentId = generateId();
+      const safeDate = fixDate(data.date);
       
       await sql`
-        INSERT INTO appointments (
-          id, first_name, last_name, email, phone, date, time, 
-          service, notes, admin_notes, doctor, status
-        ) VALUES (
-          ${appointmentId},
-          ${data.firstName},
-          ${data.lastName},
-          ${data.email},
-          ${data.phone},
-          ${data.date},
-          ${data.time},
-          ${data.service},
-          ${data.notes || ''},
-          ${data.adminNotes || ''},
-          ${data.doctor || ''},
-          ${data.status || 'pending'}
-        )
+        INSERT INTO appointments (id, first_name, last_name, email, phone, date, time, service, notes, admin_notes, doctor, status)
+        VALUES (${appointmentId}, ${data.firstName}, ${data.lastName}, ${data.email}, ${data.phone}, ${safeDate}, ${data.time}, ${data.service}, ${data.notes || ''}, ${data.adminNotes || ''}, ${data.doctor || ''}, ${data.status || 'pending'})
       `;
 
-      const newAppointment = await sql`
+      const created = await sql`
         SELECT 
-          id as _id,
-          id,
-          first_name as "firstName",
-          last_name as "lastName",
-          email,
-          phone,
-          date,
-          time,
-          service,
-          notes,
+          id as _id, id,
+          first_name as "firstName", last_name as "lastName",
+          email, phone,
+          CAST(date AS TEXT) as date,
+          time, service, notes,
           admin_notes as "adminNotes",
-          doctor,
-          status,
+          doctor, status,
           created_at as "createdAt",
           updated_at as "updatedAt"
-        FROM appointments 
-        WHERE id = ${appointmentId}
+        FROM appointments WHERE id = ${appointmentId}
       `;
 
       return {
         statusCode: 201, headers,
-        body: JSON.stringify({ 
-          success: true, 
-          message: 'Appointment created successfully', 
-          data: newAppointment[0] 
-        })
+        body: JSON.stringify({ success: true, message: 'Appointment created successfully', data: fixRow(created[0]) })
       };
     }
 
-    return {
-      statusCode: 405, headers,
-      body: JSON.stringify({ success: false, message: 'Method not allowed' })
-    };
+    return { statusCode: 405, headers, body: JSON.stringify({ success: false, message: 'Method not allowed' }) };
 
   } catch (error) {
     console.error('Neon database error:', error);
-    return {
-      statusCode: 500, headers,
-      body: JSON.stringify({ success: false, message: error.message })
-    };
+    return { statusCode: 500, headers, body: JSON.stringify({ success: false, message: error.message }) };
   }
 };
