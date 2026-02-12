@@ -185,22 +185,6 @@ exports.handler = async (event, context) => {
           };
         }
 
-        const appointment = existing[0];
-        
-        // Check slot availability if changing date/time
-        if ((updates.date && updates.date !== appointment.date) || (updates.time && updates.time !== appointment.time)) {
-          const newDate = updates.date || appointment.date;
-          const newTime = updates.time || appointment.time;
-          
-          const available = await isSlotAvailable(newDate, newTime, id);
-          if (!available) {
-            return {
-              statusCode: 400, headers,
-              body: JSON.stringify({ success: false, message: 'This time slot is already booked. Please choose another time.' })
-            };
-          }
-        }
-
         // Use individual UPDATE statements for each field
         if (updates.firstName) {
           await sql`UPDATE appointments SET first_name = ${updates.firstName} WHERE id = ${id}`;
@@ -296,14 +280,6 @@ exports.handler = async (event, context) => {
 
       // CREATE operation (default)
       validateAppointment(data);
-      
-      const available = await isSlotAvailable(data.date, data.time);
-      if (!available) {
-        return {
-          statusCode: 400, headers,
-          body: JSON.stringify({ success: false, message: 'This time slot is already booked' })
-        };
-      }
 
       const appointmentId = generateId();
       

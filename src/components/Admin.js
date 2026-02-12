@@ -228,7 +228,11 @@ const Admin = ({ t }) => {
     // Calculate stats
     Object.values(patientsMap).forEach(patient => {
       patient.totalAppointments = patient.appointments.length;
-      patient.appointments.sort((a, b) => new Date(b.date) - new Date(a.date));
+      patient.appointments.sort((a, b) => {
+        const dateA = typeof a.date === 'string' ? a.date.split('T')[0] : a.date;
+        const dateB = typeof b.date === 'string' ? b.date.split('T')[0] : b.date;
+        return dateB > dateA ? 1 : dateB < dateA ? -1 : 0;
+      });
       patient.lastAppointmentDate = patient.appointments[0]?.date;
       patient.lastService = patient.appointments[0]?.service;
       patient.monthlyStats = calculateMonthlyStats(patient.appointments);
@@ -242,10 +246,13 @@ const Admin = ({ t }) => {
   // ==============================
   function calculateMonthlyStats(appointments) {
     const monthlyStats = {};
+    const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
     appointments.forEach(apt => {
-      const aptDate = new Date(apt.date);
-      const monthKey = `${aptDate.getFullYear()}-${aptDate.getMonth() + 1}`;
-      const monthName = aptDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+      const dateStr = typeof apt.date === 'string' ? apt.date.split('T')[0] : '';
+      const [year, month] = dateStr.split('-').map(Number);
+      if (!year || !month) return;
+      const monthKey = `${year}-${month}`;
+      const monthName = `${monthNames[month - 1]} ${year}`;
       if (!monthlyStats[monthKey]) {
         monthlyStats[monthKey] = { month: monthName, count: 0, appointments: [] };
       }
@@ -325,9 +332,9 @@ const Admin = ({ t }) => {
       }));
   }, [allAppointments, calendarDate, getWeekDays, normalizeDate]);
 
-  const getAppointmentForSlot = useCallback((date, time) => {
+  const getAppointmentsForSlot = useCallback((date, time) => {
     const dateStr = date.toISOString().split('T')[0];
-    return calendarAppointments.find(apt => apt.date === dateStr && apt.time === time);
+    return calendarAppointments.filter(apt => apt.date === dateStr && apt.time === time);
   }, [calendarAppointments]);
 
   const navigateCalendar = (direction) => {
@@ -902,15 +909,20 @@ const Admin = ({ t }) => {
                     <tr key={time}>
                       <td className="cal-time-cell">{time}</td>
                       {weekDays.map((day, dIdx) => {
-                        const apt = getAppointmentForSlot(day, time);
+                        const apts = getAppointmentsForSlot(day, time);
+                        const hasAny = apts.length > 0;
+                        const hasPending = apts.some(a => a.displayStatus === 'pending');
                         return (
                           <td key={dIdx}
-                            className={`cal-slot ${isToday(day) ? 'today' : ''} ${apt ? (apt.displayStatus === 'pending' ? 'has-pending' : 'has-confirmed') : 'empty'}`}>
-                            {apt ? (
-                              <div className="cal-appointment">
-                                <span className="cal-apt-name">{apt.patientName}</span>
-                                <span className="cal-apt-service">{getServiceLabel(apt.service)}</span>
-                                <span className="cal-apt-doctor">{apt.doctor ? `👨‍⚕️ ${apt.doctor}` : (apt.displayStatus === 'pending' ? '⏳ No doctor' : '⏳ No doctor')}</span>
+                            className={`cal-slot ${isToday(day) ? 'today' : ''} ${hasAny ? (hasPending ? 'has-pending' : 'has-confirmed') : 'empty'}`}>
+                            {hasAny ? (
+                              <div className="cal-slot-appointments">
+                                {apts.map((apt, aIdx) => (
+                                  <div key={aIdx} className={`cal-appointment ${apts.length > 1 ? 'multi' : ''}`}>
+                                    <span className="cal-apt-name">{apt.patientName}</span>
+                                    <span className="cal-apt-doctor">{apt.doctor ? `👨‍⚕️ ${apt.doctor}` : '⏳ No doctor'}</span>
+                                  </div>
+                                ))}
                               </div>
                             ) : (
                               <span className="cal-empty">—</span>
@@ -971,7 +983,7 @@ const Admin = ({ t }) => {
                       <span className="monthly-count">This month: {getCurrentMonthStats(patient)}</span>
                     </div>
                     <div className="patient-dates">
-                      <span className="last-appointment">Last: {new Date(patient.lastAppointmentDate).toLocaleDateString()}</span>
+                      <span className="last-appointment">Last: {formatDate(patient.lastAppointmentDate)}</span>
                       <span className="last-service">{getServiceLabel(patient.lastService)}</span>
                     </div>
                     <div className="patient-actions-col">
