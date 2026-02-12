@@ -220,7 +220,12 @@ const Admin = ({ t }) => {
   }
 
   const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
+    if (!dateString) return 'N/A';
+    // Normalize: take only the YYYY-MM-DD part to avoid timezone shifts
+    const dateOnly = typeof dateString === 'string' ? dateString.split('T')[0] : dateString;
+    const [year, month, day] = dateOnly.split('-').map(Number);
+    const d = new Date(year, month - 1, day); // local date, no timezone shift
+    return d.toLocaleDateString('en-US', {
       weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
     });
   };
@@ -259,19 +264,30 @@ const Admin = ({ t }) => {
       date.getFullYear() === today.getFullYear();
   };
 
+  // Normalize date to YYYY-MM-DD (handles both "2026-02-12" and "2026-02-12T00:00:00.000Z")
+  const normalizeDate = useCallback((dateVal) => {
+    if (!dateVal) return '';
+    const str = typeof dateVal === 'string' ? dateVal : new Date(dateVal).toISOString();
+    return str.split('T')[0];
+  }, []);
+
   const calendarAppointments = useMemo(() => {
     const weekDays = getWeekDays(calendarDate);
     const startStr = weekDays[0].toISOString().split('T')[0];
     const endStr = weekDays[weekDays.length - 1].toISOString().split('T')[0];
 
     return allAppointments
-      .filter(apt => apt.date >= startStr && apt.date <= endStr)
+      .filter(apt => {
+        const aptDate = normalizeDate(apt.date);
+        return aptDate >= startStr && aptDate <= endStr;
+      })
       .map(apt => ({
         ...apt,
+        date: normalizeDate(apt.date),
         displayStatus: apt.status || 'pending',
         patientName: `${apt.firstName} ${apt.lastName}`
       }));
-  }, [allAppointments, calendarDate, getWeekDays]);
+  }, [allAppointments, calendarDate, getWeekDays, normalizeDate]);
 
   const getAppointmentForSlot = useCallback((date, time) => {
     const dateStr = date.toISOString().split('T')[0];
