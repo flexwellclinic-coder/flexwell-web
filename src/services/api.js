@@ -114,30 +114,30 @@ export const appointmentsAPI = {
     }
   },
 
-  // Update appointment
+  // Update appointment (uses dedicated function - no sub-path needed)
   update: async (id, appointmentData) => {
     try {
-      const response = await api.put(`/appointments/${id}`, appointmentData);
+      const response = await api.post('/appointment-update', { id, ...appointmentData });
       return response.data;
     } catch (error) {
       throw error.response?.data || { success: false, message: 'Failed to update appointment' };
     }
   },
 
-  // Delete appointment
+  // Delete appointment (uses dedicated function - no sub-path needed)
   delete: async (id) => {
     try {
-      const response = await api.delete(`/appointments/${id}`);
+      const response = await api.post('/appointment-delete', { id });
       return response.data;
     } catch (error) {
       throw error.response?.data || { success: false, message: 'Failed to delete appointment' };
     }
   },
 
-  // Update appointment status (uses PUT since Netlify functions handle PUT)
+  // Update appointment status
   updateStatus: async (id, status) => {
     try {
-      const response = await api.put(`/appointments/${id}`, { status });
+      const response = await api.post('/appointment-update', { id, status });
       return response.data;
     } catch (error) {
       throw error.response?.data || { success: false, message: 'Failed to update status' };
