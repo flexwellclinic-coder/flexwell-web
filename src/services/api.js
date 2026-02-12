@@ -90,7 +90,14 @@ export const appointmentsAPI = {
       const response = await api.get('/appointments', { params });
       return response.data;
     } catch (error) {
-      throw error.response?.data || { success: false, message: 'Failed to fetch appointments' };
+      console.warn('Main appointments API failed, trying simple fallback:', error.message);
+      try {
+        const fallbackResponse = await api.get('/appointments-simple');
+        return fallbackResponse.data;
+      } catch (fallbackError) {
+        console.error('Fallback also failed:', fallbackError);
+        throw error.response?.data || { success: false, message: 'Failed to fetch appointments' };
+      }
     }
   },
 
@@ -110,7 +117,14 @@ export const appointmentsAPI = {
       const response = await api.post('/appointments', appointmentData);
       return response.data;
     } catch (error) {
-      throw error.response?.data || { success: false, message: 'Failed to create appointment' };
+      console.warn('Main create API failed, trying simple fallback:', error.message);
+      try {
+        const fallbackResponse = await api.post('/appointments-simple', appointmentData);
+        return fallbackResponse.data;
+      } catch (fallbackError) {
+        console.error('Fallback create also failed:', fallbackError);
+        throw error.response?.data || { success: false, message: 'Failed to create appointment' };
+      }
     }
   },
 
@@ -120,7 +134,14 @@ export const appointmentsAPI = {
       const response = await api.post('/appointment-update', { id, ...appointmentData });
       return response.data;
     } catch (error) {
-      throw error.response?.data || { success: false, message: 'Failed to update appointment' };
+      console.warn('Main update API failed, trying simple fallback:', error.message);
+      try {
+        const fallbackResponse = await api.post('/appointments-simple', { action: 'update', id, ...appointmentData });
+        return fallbackResponse.data;
+      } catch (fallbackError) {
+        console.error('Fallback update also failed:', fallbackError);
+        throw error.response?.data || { success: false, message: 'Failed to update appointment' };
+      }
     }
   },
 
@@ -130,7 +151,14 @@ export const appointmentsAPI = {
       const response = await api.post('/appointment-delete', { id });
       return response.data;
     } catch (error) {
-      throw error.response?.data || { success: false, message: 'Failed to delete appointment' };
+      console.warn('Main delete API failed, trying simple fallback:', error.message);
+      try {
+        const fallbackResponse = await api.post('/appointments-simple', { action: 'delete', id });
+        return fallbackResponse.data;
+      } catch (fallbackError) {
+        console.error('Fallback delete also failed:', fallbackError);
+        throw error.response?.data || { success: false, message: 'Failed to delete appointment' };
+      }
     }
   },
 
@@ -140,7 +168,14 @@ export const appointmentsAPI = {
       const response = await api.post('/appointment-update', { id, status });
       return response.data;
     } catch (error) {
-      throw error.response?.data || { success: false, message: 'Failed to update status' };
+      console.warn('Main status update API failed, trying simple fallback:', error.message);
+      try {
+        const fallbackResponse = await api.post('/appointments-simple', { action: 'update', id, status });
+        return fallbackResponse.data;
+      } catch (fallbackError) {
+        console.error('Fallback status update also failed:', fallbackError);
+        throw error.response?.data || { success: false, message: 'Failed to update status' };
+      }
     }
   },
 
