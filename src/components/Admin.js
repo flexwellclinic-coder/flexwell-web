@@ -1011,21 +1011,35 @@ const Admin = ({ t }) => {
                         🔄 Reserve Again
                       </button>
                       {patient.appointments && patient.appointments[0] && (
-                        <button className="edit-patient-btn"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            const latestApt = patient.appointments[0];
-                            handleEditAppointment({
-                              ...latestApt,
-                              firstName: patient.firstName,
-                              lastName: patient.lastName,
-                              email: patient.email,
-                              phone: patient.phone
-                            }, e);
-                          }}
-                          title="Edit patient info">
-                          ✏️ Edit Info
-                        </button>
+                        <>
+                          <button className="edit-patient-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              const latestApt = patient.appointments[0];
+                              handleEditAppointment({
+                                ...latestApt,
+                                firstName: patient.firstName,
+                                lastName: patient.lastName,
+                                email: patient.email,
+                                phone: patient.phone
+                              }, e);
+                            }}
+                            title="Edit patient info">
+                            ✏️ Edit Info
+                          </button>
+                          <button className="delete-booking-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteAppointment({
+                                ...patient.appointments[0],
+                                firstName: patient.firstName,
+                                lastName: patient.lastName
+                              });
+                            }}
+                            title="Delete this booking">
+                            🗑️ Delete
+                          </button>
+                        </>
                       )}
                       <span className="click-indicator">👁️ View History</span>
                     </div>
@@ -1081,6 +1095,14 @@ const Admin = ({ t }) => {
                         <div className="timeline-header">
                           <span className="timeline-date">{formatDate(apt.date)}</span>
                           <span className="timeline-time">{formatTime(apt.time)}</span>
+                          <button
+                            type="button"
+                            className="timeline-delete-btn"
+                            onClick={() => handleDeleteAppointment({ ...apt, firstName: selectedPatient.firstName, lastName: selectedPatient.lastName })}
+                            title="Delete this booking"
+                          >
+                            🗑️
+                          </button>
                         </div>
                         <div className="timeline-details">
                           <p><strong>Service:</strong> {getServiceLabel(apt.service)}</p>
