@@ -6,6 +6,8 @@ const ALL_TIME_SLOTS = [
   { value: '9:00', labelEn: '9:00 AM', labelSq: '9:00 AM' },
   { value: '10:00', labelEn: '10:00 AM', labelSq: '10:00 AM' },
   { value: '11:00', labelEn: '11:00 AM', labelSq: '11:00 AM' },
+  { value: '12:00', labelEn: '12:00 PM', labelSq: '12:00 PM' },
+  { value: '13:00', labelEn: '1:00 PM', labelSq: '1:00 PM' },
   { value: '14:00', labelEn: '2:00 PM', labelSq: '2:00 PM' },
   { value: '15:00', labelEn: '3:00 PM', labelSq: '3:00 PM' },
   { value: '16:00', labelEn: '4:00 PM', labelSq: '4:00 PM' },
