@@ -74,6 +74,13 @@ const Appointment = ({ t }) => {
 
     // When date changes, fetch available slots and reset time
     if (name === 'preferredDate') {
+      const day = new Date(value + 'T12:00:00').getDay();
+      if (day === 0) {
+        setFormErrors(prev => ({ ...prev, preferredDate: t('Sundays are not available. Please choose another day.', 'Të dielat nuk janë të disponueshme. Ju lutem zgjidhni një ditë tjetër.') }));
+        setFormData(prev => ({ ...prev, preferredDate: '', preferredTime: '' }));
+        return;
+      }
+      setFormErrors(prev => ({ ...prev, preferredDate: '' }));
       setFormData(prev => ({
         ...prev,
         preferredDate: value,
@@ -98,6 +105,15 @@ const Appointment = ({ t }) => {
     setIsSubmitting(true);
     setFormErrors({});
     setSubmitMessage('');
+
+    if (formData.preferredDate) {
+      const day = new Date(formData.preferredDate + 'T12:00:00').getDay();
+      if (day === 0) {
+        setFormErrors({ preferredDate: t('Sundays are not available. Please choose another day.', 'Të dielat nuk janë të disponueshme. Ju lutem zgjidhni një ditë tjetër.') });
+        setIsSubmitting(false);
+        return;
+      }
+    }
     
     // Create appointment object with all required fields for admin system
     const appointment = {
