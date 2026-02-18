@@ -135,16 +135,9 @@ const Admin = ({ t }) => {
   // ==============================
   // DATA LOADING (ALL FROM API)
   // ==============================
-  // Display date as -1 day to offset timezone bug (API returns +1 day)
-  const toDisplayDate = useCallback((val) => {
+  const toDateString = useCallback((val) => {
     if (val == null || val === '') return '';
-    const s = (typeof val === 'string' ? val : String(val)).split('T')[0];
-    const m = s.match(/^(\d{4})-(\d{2})-(\d{2})$/);
-    if (!m) return s;
-    const [, y, mo, d] = m.map(Number);
-    const date = new Date(y, mo - 1, d);
-    date.setDate(date.getDate() - 1);
-    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+    return String(val).split('T')[0];
   }, []);
 
   const loadAppointments = useCallback(async () => {
@@ -160,10 +153,9 @@ const Admin = ({ t }) => {
         console.warn('API failed, trying localStorage fallback:', apiError);
         appointments = localStorageBackup.getAppointments();
       }
-      // Display dates as -1 day to offset timezone bug
       const normalized = appointments.map(apt => ({
         ...apt,
-        date: toDisplayDate(apt.date) || String(apt.date || '').split('T')[0]
+        date: toDateString(apt.date) || String(apt.date || '').split('T')[0]
       }));
       setAllAppointments(normalized);
       console.log(`📋 Loaded ${appointments.length} total appointments from database`);
@@ -173,7 +165,7 @@ const Admin = ({ t }) => {
     } finally {
       setLoading(false);
     }
-  }, [toDisplayDate]);
+  }, [toDateString]);
 
   const loadDoctors = useCallback(async () => {
     try {
@@ -280,7 +272,7 @@ const Admin = ({ t }) => {
   }
 
   const formatDate = (dateString) => {
-    const d = toDisplayDate(dateString);
+    const d = toDateString(dateString);
     if (!d) return 'N/A';
     const [year, month, day] = d.split('-').map(Number);
     const date = new Date(year, month - 1, day);

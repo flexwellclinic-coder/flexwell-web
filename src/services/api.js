@@ -82,6 +82,16 @@ export const authAPI = {
   }
 };
 
+// -1 day on date before sending to API (offsets timezone bug)
+const dateDayMinus1 = (d) => {
+  if (!d) return d;
+  const s = String(d).split('T')[0];
+  const [y, m, day] = s.split('-').map(Number);
+  const date = new Date(y, m - 1, day);
+  date.setDate(date.getDate() - 1);
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+};
+
 // Appointments API
 export const appointmentsAPI = {
   // Get all appointments with optional filtering
@@ -114,18 +124,20 @@ export const appointmentsAPI = {
 
   // Create new appointment
   create: async (appointmentData) => {
+    const payload = { ...appointmentData };
+    if (payload.date) payload.date = dateDayMinus1(payload.date);
     try {
       // Try Neon database first (PostgreSQL)
-      const response = await api.post('/appointments-neon', appointmentData);
+      const response = await api.post('/appointments-neon', payload);
       return response.data;
     } catch (error) {
       console.warn('Neon create failed, trying MongoDB:', error.message);
       try {
-        const mongoResponse = await api.post('/appointments', appointmentData);
+        const mongoResponse = await api.post('/appointments', payload);
         return mongoResponse.data;
       } catch (mongoError) {
         console.warn('MongoDB failed, using localStorage:', mongoError.message);
-        const saved = localStorageBackup.addAppointment(appointmentData);
+        const saved = localStorageBackup.addAppointment(payload);
         return saved ? { success: true, data: saved } : { success: false, message: 'Failed to save' };
       }
     }
@@ -133,18 +145,20 @@ export const appointmentsAPI = {
 
   // Update appointment (uses dedicated function - no sub-path needed)
   update: async (id, appointmentData) => {
+    const payload = { ...appointmentData };
+    if (payload.date) payload.date = dateDayMinus1(payload.date);
     try {
       // Try Neon database first (PostgreSQL)
-      const response = await api.post('/appointments-neon', { action: 'update', id, ...appointmentData });
+      const response = await api.post('/appointments-neon', { action: 'update', id, ...payload });
       return response.data;
     } catch (error) {
       console.warn('Neon update failed, trying MongoDB:', error.message);
       try {
-        const mongoResponse = await api.post('/appointment-update', { id, ...appointmentData });
+        const mongoResponse = await api.post('/appointment-update', { id, ...payload });
         return mongoResponse.data;
       } catch (mongoError) {
         console.warn('MongoDB failed, using localStorage:', mongoError.message);
-        const success = localStorageBackup.updateAppointment(id, appointmentData);
+        const success = localStorageBackup.updateAppointment(id, payload);
         return success ? { success: true, message: 'Updated locally' } : { success: false, message: 'Failed to update' };
       }
     }
