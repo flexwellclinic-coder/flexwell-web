@@ -9,6 +9,8 @@ const ALL_TIME_SLOTS = [
   { value: '14:00', labelEn: '2:00 PM', labelSq: '2:00 PM' },
   { value: '15:00', labelEn: '3:00 PM', labelSq: '3:00 PM' },
   { value: '16:00', labelEn: '4:00 PM', labelSq: '4:00 PM' },
+  { value: '17:00', labelEn: '5:00 PM', labelSq: '5:00 PM' },
+  { value: '18:00', labelEn: '6:00 PM', labelSq: '6:00 PM' },
 ];
 
 const Appointment = ({ t }) => {
