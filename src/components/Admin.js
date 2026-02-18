@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { appointmentsAPI, authAPI, localStorageBackup, doctorsAPI } from '../services/api';
 
-const TIME_SLOTS = ['9:00', '10:00', '11:00', '14:00', '15:00', '16:00'];
+const TIME_SLOTS = ['9:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'];
 const CALENDAR_SLOTS = [
   '9:00', '10:00', '11:00', '12:00', '13:00',
   '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'
