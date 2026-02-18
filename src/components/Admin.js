@@ -135,17 +135,16 @@ const Admin = ({ t }) => {
   // ==============================
   // DATA LOADING (ALL FROM API)
   // ==============================
-  // Force date to YYYY-MM-DD - prevents +1 day from UTC/timezone conversion
-  const toDateString = useCallback((val) => {
+  // Display date as -1 day to offset timezone bug (API returns +1 day)
+  const toDisplayDate = useCallback((val) => {
     if (val == null || val === '') return '';
-    if (typeof val === 'string') return val.split('T')[0];
-    if (val instanceof Date) {
-      const y = val.getUTCFullYear();
-      const m = String(val.getUTCMonth() + 1).padStart(2, '0');
-      const d = String(val.getUTCDate()).padStart(2, '0');
-      return `${y}-${m}-${d}`;
-    }
-    return String(val).split('T')[0] || '';
+    const s = (typeof val === 'string' ? val : String(val)).split('T')[0];
+    const m = s.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (!m) return s;
+    const [, y, mo, d] = m.map(Number);
+    const date = new Date(y, mo - 1, d);
+    date.setDate(date.getDate() - 1);
+    return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
   }, []);
 
   const loadAppointments = useCallback(async () => {
@@ -161,10 +160,10 @@ const Admin = ({ t }) => {
         console.warn('API failed, trying localStorage fallback:', apiError);
         appointments = localStorageBackup.getAppointments();
       }
-      // Normalize every date to YYYY-MM-DD - prevents +1 day display bug
+      // Display dates as -1 day to offset timezone bug
       const normalized = appointments.map(apt => ({
         ...apt,
-        date: toDateString(apt.date) || String(apt.date || '').split('T')[0]
+        date: toDisplayDate(apt.date) || String(apt.date || '').split('T')[0]
       }));
       setAllAppointments(normalized);
       console.log(`📋 Loaded ${appointments.length} total appointments from database`);
@@ -174,7 +173,7 @@ const Admin = ({ t }) => {
     } finally {
       setLoading(false);
     }
-  }, [toDateString]);
+  }, [toDisplayDate]);
 
   const loadDoctors = useCallback(async () => {
     try {
@@ -281,10 +280,10 @@ const Admin = ({ t }) => {
   }
 
   const formatDate = (dateString) => {
-    const d = toDateString(dateString);
+    const d = toDisplayDate(dateString);
     if (!d) return 'N/A';
     const [year, month, day] = d.split('-').map(Number);
-    const date = new Date(year, month - 1, day); // local calendar date, no UTC
+    const date = new Date(year, month - 1, day);
     return date.toLocaleDateString('en-US', {
       weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
     });
