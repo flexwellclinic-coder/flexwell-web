@@ -927,8 +927,18 @@ const Admin = ({ t }) => {
                               <div className="cal-slot-appointments">
                                 {apts.map((apt, aIdx) => (
                                   <div key={aIdx} className={`cal-appointment ${apts.length > 1 ? 'multi' : ''}`}>
-                                    <span className="cal-apt-name">{apt.patientName}</span>
-                                    <span className="cal-apt-doctor">{apt.doctor ? `👨‍⚕️ ${apt.doctor}` : '⏳ No doctor'}</span>
+                                    <div className="cal-apt-info">
+                                      <span className="cal-apt-name">{apt.patientName}</span>
+                                      <span className="cal-apt-doctor">{apt.doctor ? `👨‍⚕️ ${apt.doctor}` : '⏳ No doctor'}</span>
+                                    </div>
+                                    <button
+                                      type="button"
+                                      className="cal-apt-delete-btn"
+                                      onClick={(e) => { e.stopPropagation(); handleDeleteAppointment(apt); }}
+                                      title="Delete appointment"
+                                    >
+                                      🗑️
+                                    </button>
                                   </div>
                                 ))}
                               </div>
