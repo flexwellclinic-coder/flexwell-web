@@ -362,6 +362,15 @@ export const doctorsAPI = {
     }
   },
 
+  login: async (name, password) => {
+    try {
+      const response = await api.post('/doctors', { action: 'login', name, password });
+      return response.data;
+    } catch (error) {
+      throw error.response?.data || { success: false, message: 'Invalid credentials' };
+    }
+  },
+
   create: async (doctorData) => {
     try {
       const response = await api.post('/doctors', doctorData);

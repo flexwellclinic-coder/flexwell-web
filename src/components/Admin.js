@@ -17,8 +17,11 @@ const SERVICE_LABELS = {
 
 const getServiceLabel = (service) => SERVICE_LABELS[service] || service || 'N/A';
 
+const USER_KEY = 'flexwell_user';
+
 const Admin = ({ t }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null); // { type: 'admin' } | { type: 'doctor', id, name, role }
   const [loginForm, setLoginForm] = useState({ username: '', password: '' });
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [allAppointments, setAllAppointments] = useState([]);
@@ -55,7 +58,7 @@ const Admin = ({ t }) => {
   // Doctors state
   const [doctors, setDoctors] = useState([]);
   const [showAddDoctorModal, setShowAddDoctorModal] = useState(false);
-  const [addDoctorForm, setAddDoctorForm] = useState({ name: '', specialty: '' });
+  const [addDoctorForm, setAddDoctorForm] = useState({ name: '', specialty: '', password: '', role: 'doctor' });
 
   // Calendar state
   const [calendarDate, setCalendarDate] = useState(() => {
@@ -73,29 +76,49 @@ const Admin = ({ t }) => {
   const checkAuthentication = async () => {
     try {
       const token = localStorage.getItem('adminToken');
-      if (!token) { setIsAuthenticated(false); return; }
+      const userJson = localStorage.getItem(USER_KEY);
+      if (!token) { setIsAuthenticated(false); setCurrentUser(null); return; }
+
+      if (token === 'frontend-admin-token') {
+        setIsAuthenticated(true);
+        setCurrentUser({ type: 'admin' });
+        return;
+      }
+      if (token.startsWith('doctor-') && userJson) {
+        try {
+          const user = JSON.parse(userJson);
+          if (user.type === 'doctor' && user.id) {
+            setIsAuthenticated(true);
+            setCurrentUser(user);
+            return;
+          }
+        } catch (e) {}
+      }
 
       if (process.env.NODE_ENV === 'production') {
-        if (token === 'frontend-admin-token') {
-          setIsAuthenticated(true);
-        } else {
-          localStorage.removeItem('adminToken');
-          setIsAuthenticated(false);
-        }
+        localStorage.removeItem('adminToken');
+        localStorage.removeItem(USER_KEY);
+        setIsAuthenticated(false);
+        setCurrentUser(null);
         return;
       }
 
       const response = await authAPI.verify();
       if (response.success) {
         setIsAuthenticated(true);
+        setCurrentUser({ type: 'admin' });
       } else {
         localStorage.removeItem('adminToken');
+        localStorage.removeItem(USER_KEY);
         setIsAuthenticated(false);
+        setCurrentUser(null);
       }
     } catch (err) {
       console.error('Auth check failed:', err);
       localStorage.removeItem('adminToken');
+      localStorage.removeItem(USER_KEY);
       setIsAuthenticated(false);
+      setCurrentUser(null);
     }
   };
 
@@ -108,19 +131,41 @@ const Admin = ({ t }) => {
       if (process.env.NODE_ENV === 'production') {
         if (username === 'admin' && password === '@Kumbulla&Shalq!(3024)') {
           localStorage.setItem('adminToken', 'frontend-admin-token');
+          localStorage.setItem(USER_KEY, JSON.stringify({ type: 'admin' }));
+          setIsAuthenticated(true);
+          setCurrentUser({ type: 'admin' });
+          return;
+        }
+        const docRes = await doctorsAPI.login(username, password);
+        if (docRes.success && docRes.data) {
+          const d = docRes.data;
+          localStorage.setItem('adminToken', 'doctor-' + d.id);
+          localStorage.setItem(USER_KEY, JSON.stringify({ type: 'doctor', id: d.id, name: d.name, role: d.role || 'doctor' }));
+          setIsAuthenticated(true);
+          setCurrentUser({ type: 'doctor', id: d.id, name: d.name, role: d.role || 'doctor' });
+          return;
+        }
+      } else {
+        const response = await authAPI.login(username, password);
+        if (response.success) {
+          localStorage.setItem(USER_KEY, JSON.stringify({ type: 'admin' }));
+          setCurrentUser({ type: 'admin' });
           setIsAuthenticated(true);
           return;
-        } else {
-          setError('Invalid username or password');
+        }
+        const docRes = await doctorsAPI.login(username, password);
+        if (docRes.success && docRes.data) {
+          const d = docRes.data;
+          localStorage.setItem('adminToken', 'doctor-' + d.id);
+          localStorage.setItem(USER_KEY, JSON.stringify({ type: 'doctor', id: d.id, name: d.name, role: d.role || 'doctor' }));
+          setIsAuthenticated(true);
+          setCurrentUser({ type: 'doctor', id: d.id, name: d.name, role: d.role || 'doctor' });
           return;
         }
       }
-      const response = await authAPI.login(username, password);
-      if (response.success) { setIsAuthenticated(true); }
-      else { setError(response.message || 'Login failed'); }
+      setError('Invalid username or password');
     } catch (err) {
-      console.error('Login error:', err);
-      setError('Login failed. Please check your credentials.');
+      setError('Invalid username or password');
     } finally {
       setIsLoggingIn(false);
     }
@@ -128,7 +173,9 @@ const Admin = ({ t }) => {
 
   const handleLogout = () => {
     localStorage.removeItem('adminToken');
+    localStorage.removeItem(USER_KEY);
     setIsAuthenticated(false);
+    setCurrentUser(null);
     setAllAppointments([]);
   };
 
@@ -190,13 +237,24 @@ const Admin = ({ t }) => {
   // ==============================
   // DERIVED DATA (from API response)
   // ==============================
+  const isAdmin = currentUser?.type === 'admin' || (currentUser?.type === 'doctor' && currentUser?.role === 'admin');
+  const isDoctor = currentUser?.type === 'doctor' && currentUser?.role !== 'admin';
+  const doctorName = currentUser?.type === 'doctor' ? currentUser.name : null;
+
+  const filteredAppointments = useMemo(() => {
+    if (isDoctor && doctorName) {
+      return allAppointments.filter(apt => (apt.doctor || '').toLowerCase() === doctorName.toLowerCase());
+    }
+    return allAppointments;
+  }, [allAppointments, isDoctor, doctorName]);
+
   const pendingAppointments = useMemo(() => {
-    return allAppointments.filter(apt => !apt.status || apt.status === 'pending');
-  }, [allAppointments]);
+    return filteredAppointments.filter(apt => !apt.status || apt.status === 'pending');
+  }, [filteredAppointments]);
 
   const confirmedAppointments = useMemo(() => {
-    return allAppointments.filter(apt => apt.status === 'confirmed' || apt.status === 'completed');
-  }, [allAppointments]);
+    return filteredAppointments.filter(apt => apt.status === 'confirmed' || apt.status === 'completed');
+  }, [filteredAppointments]);
 
   // Build patient list by grouping confirmed appointments by email+phone
   const confirmedPatients = useMemo(() => {
@@ -327,7 +385,7 @@ const Admin = ({ t }) => {
     const startStr = weekDays[0].toISOString().split('T')[0];
     const endStr = weekDays[weekDays.length - 1].toISOString().split('T')[0];
 
-    return allAppointments
+    return filteredAppointments
       .filter(apt => {
         const aptDate = normalizeDate(apt.date);
         return aptDate >= startStr && aptDate <= endStr;
@@ -338,7 +396,7 @@ const Admin = ({ t }) => {
         displayStatus: apt.status || 'pending',
         patientName: `${apt.firstName} ${apt.lastName}`
       }));
-  }, [allAppointments, calendarDate, getWeekDays, normalizeDate]);
+  }, [filteredAppointments, calendarDate, getWeekDays, normalizeDate]);
 
   const getAppointmentsForSlot = useCallback((date, time) => {
     const dateStr = date.toISOString().split('T')[0];
@@ -533,14 +591,18 @@ const Admin = ({ t }) => {
       alert('Please enter a doctor name.');
       return;
     }
+    if (!addDoctorForm.password || addDoctorForm.password.length < 4) {
+      alert('Password must be at least 4 characters.');
+      return;
+    }
     setLoading(true);
     try {
       const res = await doctorsAPI.create(addDoctorForm);
       if (res.success) {
         setShowAddDoctorModal(false);
-        setAddDoctorForm({ name: '', specialty: '' });
+        setAddDoctorForm({ name: '', specialty: '', password: '', role: 'doctor' });
         await loadDoctors();
-        alert(`Doctor ${addDoctorForm.name} added!`);
+        alert(`Doctor ${addDoctorForm.name} added! They can log in with their name and password.`);
       } else {
         alert(`Failed: ${res.message}`);
       }
@@ -720,8 +782,8 @@ const Admin = ({ t }) => {
       <div className="admin-login">
         <div className="login-container">
           <div className="login-header">
-            <h2>🔐 Admin Login</h2>
-            <p>Access the appointment confirmation panel</p>
+            <h2>🔐 Admin / Doctor Login</h2>
+            <p>Admins: use admin credentials. Doctors: use your name and password.</p>
           </div>
           <form onSubmit={handleLogin} className="login-form">
             {error && <div className="error-message">{error}</div>}
@@ -754,7 +816,9 @@ const Admin = ({ t }) => {
     <div className="admin-dashboard">
       <header className="admin-header">
         <div className="admin-header-content">
-          <h1 className="admin-title">📋 Appointment Management System</h1>
+          <h1 className="admin-title">
+            {isDoctor ? `👨‍⚕️ Dr. ${doctorName}'s Panel` : '📋 Appointment Management System'}
+          </h1>
           <button onClick={handleLogout} className="logout-btn">🚪 Logout</button>
         </div>
       </header>
@@ -800,12 +864,16 @@ const Admin = ({ t }) => {
             <div className="section-header">
               <h2>⏳ Pending Appointments ({pendingAppointments.length})</h2>
               <div className="section-header-actions">
-                <button onClick={handleManualBook} className="manual-book-btn" disabled={loading}>
-                  ➕ Manual Booking
-                </button>
-                <button onClick={() => { setAddDoctorForm({ name: '', specialty: '' }); setShowAddDoctorModal(true); }} className="manage-doctors-btn" disabled={loading}>
-                  👨‍⚕️ Add Doctor
-                </button>
+                {isAdmin && (
+                  <>
+                    <button onClick={handleManualBook} className="manual-book-btn" disabled={loading}>
+                      ➕ Manual Booking
+                    </button>
+                    <button onClick={() => { setAddDoctorForm({ name: '', specialty: '', password: '', role: 'doctor' }); setShowAddDoctorModal(true); }} className="manage-doctors-btn" disabled={loading}>
+                      👨‍⚕️ Add Doctor
+                    </button>
+                  </>
+                )}
                 <button onClick={loadAppointments} className="refresh-btn" disabled={loading}>
                   {loading ? '🔄' : '↻'} Refresh
                 </button>
@@ -851,19 +919,21 @@ const Admin = ({ t }) => {
                           <span className="detail-value">{appointment.notes}</span>
                         </div>
                       )}
-                      <div className="detail-row doctor-assign-row">
-                        <span className="detail-label">👨‍⚕️ Doctor:</span>
-                        <select
-                          className="doctor-select"
-                          value={appointment.doctor || ''}
-                          onChange={(e) => handleAssignDoctor(appointment, e.target.value)}
-                        >
-                          <option value="">Select a doctor</option>
-                          {doctors.map(doc => (
-                            <option key={doc.id} value={doc.name}>{doc.name}{doc.specialty ? ` (${doc.specialty})` : ''}</option>
-                          ))}
-                        </select>
-                      </div>
+                      {isAdmin && (
+                        <div className="detail-row doctor-assign-row">
+                          <span className="detail-label">👨‍⚕️ Doctor:</span>
+                          <select
+                            className="doctor-select"
+                            value={appointment.doctor || ''}
+                            onChange={(e) => handleAssignDoctor(appointment, e.target.value)}
+                          >
+                            <option value="">Select a doctor</option>
+                            {doctors.map(doc => (
+                              <option key={doc.id} value={doc.name}>{doc.name}{doc.specialty ? ` (${doc.specialty})` : ''}</option>
+                            ))}
+                          </select>
+                        </div>
+                      )}
                     </div>
                     <div className="appointment-actions">
                       <button onClick={() => handleConfirmAppointment(appointment)}
@@ -874,14 +944,18 @@ const Admin = ({ t }) => {
                         className="reschedule-btn" disabled={loading}>
                         📅 Reschedule
                       </button>
-                      <button onClick={(e) => handleEditAppointment(appointment, e)}
-                        className="edit-btn" disabled={loading}>
-                        ✏️ Edit
-                      </button>
-                      <button onClick={() => handleDeleteAppointment(appointment)}
-                        className="delete-btn" disabled={loading}>
-                        🗑️ Delete
-                      </button>
+                      {isAdmin && (
+                        <>
+                          <button onClick={(e) => handleEditAppointment(appointment, e)}
+                            className="edit-btn" disabled={loading}>
+                            ✏️ Edit
+                          </button>
+                          <button onClick={() => handleDeleteAppointment(appointment)}
+                            className="delete-btn" disabled={loading}>
+                            🗑️ Delete
+                          </button>
+                        </>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -955,12 +1029,12 @@ const Admin = ({ t }) => {
             </div>
           </div>
 
-          {/* Doctors Team */}
-          {doctors.length > 0 && (
+          {/* Doctors Team - admin only */}
+          {isAdmin && doctors.length > 0 && (
             <div className="doctors-section">
               <div className="section-header">
                 <h2>👨‍⚕️ Doctors ({doctors.length})</h2>
-                <button onClick={() => { setAddDoctorForm({ name: '', specialty: '' }); setShowAddDoctorModal(true); }}
+                <button onClick={() => { setAddDoctorForm({ name: '', specialty: '', password: '', role: 'doctor' }); setShowAddDoctorModal(true); }}
                   className="manage-doctors-btn">
                   ➕ Add Doctor
                 </button>
@@ -972,6 +1046,7 @@ const Admin = ({ t }) => {
                     <div className="doctor-info">
                       <span className="doctor-name">{doc.name}</span>
                       <span className="doctor-specialty">{doc.specialty || 'Physiotherapist'}</span>
+                      {doc.role && <span className="doctor-role-badge">{doc.role === 'admin' ? '🔑 Admin' : '👨‍⚕️ Doctor'}</span>}
                     </div>
                     <button className="doctor-delete-btn" onClick={() => handleDeleteDoctor(doc)} title="Remove doctor">
                       🗑️
@@ -1005,12 +1080,14 @@ const Admin = ({ t }) => {
                       <span className="last-service">{getServiceLabel(patient.lastService)}</span>
                     </div>
                     <div className="patient-actions-col">
-                      <button className="reserve-again-btn"
-                        onClick={(e) => handleReserveAgain(patient, e)}
-                        title="Book another appointment">
-                        🔄 Reserve Again
-                      </button>
-                      {patient.appointments && patient.appointments[0] && (
+                      {isAdmin && (
+                        <button className="reserve-again-btn"
+                          onClick={(e) => handleReserveAgain(patient, e)}
+                          title="Book another appointment">
+                          🔄 Reserve Again
+                        </button>
+                      )}
+                      {isAdmin && patient.appointments && patient.appointments[0] && (
                         <>
                           <button className="edit-patient-btn"
                             onClick={(e) => {
@@ -1067,10 +1144,12 @@ const Admin = ({ t }) => {
                   <p><strong>📞 Phone:</strong> {selectedPatient.phone}</p>
                   <p><strong>📅 Total Appointments:</strong> {selectedPatient.totalAppointments}</p>
                 </div>
-                <button className="reserve-again-btn modal-reserve-btn"
-                  onClick={(e) => handleReserveAgain(selectedPatient, e)}>
-                  🔄 Reserve Again
-                </button>
+                {isAdmin && (
+                  <button className="reserve-again-btn modal-reserve-btn"
+                    onClick={(e) => handleReserveAgain(selectedPatient, e)}>
+                    🔄 Reserve Again
+                  </button>
+                )}
               </div>
 
               <div className="monthly-stats">
@@ -1095,14 +1174,16 @@ const Admin = ({ t }) => {
                         <div className="timeline-header">
                           <span className="timeline-date">{formatDate(apt.date)}</span>
                           <span className="timeline-time">{formatTime(apt.time)}</span>
-                          <button
-                            type="button"
-                            className="timeline-delete-btn"
-                            onClick={() => handleDeleteAppointment({ ...apt, firstName: selectedPatient.firstName, lastName: selectedPatient.lastName })}
-                            title="Delete this booking"
-                          >
-                            🗑️
-                          </button>
+                          {isAdmin && (
+                            <button
+                              type="button"
+                              className="timeline-delete-btn"
+                              onClick={() => handleDeleteAppointment({ ...apt, firstName: selectedPatient.firstName, lastName: selectedPatient.lastName })}
+                              title="Delete this booking"
+                            >
+                              🗑️
+                            </button>
+                          )}
                         </div>
                         <div className="timeline-details">
                           <p><strong>Service:</strong> {getServiceLabel(apt.service)}</p>
@@ -1193,7 +1274,21 @@ const Admin = ({ t }) => {
                   <label>👤 Doctor Name *</label>
                   <input type="text" value={addDoctorForm.name}
                     onChange={(e) => setAddDoctorForm({ ...addDoctorForm, name: e.target.value })}
-                    placeholder="e.g. Paola" required />
+                    placeholder="e.g. Xhavi" required />
+                </div>
+                <div className="form-group">
+                  <label>🔒 Password *</label>
+                  <input type="password" value={addDoctorForm.password}
+                    onChange={(e) => setAddDoctorForm({ ...addDoctorForm, password: e.target.value })}
+                    placeholder="Min 4 characters" required minLength={4} />
+                </div>
+                <div className="form-group">
+                  <label>👔 Role *</label>
+                  <select value={addDoctorForm.role}
+                    onChange={(e) => setAddDoctorForm({ ...addDoctorForm, role: e.target.value })}>
+                    <option value="doctor">Normal Doctor</option>
+                    <option value="admin">Admin</option>
+                  </select>
                 </div>
                 <div className="form-group">
                   <label>🏥 Specialty</label>
