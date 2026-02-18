@@ -241,12 +241,15 @@ const Admin = ({ t }) => {
   const isDoctor = currentUser?.type === 'doctor' && currentUser?.role !== 'admin';
   const doctorName = currentUser?.type === 'doctor' ? currentUser.name : null;
 
-  const filteredAppointments = useMemo(() => {
+  const filteredAppointments = useMemo(() => allAppointments, [allAppointments]);
+
+  const canModifyAppointment = (appointment) => {
+    if (isAdmin) return true;
     if (isDoctor && doctorName) {
-      return allAppointments.filter(apt => (apt.doctor || '').toLowerCase() === doctorName.toLowerCase());
+      return (appointment.doctor || '').toLowerCase() === doctorName.toLowerCase();
     }
-    return allAppointments;
-  }, [allAppointments, isDoctor, doctorName]);
+    return false;
+  };
 
   const pendingAppointments = useMemo(() => {
     return filteredAppointments.filter(apt => !apt.status || apt.status === 'pending');
@@ -288,7 +291,8 @@ const Admin = ({ t }) => {
         service: apt.service,
         notes: apt.notes || '',
         confirmedAt: apt.confirmedAt || apt.updatedAt || apt.createdAt,
-        status: apt.status
+        status: apt.status,
+        doctor: apt.doctor
       });
     });
 
@@ -641,7 +645,8 @@ const Admin = ({ t }) => {
   // Manual Booking
   const handleManualBook = () => {
     setManualBookForm({
-      firstName: '', lastName: '', email: '', phone: '', date: '', time: '', service: '', notes: '', doctor: ''
+      firstName: '', lastName: '', email: '', phone: '', date: '', time: '', service: '', notes: '',
+      doctor: isDoctor ? doctorName : ''
     });
     setShowManualBookModal(true);
   };
@@ -656,12 +661,13 @@ const Admin = ({ t }) => {
 
     setLoading(true);
     try {
+      const doctorVal = isDoctor ? doctorName : (manualBookForm.doctor || '');
       const appointmentData = {
         firstName, lastName, email, phone, date, time, service,
-        notes: manualBookForm.notes || 'Booked by admin',
-        doctor: manualBookForm.doctor || '',
+        notes: manualBookForm.notes || (isDoctor ? 'Booked by doctor' : 'Booked by admin'),
+        doctor: doctorVal,
         previousInjury: false,
-        createdBy: 'admin'
+        createdBy: isDoctor ? 'doctor' : 'admin'
       };
 
       let newId = null;
@@ -864,15 +870,13 @@ const Admin = ({ t }) => {
             <div className="section-header">
               <h2>⏳ Pending Appointments ({pendingAppointments.length})</h2>
               <div className="section-header-actions">
+                <button onClick={handleManualBook} className="manual-book-btn" disabled={loading}>
+                  ➕ Manual Booking
+                </button>
                 {isAdmin && (
-                  <>
-                    <button onClick={handleManualBook} className="manual-book-btn" disabled={loading}>
-                      ➕ Manual Booking
-                    </button>
-                    <button onClick={() => { setAddDoctorForm({ name: '', specialty: '', password: '', role: 'doctor' }); setShowAddDoctorModal(true); }} className="manage-doctors-btn" disabled={loading}>
-                      👨‍⚕️ Add Doctor
-                    </button>
-                  </>
+                  <button onClick={() => { setAddDoctorForm({ name: '', specialty: '', password: '', role: 'doctor' }); setShowAddDoctorModal(true); }} className="manage-doctors-btn" disabled={loading}>
+                    👨‍⚕️ Add Doctor
+                  </button>
                 )}
                 <button onClick={loadAppointments} className="refresh-btn" disabled={loading}>
                   {loading ? '🔄' : '↻'} Refresh
@@ -936,25 +940,31 @@ const Admin = ({ t }) => {
                       )}
                     </div>
                     <div className="appointment-actions">
-                      <button onClick={() => handleConfirmAppointment(appointment)}
-                        className="confirm-btn" disabled={loading}>
-                        ✅ Confirm
-                      </button>
-                      <button onClick={() => handleReschedule(appointment)}
-                        className="reschedule-btn" disabled={loading}>
-                        📅 Reschedule
-                      </button>
-                      {isAdmin && (
+                      {canModifyAppointment(appointment) ? (
                         <>
-                          <button onClick={(e) => handleEditAppointment(appointment, e)}
-                            className="edit-btn" disabled={loading}>
-                            ✏️ Edit
+                          <button onClick={() => handleConfirmAppointment(appointment)}
+                            className="confirm-btn" disabled={loading}>
+                            ✅ Confirm
                           </button>
-                          <button onClick={() => handleDeleteAppointment(appointment)}
-                            className="delete-btn" disabled={loading}>
-                            🗑️ Delete
+                          <button onClick={() => handleReschedule(appointment)}
+                            className="reschedule-btn" disabled={loading}>
+                            📅 Reschedule
                           </button>
+                          {isAdmin && (
+                            <>
+                              <button onClick={(e) => handleEditAppointment(appointment, e)}
+                                className="edit-btn" disabled={loading}>
+                                ✏️ Edit
+                              </button>
+                              <button onClick={() => handleDeleteAppointment(appointment)}
+                                className="delete-btn" disabled={loading}>
+                                🗑️ Delete
+                              </button>
+                            </>
+                          )}
                         </>
+                      ) : (
+                        <span className="apt-readonly-hint">View only</span>
                       )}
                     </div>
                   </div>
@@ -1005,14 +1015,16 @@ const Admin = ({ t }) => {
                                       <span className="cal-apt-name">{apt.patientName}</span>
                                       <span className="cal-apt-doctor">{apt.doctor ? `👨‍⚕️ ${apt.doctor}` : '⏳ No doctor'}</span>
                                     </div>
-                                    <button
-                                      type="button"
-                                      className="cal-apt-delete-btn"
-                                      onClick={(e) => { e.stopPropagation(); handleDeleteAppointment(apt); }}
-                                      title="Delete appointment"
-                                    >
-                                      🗑️
-                                    </button>
+                                    {canModifyAppointment(apt) && (
+                                      <button
+                                        type="button"
+                                        className="cal-apt-delete-btn"
+                                        onClick={(e) => { e.stopPropagation(); handleDeleteAppointment(apt); }}
+                                        title="Delete appointment"
+                                      >
+                                        🗑️
+                                      </button>
+                                    )}
                                   </div>
                                 ))}
                               </div>
@@ -1087,23 +1099,25 @@ const Admin = ({ t }) => {
                           🔄 Reserve Again
                         </button>
                       )}
-                      {isAdmin && patient.appointments && patient.appointments[0] && (
+                      {patient.appointments && patient.appointments[0] && canModifyAppointment(patient.appointments[0]) && (
                         <>
-                          <button className="edit-patient-btn"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              const latestApt = patient.appointments[0];
-                              handleEditAppointment({
-                                ...latestApt,
-                                firstName: patient.firstName,
-                                lastName: patient.lastName,
-                                email: patient.email,
-                                phone: patient.phone
-                              }, e);
-                            }}
-                            title="Edit patient info">
-                            ✏️ Edit Info
-                          </button>
+                          {isAdmin && (
+                            <button className="edit-patient-btn"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                const latestApt = patient.appointments[0];
+                                handleEditAppointment({
+                                  ...latestApt,
+                                  firstName: patient.firstName,
+                                  lastName: patient.lastName,
+                                  email: patient.email,
+                                  phone: patient.phone
+                                }, e);
+                              }}
+                              title="Edit patient info">
+                              ✏️ Edit Info
+                            </button>
+                          )}
                           <button className="delete-booking-btn"
                             onClick={(e) => {
                               e.stopPropagation();
@@ -1174,7 +1188,7 @@ const Admin = ({ t }) => {
                         <div className="timeline-header">
                           <span className="timeline-date">{formatDate(apt.date)}</span>
                           <span className="timeline-time">{formatTime(apt.time)}</span>
-                          {isAdmin && (
+                          {canModifyAppointment(apt) && (
                             <button
                               type="button"
                               className="timeline-delete-btn"
@@ -1371,16 +1385,24 @@ const Admin = ({ t }) => {
                     {Object.entries(SERVICE_LABELS).map(([v, l]) => <option key={v} value={v}>{l}</option>)}
                   </select>
                 </div>
-                <div className="form-group">
-                  <label>👨‍⚕️ Doctor</label>
-                  <select value={manualBookForm.doctor}
-                    onChange={(e) => setManualBookForm({ ...manualBookForm, doctor: e.target.value })}>
-                    <option value="">Select a doctor</option>
-                    {doctors.map(doc => (
-                      <option key={doc.id} value={doc.name}>{doc.name}{doc.specialty ? ` (${doc.specialty})` : ''}</option>
-                    ))}
-                  </select>
-                </div>
+                {isAdmin ? (
+                  <div className="form-group">
+                    <label>👨‍⚕️ Doctor</label>
+                    <select value={manualBookForm.doctor}
+                      onChange={(e) => setManualBookForm({ ...manualBookForm, doctor: e.target.value })}>
+                      <option value="">Select a doctor</option>
+                      {doctors.map(doc => (
+                        <option key={doc.id} value={doc.name}>{doc.name}{doc.specialty ? ` (${doc.specialty})` : ''}</option>
+                      ))}
+                    </select>
+                  </div>
+                ) : (
+                  <div className="form-group">
+                    <label>👨‍⚕️ Doctor</label>
+                    <input type="text" value={manualBookForm.doctor || doctorName} readOnly disabled
+                      style={{ opacity: 0.8 }} />
+                  </div>
+                )}
                 <div className="form-group">
                   <label>📝 Notes (optional)</label>
                   <textarea value={manualBookForm.notes}
