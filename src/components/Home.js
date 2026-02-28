@@ -152,7 +152,7 @@ const Home = ({ t }) => {
             <p data-en="Book your appointment today and take the first step towards better health" data-sq="Rezervoni takimin tuaj sot dhe bëni hapin e parë drejt shëndetit më të mirë">
               {t('Book your appointment today and take the first step towards better health', 'Rezervoni takimin tuaj sot dhe bëni hapin e parë drejt shëndetit më të mirë')}
             </p>
-            <a href="/appointment" className="cta-btn">
+            <a href="/#/appointment" className="cta-btn">
               <span data-en="Book Appointment" data-sq="Rezervo Takim">
                 {t('Book Appointment', 'Rezervo Takim')}
               </span>
