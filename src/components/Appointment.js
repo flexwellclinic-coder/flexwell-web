@@ -642,18 +642,30 @@ const Appointment = ({ t }) => {
                   rel="noopener noreferrer"
                   className="contact-link"
                 >
-                  <p data-en="123 Grafton Street, Dublin 2, Ireland" data-sq="123 Grafton Street, Dublin 2, Irlandë">
-                    {t('123 Grafton Street, Dublin 2, Ireland', '123 Grafton Street, Dublin 2, Irlandë')}
-                  </p>
-                </a>
+  <p
+    data-en='Mine Peza Street, "Golden Tower" Residence, Staircase C, 8th Floor'
+    data-sq='Rruga "Mine Peza", rezidenca "Golden Tower", shkalla C, kati 8'
+  >
+    {t(
+      'Mine Peza Street, "Golden Tower" Residence, Staircase C, 8th Floor',
+      'Rruga "Mine Peza", rezidenca "Golden Tower", shkalla C, kati 8'
+    )}
+  </p>
+</a>
               </div>
               <div className="contact-item">
                 <h3 data-en="Hours" data-sq="Orari">
                   {t('Hours', 'Orari')}
                 </h3>
-                <p data-en="Mon-Fri: 8AM-7PM | Sat: 9AM-2PM" data-sq="Hën-Pre: 8:00-19:00 | Sht: 9:00-14:00">
-                  {t('Mon-Fri: 8AM-7PM | Sat: 9AM-2PM', 'Hën-Pre: 8:00-19:00 | Sht: 9:00-14:00')}
-                </p>
+                <p
+  data-en="Mon–Sat: 09:00–20:00 | Sunday: Closed"
+  data-sq="Hën–Sht: 09:00–20:00 | E diel: Pushim"
+>
+  {t(
+    'Mon–Sat: 09:00–20:00 | Sunday: Closed',
+    'Hën–Sht: 09:00–20:00 | E diel: Pushim'
+  )}
+</p>
               </div>
             </div>
             <div className="emergency-info">
