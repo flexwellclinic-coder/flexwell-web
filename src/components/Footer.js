@@ -12,7 +12,7 @@ const Footer = ({ t }) => {
             <a href="mailto:flexwellclinic@gmail.com" className="icon" title="Email us" aria-label="Email">
               📧
             </a>
-            <a href="tel:+35312345678" className="icon" title="Call us" aria-label="Phone">
+            <a href="tel:+355693638806" className="icon" title="Call us" aria-label="Phone">
               📞
             </a>
             <a 
