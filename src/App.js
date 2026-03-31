@@ -7,6 +7,7 @@ import About from './components/About';
 import Services from './components/Services';
 import Appointment from './components/Appointment';
 import Admin from './components/Admin';
+import WhatsAppButton from './components/WhatsAppButton';
 import { useLanguage } from './hooks/useLanguage';
 
 function App() {
@@ -41,9 +42,10 @@ function App() {
           </Routes>
         </main>
         <Footer t={t} />
+        <WhatsAppButton />
       </div>
     </Router>
   );
 }
 
-export default App; 
+export default App;
