@@ -620,8 +620,8 @@ const Appointment = ({ t }) => {
                 <h3 data-en="Phone" data-sq="Telefoni">
                   {t('Phone', 'Telefoni')}
                 </h3>
-                <a href="tel:+35312345678" className="contact-link">
-                  <p>+353 1 234 5678</p>
+                <a href="tel:+355693638806" className="contact-link">
+                  <p>+355693638806</p>
                 </a>
               </div>
               <div className="contact-item">
