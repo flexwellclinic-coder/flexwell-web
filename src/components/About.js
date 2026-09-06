@@ -235,8 +235,8 @@ const About = ({ t }) => {
               <h3 data-en="Denis Mata" data-sq="Denis Mata">
                 {t('Denis Mata', 'Denis Mata')}
               </h3>
-              <p className="member-title" data-en="Lead Physiotherapist" data-sq="Fizioterapeut Kryesor">
-                {t('Lead Physiotherapist', 'Fizioterapeut Kryesor')}
+              <p className="member-title" data-en="Physiotherapist" data-sq="Fizioterapist">
+                {t('Physiotherapist', 'Fizioterapist')}
               </p>
               <p data-en="10+ years of experience in sports rehabilitation and manual therapy. Specialised in post-operative rehabilitation and TMJ (temporomandibular joint) rehabilitation." data-sq="10+ vjet përvojë në rihabilitimin sportiv dhe terapinë manuale. I specializuar në rehabilitimin postoperator dhe në rehabilitimin e ATM (artikulacioni temporomandibular).">
                 {t('10+ years of experience in sports rehabilitation and manual therapy. Specialised in post-operative rehabilitation and TMJ (temporomandibular joint) rehabilitation.', '10+ vjet përvojë në rihabilitimin sportiv dhe terapinë manuale. I specializuar në rehabilitimin postoperator dhe në rehabilitimin e ATM (artikulacioni temporomandibular).')}
