@@ -238,8 +238,8 @@ const About = ({ t }) => {
               <p className="member-title" data-en="Lead Physiotherapist" data-sq="Fizioterapeut Kryesor">
                 {t('Lead Physiotherapist', 'Fizioterapeut Kryesor')}
               </p>
-              <p data-en="15+ years of experience in sports rehabilitation and manual therapy. Specialised in post-operative rehabilitation and TMJ (temporomandibular joint) rehabilitation." data-sq="15+ vjet përvojë në rihabilitimin sportiv dhe terapinë manuale. I specializuar në rehabilitimin postoperator dhe në rehabilitimin e ATM (artikulacioni temporomandibular).">
-                {t('15+ years of experience in sports rehabilitation and manual therapy. Specialised in post-operative rehabilitation and TMJ (temporomandibular joint) rehabilitation.', '15+ vjet përvojë në rihabilitimin sportiv dhe terapinë manuale. I specializuar në rehabilitimin postoperator dhe në rehabilitimin e ATM (artikulacioni temporomandibular).')}
+              <p data-en="10+ years of experience in sports rehabilitation and manual therapy. Specialised in post-operative rehabilitation and TMJ (temporomandibular joint) rehabilitation." data-sq="10+ vjet përvojë në rihabilitimin sportiv dhe terapinë manuale. I specializuar në rehabilitimin postoperator dhe në rehabilitimin e ATM (artikulacioni temporomandibular).">
+                {t('10+ years of experience in sports rehabilitation and manual therapy. Specialised in post-operative rehabilitation and TMJ (temporomandibular joint) rehabilitation.', '10+ vjet përvojë në rihabilitimin sportiv dhe terapinë manuale. I specializuar në rehabilitimin postoperator dhe në rehabilitimin e ATM (artikulacioni temporomandibular).')}
               </p>
             </div>
             <div className="team-member">
