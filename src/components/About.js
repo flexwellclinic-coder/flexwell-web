@@ -238,8 +238,8 @@ const About = ({ t }) => {
               <p className="member-title" data-en="Physiotherapist" data-sq="Fizioterapist">
                 {t('Physiotherapist', 'Fizioterapist')}
               </p>
-              <p data-en="Several years of experience in sports rehabilitation and manual therapy. Specialised in post-operative rehabilitation and TMJ (temporomandibular joint) rehabilitation." data-sq="Disa vite përvojë në rehabilitimin sportiv dhe terapinë manuale. I specializuar në rehabilitimin postoperator dhe në rehabilitimin e ATM (artikulacioni temporomandibular).">
-                {t('Several years of experience in sports rehabilitation and manual therapy. Specialised in post-operative rehabilitation and TMJ (temporomandibular joint) rehabilitation.', 'Disa vite përvojë në rehabilitimin sportiv dhe terapinë manuale. I specializuar në rehabilitimin postoperator dhe në rehabilitimin e ATM (artikulacioni temporomandibular).')}
+              <p data-en="Several years of experience in sports rehabilitation and manual therapy. Specialised in post-operative rehabilitation and TMJ (temporomandibular joint) rehabilitation." data-sq="Disa vjet përvojë në rehabilitimin sportiv dhe terapinë manuale. I specializuar në rehabilitimin postoperator dhe në rehabilitimin e ATM (artikulacioni temporomandibular).">
+                {t('Several years of experience in sports rehabilitation and manual therapy. Specialised in post-operative rehabilitation and TMJ (temporomandibular joint) rehabilitation.', 'Disa vjet përvojë në rehabilitimin sportiv dhe terapinë manuale. I specializuar në rehabilitimin postoperator dhe në rehabilitimin e ATM (artikulacioni temporomandibular).')}
               </p>
             </div>
             <div className="team-member">
@@ -252,8 +252,8 @@ const About = ({ t }) => {
               <p className="member-title" data-en="Musculoskeletal Specialist" data-sq="Specialiste e Sistemit Muskuloskeletal">
                 {t('Musculoskeletal Specialist', 'Specialiste e Sistemit Muskuloskeletal')}
               </p>
-              <p data-en="Several years of experience in physiotherapy. Specialised in treating postural disorders (scoliosis/kyphosis), TMJ (temporomandibular joint) rehabilitation and Dry Needling." data-sq="Disa vite përvojë në fizioterapi. E specializuar në trajtimin e patologjive të çrregullimeve të posturës (skoliozë/kifozë), në rehabilitimin e ATM (artikulacioni temporomandibular) dhe në Dry Needling.">
-                {t('Several years of experience in physiotherapy. Specialised in treating postural disorders (scoliosis/kyphosis), TMJ (temporomandibular joint) rehabilitation and Dry Needling.', 'Disa vite përvojë në fizioterapi. E specializuar në trajtimin e patologjive të çrregullimeve të posturës (skoliozë/kifozë), në rehabilitimin e ATM (artikulacioni temporomandibular) dhe në Dry Needling.')}
+              <p data-en="Several years of experience in physiotherapy. Specialised in treating postural disorders (scoliosis/kyphosis), TMJ (temporomandibular joint) rehabilitation and Dry Needling." data-sq="Disa vjet përvojë në fizioterapi. E specializuar në trajtimin e patologjive të çrregullimeve të posturës (skoliozë/kifozë), në rehabilitimin e ATM (artikulacioni temporomandibular) dhe në Dry Needling.">
+                {t('Several years of experience in physiotherapy. Specialised in treating postural disorders (scoliosis/kyphosis), TMJ (temporomandibular joint) rehabilitation and Dry Needling.', 'Disa vjet përvojë në fizioterapi. E specializuar në trajtimin e patologjive të çrregullimeve të posturës (skoliozë/kifozë), në rehabilitimin e ATM (artikulacioni temporomandibular) dhe në Dry Needling.')}
               </p>
             </div>
           </div>
