@@ -232,42 +232,28 @@ const About = ({ t }) => {
               <div className="member-image">
                 <span>👨‍⚕️</span>
               </div>
-              <h3 data-en="Dr. Michael Johnson" data-sq="Dr. Michael Johnson">
-                {t('Dr. Michael Johnson', 'Dr. Michael Johnson')}
+              <h3 data-en="Denis Mata" data-sq="Denis Mata">
+                {t('Denis Mata', 'Denis Mata')}
               </h3>
               <p className="member-title" data-en="Lead Physiotherapist" data-sq="Fizioterapeut Kryesor">
                 {t('Lead Physiotherapist', 'Fizioterapeut Kryesor')}
               </p>
-              <p data-en="15+ years of experience in sports rehabilitation and manual therapy" data-sq="15+ vjet përvojë në rihabilitimin sportiv dhe terapinë manuale">
-                {t('15+ years of experience in sports rehabilitation and manual therapy', '15+ vjet përvojë në rihabilitimin sportiv dhe terapinë manuale')}
+              <p data-en="15+ years of experience in sports rehabilitation and manual therapy. Specialised in post-operative rehabilitation and TMJ (temporomandibular joint) rehabilitation." data-sq="15+ vjet përvojë në rihabilitimin sportiv dhe terapinë manuale. I specializuar në rehabilitimin postoperator dhe në rehabilitimin e ATM (artikulacioni temporomandibular).">
+                {t('15+ years of experience in sports rehabilitation and manual therapy. Specialised in post-operative rehabilitation and TMJ (temporomandibular joint) rehabilitation.', '15+ vjet përvojë në rihabilitimin sportiv dhe terapinë manuale. I specializuar në rehabilitimin postoperator dhe në rehabilitimin e ATM (artikulacioni temporomandibular).')}
               </p>
             </div>
             <div className="team-member">
               <div className="member-image">
                 <span>👩‍⚕️</span>
               </div>
-              <h3 data-en="Dr. Sarah Williams" data-sq="Dr. Sarah Williams">
-                {t('Dr. Sarah Williams', 'Dr. Sarah Williams')}
+              <h3 data-en="Paola Prendi" data-sq="Paola Prendi">
+                {t('Paola Prendi', 'Paola Prendi')}
               </h3>
               <p className="member-title" data-en="Musculoskeletal Specialist" data-sq="Specialiste e Sistemit Muskuloskeletal">
                 {t('Musculoskeletal Specialist', 'Specialiste e Sistemit Muskuloskeletal')}
               </p>
-              <p data-en="Expert in treating chronic pain and movement disorders" data-sq="Eksperte në trajtimin e dhimbjes kronike dhe çrregullimeve të lëvizjes">
-                {t('Expert in treating chronic pain and movement disorders', 'Eksperte në trajtimin e dhimbjes kronike dhe çrregullimeve të lëvizjes')}
-              </p>
-            </div>
-            <div className="team-member">
-              <div className="member-image">
-                <span>👨‍⚕️</span>
-              </div>
-              <h3 data-en="Dr. James Chen" data-sq="Dr. James Chen">
-                {t('Dr. James Chen', 'Dr. James Chen')}
-              </h3>
-              <p className="member-title" data-en="Exercise Therapist" data-sq="Terapeut i Ushtrimeve">
-                {t('Exercise Therapist', 'Terapeut i Ushtrimeve')}
-              </p>
-              <p data-en="Specializes in functional movement and injury prevention programs" data-sq="Specializohet në lëvizjen funksionale dhe programet e parandalimit të lëndimeve">
-                {t('Specializes in functional movement and injury prevention programs', 'Specializohet në lëvizjen funksionale dhe programet e parandalimit të lëndimeve')}
+              <p data-en="Specialised in treating postural disorders (scoliosis/kyphosis), TMJ (temporomandibular joint) rehabilitation and Dry Needling." data-sq="E specializuar në trajtimin e patologjive të çrregullimeve të posturës (skoliozë/kifozë), në rehabilitimin e ATM (artikulacioni temporomandibular) dhe në Dry Needling.">
+                {t('Specialised in treating postural disorders (scoliosis/kyphosis), TMJ (temporomandibular joint) rehabilitation and Dry Needling.', 'E specializuar në trajtimin e patologjive të çrregullimeve të posturës (skoliozë/kifozë), në rehabilitimin e ATM (artikulacioni temporomandibular) dhe në Dry Needling.')}
               </p>
             </div>
           </div>
